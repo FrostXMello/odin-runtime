@@ -575,6 +575,13 @@ class OdinApplication:
         self.benchmark_runtime = BenchmarkRuntime(self)
         self.resource_optimization = ResourceOptimizationRuntime(self)
         self.daemon_runtime = DaemonRuntime(self)
+        from odin_backend.core.stability import RuntimeGuardian
+        from odin_backend.core.self_healing import SelfHealingRuntime
+        from odin_backend.core.automation.automation_runtime import AutomationRuntime
+
+        self.runtime_guardian = RuntimeGuardian(self)
+        self.self_healing = SelfHealingRuntime(self)
+        self.automation_runtime = AutomationRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,
@@ -679,6 +686,7 @@ class OdinApplication:
         await self.local_ai.connect()
         await self.vector_memory.connect()
         await self.agent_execution.connect()
+        await self.runtime_guardian.connect()
         if getattr(self.settings, "action_engine_enabled", False):
             await self.action_scheduler.start()
         if getattr(self.settings, "autonomous_operator_enabled", False):
@@ -778,6 +786,7 @@ class OdinApplication:
         await self.agent_society.disconnect()
         await self.agent_execution.disconnect()
         await self.vector_memory.disconnect()
+        await self.runtime_guardian.disconnect()
         await self.local_ai.disconnect()
         await self.operator_relationship.disconnect()
         await self.continuity_runtime.disconnect()

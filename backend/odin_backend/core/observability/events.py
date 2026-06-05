@@ -161,6 +161,16 @@ class TraceEventKind(StrEnum):
     REGRESSION_DETECTED = "regression_detected"
     RESOURCE_OPTIMIZED = "resource_optimized"
     DAEMON_STARTED = "daemon_started"
+    RUNTIME_RECOVERED = "runtime_recovered"
+    DEGRADED_MODE_ENABLED = "degraded_mode_enabled"
+    DAEMON_RESTORED = "daemon_restored"
+    AUTOMATION_VERIFIED = "automation_verified"
+    ACTION_RETRY_GENERATED = "action_retry_generated"
+    EXECUTION_SALVAGED = "execution_salvaged"
+    MEMORY_COMPACTED = "memory_compacted"
+    WATCHDOG_TRIGGERED = "watchdog_triggered"
+    RUNTIME_REPAIRED = "runtime_repaired"
+    WORKSPACE_RESTORED = "workspace_restored"
 
 
 class TraceEvent(BaseModel):

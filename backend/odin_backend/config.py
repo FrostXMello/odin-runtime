@@ -247,6 +247,14 @@ class Settings(BaseSettings):
     on_battery: bool = False
     daemon_mode_enabled: bool = False
 
+    # Reliability runtime (Prompt 35)
+    runtime_guardian_enabled: bool = False
+    self_healing_enabled: bool = False
+    real_automation_enabled: bool = False
+    automation_mode: str = "simulation"
+    memory_consolidation_enabled: bool = False
+    survival_mode: str = "balanced"
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

@@ -355,6 +355,24 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         channels.append("resources:runtime")
     if event.kind == TraceEventKind.DAEMON_STARTED:
         channels.append("daemon:runtime")
+    if event.kind in (
+        TraceEventKind.RUNTIME_RECOVERED,
+        TraceEventKind.DEGRADED_MODE_ENABLED,
+        TraceEventKind.WATCHDOG_TRIGGERED,
+        TraceEventKind.RUNTIME_REPAIRED,
+    ):
+        channels.append("stability:runtime")
+    if event.kind == TraceEventKind.DAEMON_RESTORED:
+        channels.append("daemon:runtime")
+        channels.append("recovery:runtime")
+    if event.kind in (TraceEventKind.AUTOMATION_VERIFIED, TraceEventKind.ACTION_RETRY_GENERATED):
+        channels.append("automation:runtime")
+    if event.kind == TraceEventKind.EXECUTION_SALVAGED:
+        channels.append("healing:runtime")
+    if event.kind == TraceEventKind.MEMORY_COMPACTED:
+        channels.append("memory:runtime")
+    if event.kind == TraceEventKind.WORKSPACE_RESTORED:
+        channels.append("recovery:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels
