@@ -41,4 +41,8 @@ async def generate_suggestions(app: Any, *, context: dict[str, Any]) -> list[dic
                 "confidence": 0.8,
             }
         )
+    if hasattr(app, "action_runtime") and getattr(app.settings, "action_engine_enabled", False):
+        for s in suggestions[:2]:
+            s["executable"] = True
+            s["propose_kind"] = "suggest_followup"
     return suggestions[:5]

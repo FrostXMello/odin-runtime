@@ -9,7 +9,7 @@ def predict_next(patterns: list[dict[str, Any]]) -> list[str]:
     if not patterns:
         return ["Review active task", "Capture workspace snapshot"]
     last = patterns[-1]
-    apps = last.get("apps", [])
+    apps = last.get("apps", []) or [last.get("label", "")]
     if "code" in str(apps).lower():
-        return ["Run linter", "Commit changes", "Update documentation"]
-    return ["Summarize session", "Archive notes"]
+        return ["Run linter", "Commit changes", "Record workflow macro"]
+    return ["Summarize session", "Archive notes", "Replay last macro"]

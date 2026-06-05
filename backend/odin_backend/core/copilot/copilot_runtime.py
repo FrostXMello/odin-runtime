@@ -47,6 +47,16 @@ class CopilotRuntime:
     async def recommend_actions(self, scene: dict[str, Any]) -> list[dict[str, str]]:
         return contextual_actions(scene)
 
+    async def propose_suggestion(self, suggestion: dict[str, Any]) -> dict[str, Any] | None:
+        if not getattr(self._app.settings, "action_engine_enabled", False):
+            return None
+        kind = suggestion.get("propose_kind", "copilot_suggestion")
+        return await self._app.action_runtime.propose(
+            kind=kind,
+            label=str(suggestion.get("title", "Copilot action")),
+            payload={"message": suggestion.get("message", "")},
+        )
+
     def snapshot(self, *, patterns: list[dict[str, Any]] | None = None) -> dict[str, Any]:
         return {
             "mode": self._mode.value,
