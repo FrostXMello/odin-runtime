@@ -175,6 +175,14 @@ class Settings(BaseSettings):
     autonomy_mission_budget_per_hour: int = 5
     autonomy_max_loop_depth: int = 3
 
+    # Multimodal operator intelligence (Prompt 28)
+    multimodal_perception_enabled: bool = False
+    desktop_awareness_enabled: bool = False
+    voice_enabled: bool = False
+    copilot_mode: str = "passive_observer"
+    whisper_model: str = "base"
+    piper_voice_path: str = ""
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

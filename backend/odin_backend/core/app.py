@@ -472,6 +472,21 @@ class OdinApplication:
         self.identity_store = IdentityStore(self.settings)
         if getattr(self.settings, "autonomy_mode", "supervised"):
             self.autonomous_loop.set_mode(self.settings.autonomy_mode)
+        from odin_backend.core.perception.perception_runtime import MultimodalPerceptionRuntime
+        from odin_backend.core.desktop.desktop_monitor import DesktopMonitor
+        from odin_backend.core.vision.screen_pipeline import ScreenUnderstandingPipeline
+        from odin_backend.core.voice import VoiceRuntime
+        from odin_backend.core.copilot import CopilotRuntime
+        from odin_backend.core.copilot.workspace_memory import WorkspaceMemoryStore
+        from odin_backend.core.collaboration import CollaborationRuntime
+
+        self.multimodal_perception = MultimodalPerceptionRuntime(self)
+        self.desktop_monitor = DesktopMonitor(self)
+        self.screen_pipeline = ScreenUnderstandingPipeline(self)
+        self.voice_runtime = VoiceRuntime(self)
+        self.copilot_runtime = CopilotRuntime(self)
+        self.workspace_memory = WorkspaceMemoryStore(self.settings)
+        self.collaboration_runtime = CollaborationRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,
@@ -564,6 +579,7 @@ class OdinApplication:
             await self.embedding_runtime.connect()
         await self.objective_manager.connect()
         await self.identity_store.connect()
+        await self.workspace_memory.connect()
         if getattr(self.settings, "autonomous_operator_enabled", False):
             await self.autonomous_loop.start()
         if getattr(self.settings, "cognitive_learning_enabled", True):
@@ -654,6 +670,7 @@ class OdinApplication:
         await self.tool_memory.disconnect()
         await self.autonomous_loop.stop()
         await self.objective_manager.disconnect()
+        await self.workspace_memory.disconnect()
         await self.identity_store.disconnect()
         if getattr(self.settings, "local_cognition_enabled", True):
             await self.embedding_runtime.disconnect()
