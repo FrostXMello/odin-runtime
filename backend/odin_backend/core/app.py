@@ -539,6 +539,23 @@ class OdinApplication:
         self.strategic_reasoning = StrategicReasoningRuntime(self)
         self.federated_memory = FederatedMemoryRuntime(self)
         self.federation_governance = FederationGovernanceRuntime(self)
+        from odin_backend.core.runtime_continuity import ContinuityRuntime
+        from odin_backend.core.background_cognition import BackgroundCognitionRuntime
+        from odin_backend.core.runtime_evolution import EvolutionRuntime
+        from odin_backend.core.cognitive_economy import CognitiveEconomyRuntime
+        from odin_backend.core.meta_reasoning import MetaReasoningRuntime
+        from odin_backend.core.operational_planning import OperationalPlanningRuntime
+        from odin_backend.core.operator_relationship import OperatorRelationshipRuntime
+        from odin_backend.core.distributed_optimization import DistributedOptimizationRuntime
+
+        self.continuity_runtime = ContinuityRuntime(self)
+        self.background_cognition = BackgroundCognitionRuntime(self)
+        self.evolution_runtime = EvolutionRuntime(self)
+        self.cognitive_economy = CognitiveEconomyRuntime(self)
+        self.meta_reasoning = MetaReasoningRuntime(self)
+        self.operational_planning = OperationalPlanningRuntime(self)
+        self.operator_relationship = OperatorRelationshipRuntime(self)
+        self.distributed_optimization = DistributedOptimizationRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,
@@ -638,6 +655,8 @@ class OdinApplication:
         await self.federation_runtime.connect()
         await self.world_simulation.connect()
         await self.federated_memory.connect()
+        await self.continuity_runtime.connect()
+        await self.operator_relationship.connect()
         if getattr(self.settings, "action_engine_enabled", False):
             await self.action_scheduler.start()
         if getattr(self.settings, "autonomous_operator_enabled", False):
@@ -735,6 +754,8 @@ class OdinApplication:
         await self.workflow_memory.disconnect()
         await self.knowledge_runtime.disconnect()
         await self.agent_society.disconnect()
+        await self.operator_relationship.disconnect()
+        await self.continuity_runtime.disconnect()
         await self.federated_memory.disconnect()
         await self.world_simulation.disconnect()
         await self.federation_runtime.disconnect()
