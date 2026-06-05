@@ -273,7 +273,7 @@ class OdinApplication:
         self.desktop_semantics = DesktopSemanticsService(self.event_bus)
         self.resilience = ResilienceManager(self.event_bus)
         self.workspace_automation = ContextualActionGenerator()
-        self.execution_intelligence = ExecutionIntelligenceService(self.event_bus)
+        self.execution_intelligence_service = ExecutionIntelligenceService(self.event_bus)
         self.unified_cognition = UnifiedCognitiveStream(self.event_bus, self.cognition)
         self.live_cognition = LiveCognitionEngine(
             self.event_bus,
@@ -313,7 +313,7 @@ class OdinApplication:
             max_parallel=self.settings.workflow_max_parallel_steps,
         )
         self.collaboration = CollaborationOrchestrator(self.event_bus, self.agent_registry)
-        self.agent_society = AgentSocietyRegistry(self.agent_registry)
+        self.agent_society_registry = AgentSocietyRegistry(self.agent_registry)
         self.compute = AIComputeOrchestrator(
             self.settings,
             self.event_bus,
@@ -438,7 +438,9 @@ class OdinApplication:
         self.cognitive_memory = CognitiveMemoryGraph(self.settings, self)
         self.memory_retrieval = RetrievalEngine(self.cognitive_memory)
         self.experience_engine = ExperienceEngine(self)
-        self.execution_intelligence = ExecutionIntelligence(self)
+        self.execution_intelligence = ExecutionIntelligence(
+            self, legacy_service=self.execution_intelligence_service
+        )
         self.failure_intelligence = FailureIntelligence(self)
         self.improvement_loop = ImprovementLoop(self)
         self._learning_scheduler = LearningScheduler(self, interval_seconds=300.0)
@@ -523,7 +525,7 @@ class OdinApplication:
         from odin_backend.core.agent_messages import AgentMessageBus
         from odin_backend.core.learning_society import PeerLearningEngine
 
-        self.agent_society = AgentSocietyRuntime(self)
+        self.agent_society = AgentSocietyRuntime(self, legacy_registry=self.agent_society_registry)
         self.agent_messages = AgentMessageBus(self)
         self.peer_learning = PeerLearningEngine(self)
         from odin_backend.core.federation import FederationRuntime

@@ -206,6 +206,16 @@ class MissionRuntime:
         self._metrics["waves_executed"] += 1
         mission.sync_task_lists()
 
+        force_ckpt = (
+            hasattr(app, "adaptive_policy")
+            and app.adaptive_policy.state.checkpoint_interval <= 1
+        )
+        if force_ckpt or mission.current_wave % 1 == 0:
+            ckpt = self._checkpoints.create_checkpoint(
+                mission, label=f"wave_{mission.current_wave}"
+            )
+            await self._checkpoints.persist(mission, ckpt)
+
         if async_mode and submitted_async:
             obs = getattr(app, "observability", None)
             if obs:
@@ -226,16 +236,6 @@ class MissionRuntime:
                 "in_flight": app.async_mission_runtime.in_flight_count(mission.mission_id),
                 "wave_results": results,
             }
-
-        force_ckpt = (
-            hasattr(app, "adaptive_policy")
-            and app.adaptive_policy.state.checkpoint_interval <= 1
-        )
-        if force_ckpt or mission.current_wave % 1 == 0:
-            ckpt = self._checkpoints.create_checkpoint(
-                mission, label=f"wave_{mission.current_wave}"
-            )
-            await self._checkpoints.persist(mission, ckpt)
 
         return await self._evaluate_completion(app, mission, wave_results=results)
 

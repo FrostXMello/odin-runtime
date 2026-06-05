@@ -31,7 +31,7 @@ class SelfReasoningPlanner:
                 report.merged_node_ids.extend(ids[1:])
                 for dup_id in ids[1:]:
                     dup = task_graph.get(dup_id)
-                    if dup and dup.status == TaskNodeStatus.PENDING:
+                    if dup and dup.status in (TaskNodeStatus.PENDING, TaskNodeStatus.READY):
                         task_graph.update_status(dup_id, TaskNodeStatus.BLOCKED)
                         report.actions.append(f"blocked_duplicate:{dup_id}")
 

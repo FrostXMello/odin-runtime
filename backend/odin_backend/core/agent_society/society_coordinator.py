@@ -21,11 +21,14 @@ from odin_backend.core.agent_society.persistent_agents import PersistentAgentSto
 from odin_backend.core.agent_society.society_governance import SocietyGovernance
 from odin_backend.core.agent_society.specialization import evolve_expertise, rebalance
 from odin_backend.core.agent_society.task_council import TaskCouncil
+from odin_backend.agent_society.registry import AgentSocietyRegistry
 
 
 class AgentSocietyRuntime:
-    def __init__(self, app: Any) -> None:
+    def __init__(self, app: Any, *, legacy_registry: Any | None = None) -> None:
         self._app = app
+        self._legacy_registry = legacy_registry
+        self._legacy_registry = AgentSocietyRegistry(app.agent_registry)
         self._store = PersistentAgentStore(app.settings)
         self._registry = SocietyAgentRegistry()
         self._continuity = ContinuityState(app.settings)
@@ -158,6 +161,21 @@ class AgentSocietyRuntime:
 
     def expertise_heatmap(self) -> dict[str, float]:
         return self._expertise.heatmap()
+
+    def list_profiles(self) -> list[dict[str, Any]]:
+        if self._legacy_registry is not None:
+            return self._legacy_registry.list_profiles()
+        return []
+
+    def route_task(self, domain: str, *, context: str = "") -> Any:
+        if self._legacy_registry is not None:
+            return self._legacy_registry.route_task(domain, context=context)
+        return "valkyrie"
+
+    def get_reputation(self, agent_id: str) -> dict[str, Any]:
+        if self._legacy_registry is not None:
+            return self._legacy_registry.get_reputation(agent_id)
+        return {}
 
     def snapshot(self) -> dict[str, Any]:
         return {

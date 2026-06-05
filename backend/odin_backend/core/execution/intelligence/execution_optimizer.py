@@ -8,13 +8,17 @@ from odin_backend.core.execution.intelligence.adaptive_timeout import estimate_t
 from odin_backend.core.execution.intelligence.capability_performance import CapabilityPerformanceTracker
 from odin_backend.core.execution.intelligence.execution_profiler import ExecutionProfiler
 from odin_backend.core.execution.intelligence.retry_intelligence import retry_delay, should_replan_instead_of_retry
+from odin_backend.execution_intelligence.service import ExecutionIntelligenceService
 
 
 class ExecutionIntelligence:
-    def __init__(self, app: Any | None = None) -> None:
+    def __init__(self, app: Any | None = None, *, legacy_service: Any | None = None) -> None:
         self._app = app
+        self._legacy_service = legacy_service
         self._capabilities = CapabilityPerformanceTracker()
         self._profiler = ExecutionProfiler()
+        event_bus = getattr(app, "event_bus", None)
+        self._legacy = ExecutionIntelligenceService(event_bus) if event_bus else None
 
     def capability_scores(self) -> dict[str, dict[str, Any]]:
         return self._capabilities.scores()
@@ -74,3 +78,29 @@ class ExecutionIntelligence:
     @property
     def profiler(self) -> ExecutionProfiler:
         return self._profiler
+
+    def record_tool_execution(
+        self,
+        tool_name: str,
+        *,
+        success: bool,
+        latency_ms: float = 0.0,
+        domain: str = "general",
+    ) -> None:
+        if self._legacy_service is not None:
+            self._legacy_service.record_tool_execution(
+                tool_name,
+                success=success,
+                latency_ms=latency_ms,
+                domain=domain,
+            )
+
+    def get_reliability_scores(self) -> list[dict[str, Any]]:
+        if self._legacy_service is not None:
+            return self._legacy_service.get_reliability_scores()
+        return []
+
+    def recommend_for_tool(self, tool_name: str, domain: str = "general") -> dict[str, Any]:
+        if self._legacy_service is not None:
+            return self._legacy_service.recommend_for_tool(tool_name, domain=domain)
+        return {"preferred_tool": tool_name, "recommended_tool": tool_name, "recommendations": []}
