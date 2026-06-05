@@ -373,6 +373,22 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         channels.append("memory:runtime")
     if event.kind == TraceEventKind.WORKSPACE_RESTORED:
         channels.append("recovery:runtime")
+    if event.kind in (TraceEventKind.PROJECT_CONTEXT_RESTORED, TraceEventKind.CODING_SESSION_RESUMED):
+        channels.append("projects:runtime")
+    if event.kind == TraceEventKind.REPOSITORY_INDEXED:
+        channels.append("repositories:runtime")
+    if event.kind == TraceEventKind.WORKSPACE_LINKED:
+        channels.append("workspace:runtime")
+    if event.kind == TraceEventKind.SEMANTIC_SEARCH_COMPLETED:
+        channels.append("search:runtime")
+    if event.kind in (TraceEventKind.PRODUCTIVITY_PATTERN_DETECTED, TraceEventKind.FOCUS_SESSION_STARTED):
+        channels.append("productivity:runtime")
+    if event.kind == TraceEventKind.BRIEFING_GENERATED:
+        channels.append("workspace:runtime")
+    if event.kind == TraceEventKind.KNOWLEDGE_CLUSTER_CREATED:
+        channels.append("workspace:runtime")
+    if event.kind == TraceEventKind.RETRIEVAL_OPTIMIZED:
+        channels.append("storage:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

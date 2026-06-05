@@ -255,6 +255,15 @@ class Settings(BaseSettings):
     memory_consolidation_enabled: bool = False
     survival_mode: str = "balanced"
 
+    # Personal OS (Prompt 36)
+    project_os_enabled: bool = False
+    developer_integrations_enabled: bool = False
+    workspace_knowledge_enabled: bool = False
+    productivity_enabled: bool = False
+    local_search_enabled: bool = False
+    communications_enabled: bool = False
+    storage_optimization_enabled: bool = False
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

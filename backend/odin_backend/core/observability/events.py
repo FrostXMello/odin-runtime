@@ -171,6 +171,16 @@ class TraceEventKind(StrEnum):
     WATCHDOG_TRIGGERED = "watchdog_triggered"
     RUNTIME_REPAIRED = "runtime_repaired"
     WORKSPACE_RESTORED = "workspace_restored"
+    PROJECT_CONTEXT_RESTORED = "project_context_restored"
+    REPOSITORY_INDEXED = "repository_indexed"
+    WORKSPACE_LINKED = "workspace_linked"
+    SEMANTIC_SEARCH_COMPLETED = "semantic_search_completed"
+    PRODUCTIVITY_PATTERN_DETECTED = "productivity_pattern_detected"
+    FOCUS_SESSION_STARTED = "focus_session_started"
+    BRIEFING_GENERATED = "briefing_generated"
+    CODING_SESSION_RESUMED = "coding_session_resumed"
+    KNOWLEDGE_CLUSTER_CREATED = "knowledge_cluster_created"
+    RETRIEVAL_OPTIMIZED = "retrieval_optimized"
 
 
 class TraceEvent(BaseModel):

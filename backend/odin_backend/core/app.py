@@ -582,6 +582,19 @@ class OdinApplication:
         self.runtime_guardian = RuntimeGuardian(self)
         self.self_healing = SelfHealingRuntime(self)
         self.automation_runtime = AutomationRuntime(self)
+        from odin_backend.core.project_os import ProjectOSRuntime
+        from odin_backend.core.integrations import IntegrationsRuntime
+        from odin_backend.core.workspace_knowledge import WorkspaceKnowledgeRuntime
+        from odin_backend.core.productivity import ProductivityRuntime
+        from odin_backend.core.communications import CommunicationsRuntime
+        from odin_backend.core.storage_optimization import StorageOptimizationRuntime
+
+        self.project_os = ProjectOSRuntime(self)
+        self.integrations_runtime = IntegrationsRuntime(self)
+        self.workspace_knowledge = WorkspaceKnowledgeRuntime(self)
+        self.productivity_runtime = ProductivityRuntime(self)
+        self.communications_runtime = CommunicationsRuntime(self)
+        self.storage_optimization = StorageOptimizationRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,
@@ -687,6 +700,7 @@ class OdinApplication:
         await self.vector_memory.connect()
         await self.agent_execution.connect()
         await self.runtime_guardian.connect()
+        await self.project_os.connect()
         if getattr(self.settings, "action_engine_enabled", False):
             await self.action_scheduler.start()
         if getattr(self.settings, "autonomous_operator_enabled", False):
@@ -786,6 +800,7 @@ class OdinApplication:
         await self.agent_society.disconnect()
         await self.agent_execution.disconnect()
         await self.vector_memory.disconnect()
+        await self.project_os.disconnect()
         await self.runtime_guardian.disconnect()
         await self.local_ai.disconnect()
         await self.operator_relationship.disconnect()
