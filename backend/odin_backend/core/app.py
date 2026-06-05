@@ -556,6 +556,23 @@ class OdinApplication:
         self.operational_planning = OperationalPlanningRuntime(self)
         self.operator_relationship = OperatorRelationshipRuntime(self)
         self.distributed_optimization = DistributedOptimizationRuntime(self)
+        from odin_backend.core.local_ai import LocalAIRuntime
+        from odin_backend.core.vector_memory import VectorMemoryRuntime
+        from odin_backend.core.agent_execution import AgentExecutionRuntime
+        from odin_backend.core.copilot.copilot_production_runtime import CopilotProductionRuntime
+        from odin_backend.core.realtime_voice import RealtimeVoiceRuntime
+        from odin_backend.core.evaluation import BenchmarkRuntime
+        from odin_backend.core.resource_optimization import ResourceOptimizationRuntime
+        from odin_backend.core.daemon import DaemonRuntime
+
+        self.local_ai = LocalAIRuntime(self)
+        self.vector_memory = VectorMemoryRuntime(self)
+        self.agent_execution = AgentExecutionRuntime(self)
+        self.copilot_production = CopilotProductionRuntime(self)
+        self.realtime_voice = RealtimeVoiceRuntime(self)
+        self.benchmark_runtime = BenchmarkRuntime(self)
+        self.resource_optimization = ResourceOptimizationRuntime(self)
+        self.daemon_runtime = DaemonRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,
@@ -657,6 +674,9 @@ class OdinApplication:
         await self.federated_memory.connect()
         await self.continuity_runtime.connect()
         await self.operator_relationship.connect()
+        await self.local_ai.connect()
+        await self.vector_memory.connect()
+        await self.agent_execution.connect()
         if getattr(self.settings, "action_engine_enabled", False):
             await self.action_scheduler.start()
         if getattr(self.settings, "autonomous_operator_enabled", False):
@@ -754,6 +774,9 @@ class OdinApplication:
         await self.workflow_memory.disconnect()
         await self.knowledge_runtime.disconnect()
         await self.agent_society.disconnect()
+        await self.agent_execution.disconnect()
+        await self.vector_memory.disconnect()
+        await self.local_ai.disconnect()
         await self.operator_relationship.disconnect()
         await self.continuity_runtime.disconnect()
         await self.federated_memory.disconnect()

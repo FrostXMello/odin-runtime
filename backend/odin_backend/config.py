@@ -232,6 +232,21 @@ class Settings(BaseSettings):
     operator_relationship_enabled: bool = False
     distributed_optimization_enabled: bool = False
 
+    # Production runtime (Prompt 34)
+    local_ai_enabled: bool = False
+    local_ai_vram_mb: int = 4096
+    local_ai_ram_mb: int = 16384
+    local_ai_warm_on_startup: bool = False
+    vector_memory_enabled: bool = False
+    agent_execution_enabled: bool = False
+    copilot_production_enabled: bool = False
+    realtime_voice_enabled: bool = False
+    evaluation_enabled: bool = False
+    resource_optimization_enabled: bool = False
+    resource_mode: str = "normal"
+    on_battery: bool = False
+    daemon_mode_enabled: bool = False
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

@@ -343,6 +343,20 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         channels.append("continuity:runtime")
     if event.kind == TraceEventKind.WORKLOAD_REBALANCED:
         channels.append("optimization:runtime")
+    if event.kind == TraceEventKind.MEMORY_INDEXED:
+        channels.append("memory:runtime")
+    if event.kind == TraceEventKind.TASK_DELEGATED:
+        channels.append("agents:runtime")
+    if event.kind == TraceEventKind.VOICE_TURN_COMPLETED:
+        channels.append("voice:runtime")
+    if event.kind in (TraceEventKind.BENCHMARK_COMPLETED, TraceEventKind.REGRESSION_DETECTED):
+        channels.append("evaluation:runtime")
+    if event.kind == TraceEventKind.RESOURCE_OPTIMIZED:
+        channels.append("resources:runtime")
+    if event.kind == TraceEventKind.DAEMON_STARTED:
+        channels.append("daemon:runtime")
+    if event.kind == TraceEventKind.MODEL_LOADED:
+        channels.append("models:runtime")
     return channels
 
 

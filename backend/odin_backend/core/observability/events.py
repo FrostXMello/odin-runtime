@@ -154,6 +154,13 @@ class TraceEventKind(StrEnum):
     OPERATOR_PATTERN_LEARNED = "operator_pattern_learned"
     WORKLOAD_REBALANCED = "workload_rebalanced"
     EVOLUTION_CYCLE_COMPLETED = "evolution_cycle_completed"
+    MEMORY_INDEXED = "memory_indexed"
+    TASK_DELEGATED = "task_delegated"
+    VOICE_TURN_COMPLETED = "voice_turn_completed"
+    BENCHMARK_COMPLETED = "benchmark_completed"
+    REGRESSION_DETECTED = "regression_detected"
+    RESOURCE_OPTIMIZED = "resource_optimized"
+    DAEMON_STARTED = "daemon_started"
 
 
 class TraceEvent(BaseModel):
