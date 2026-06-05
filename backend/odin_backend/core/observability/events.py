@@ -133,6 +133,18 @@ class TraceEventKind(StrEnum):
     CONTINUITY_RESTORED = "continuity_restored"
     REASONING_SHARED = "reasoning_shared"
     AGENT_REFLECTION_GENERATED = "agent_reflection_generated"
+    FEDERATION_NODE_CONNECTED = "federation_node_connected"
+    FEDERATION_NODE_DISCONNECTED = "federation_node_disconnected"
+    REMOTE_REASONING_REQUESTED = "remote_reasoning_requested"
+    REMOTE_REASONING_COMPLETED = "remote_reasoning_completed"
+    STRATEGY_GENERATED = "strategy_generated"
+    SIMULATION_PROJECTED = "simulation_projected"
+    PREDICTION_UPDATED = "prediction_updated"
+    WORLD_STATE_CHANGED = "world_state_changed"
+    TRUST_SCORE_CHANGED = "trust_score_changed"
+    GOVERNANCE_VIOLATION = "governance_violation"
+    NODE_QUARANTINED = "node_quarantined"
+    KNOWLEDGE_SHARED = "knowledge_shared"
 
 
 class TraceEvent(BaseModel):

@@ -304,6 +304,31 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         channels.append("society:runtime")
     if event.kind == TraceEventKind.DEBATE_STARTED:
         channels.append("society:runtime")
+    if event.kind in (
+        TraceEventKind.FEDERATION_NODE_CONNECTED,
+        TraceEventKind.FEDERATION_NODE_DISCONNECTED,
+        TraceEventKind.REMOTE_REASONING_REQUESTED,
+        TraceEventKind.REMOTE_REASONING_COMPLETED,
+    ):
+        channels.append("federation:runtime")
+    if event.kind in (
+        TraceEventKind.WORLD_STATE_CHANGED,
+        TraceEventKind.SIMULATION_PROJECTED,
+        TraceEventKind.PREDICTION_UPDATED,
+    ):
+        channels.append("world:runtime")
+        channels.append("simulation:runtime")
+    if event.kind == TraceEventKind.STRATEGY_GENERATED:
+        channels.append("strategy:runtime")
+    if event.kind in (
+        TraceEventKind.TRUST_SCORE_CHANGED,
+        TraceEventKind.GOVERNANCE_VIOLATION,
+        TraceEventKind.NODE_QUARANTINED,
+    ):
+        channels.append("governance:runtime")
+        channels.append("federation:runtime")
+    if event.kind == TraceEventKind.KNOWLEDGE_SHARED:
+        channels.append("federation:runtime")
     return channels
 
 

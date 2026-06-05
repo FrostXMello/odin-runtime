@@ -337,3 +337,24 @@ async def mission_delegation(mission_id: str, request: Request) -> dict:
     app = request.app.state.odin
     delegations = [d for d in app.agent_society._delegations.list_all() if d.get("mission_id") == mission_id]
     return {"mission_id": mission_id, "delegations": delegations}
+
+
+@router.get("/{mission_id}/simulation")
+async def mission_simulation(mission_id: str, request: Request) -> dict:
+    app = request.app.state.odin
+    predictions = app.world_simulation.predictions_for_mission(mission_id)
+    return {"mission_id": mission_id, "predictions": predictions, "simulations": app.world_simulation.list_simulations()[-5:]}
+
+
+@router.get("/{mission_id}/strategy")
+async def mission_strategy(mission_id: str, request: Request) -> dict:
+    app = request.app.state.odin
+    return {"mission_id": mission_id, "analyses": app.strategic_reasoning.analysis_for_mission(mission_id)}
+
+
+@router.get("/{mission_id}/federation")
+async def mission_federation(mission_id: str, request: Request) -> dict:
+    app = request.app.state.odin
+    delegations = app.society_federation._delegations.list_for_mission(mission_id)
+    reasoning = app.society_federation._reasoning.list_for_mission(mission_id)
+    return {"mission_id": mission_id, "delegations": delegations, "remote_reasoning": reasoning}
