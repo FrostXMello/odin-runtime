@@ -8,6 +8,11 @@ from odin_backend.core.vector_memory.embedding_runtime import embed_chunks
 from odin_backend.core.vector_memory.episodic_memory import EpisodicMemory
 from odin_backend.core.vector_memory.long_term_memory import LongTermMemory
 from odin_backend.core.vector_memory.retrieval_pipeline import retrieve
+from odin_backend.core.vector_memory.memory_consolidation import (
+    cluster_by_project,
+    compress_memories,
+    summarize_episodic,
+)
 from odin_backend.core.vector_memory.semantic_cache import SemanticCache
 
 
@@ -41,6 +46,23 @@ class VectorMemoryRuntime:
 
     def record_episode(self, *, event: str, context: dict) -> dict[str, Any]:
         return self._episodic.record(event=event, context=context)
+
+    async def consolidate(self) -> dict[str, Any]:
+        if not getattr(self._app.settings, "vector_memory_enabled", False):
+            return {"accepted": False, "reason": "vector_memory_disabled"}
+        entries = [{"text": e.get("content", ""), "importance": e.get("importance", 0.5)} for e in self._long_term._entries]
+        compressed = compress_memories(entries)
+        summary = summarize_episodic(self._episodic._episodes)
+        clusters = cluster_by_project(entries)
+        self._long_term._entries = compressed["entries"]
+        self._emit("memory_compacted", {"compressed": compressed["compressed"], "clusters": len(clusters)})
+        return {"accepted": True, "compressed": compressed, "episodic_summary": summary, "projects": list(clusters.keys())}
+
+    async def compact(self) -> dict[str, Any]:
+        before = self._cache.size()
+        self._cache._cache = dict(list(self._cache._cache.items())[-50:])
+        evicted = max(0, before - self._cache.size())
+        return {"evicted": evicted}
 
     def snapshot(self) -> dict[str, Any]:
         embed_metrics = {}
