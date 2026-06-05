@@ -1,0 +1,15 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/diagnostics/page": "/diagnostics",
+  "/executions/[id]/page": "/executions/[id]",
+  "/memory/page": "/memory",
+  "/graph/page": "/graph",
+  "/traces/[id]/page": "/traces/[id]",
+  "/missions/page": "/missions",
+  "/page": "/",
+  "/tasks/[id]/page": "/tasks/[id]",
+  "/runtime/page": "/runtime",
+  "/executions/page": "/executions",
+  "/missions/[id]/page": "/missions/[id]",
+  "/traces/page": "/traces"
+}

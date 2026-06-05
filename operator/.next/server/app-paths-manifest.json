@@ -1,0 +1,15 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/diagnostics/page": "app/diagnostics/page.js",
+  "/executions/[id]/page": "app/executions/[id]/page.js",
+  "/memory/page": "app/memory/page.js",
+  "/graph/page": "app/graph/page.js",
+  "/traces/[id]/page": "app/traces/[id]/page.js",
+  "/missions/page": "app/missions/page.js",
+  "/page": "app/page.js",
+  "/tasks/[id]/page": "app/tasks/[id]/page.js",
+  "/runtime/page": "app/runtime/page.js",
+  "/executions/page": "app/executions/page.js",
+  "/missions/[id]/page": "app/missions/[id]/page.js",
+  "/traces/page": "app/traces/page.js"
+}
