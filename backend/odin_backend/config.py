@@ -210,6 +210,17 @@ class Settings(BaseSettings):
     agent_message_rate_per_minute: int = 30
     agent_debate_max_depth: int = 8
 
+    # Federation + world simulation (Prompt 32)
+    federation_enabled: bool = False
+    federation_node_name: str = "odin-local"
+    federation_node_role: str = "coordinator"
+    federation_max_nodes: int = 8
+    federation_min_trust_share: float = 0.4
+    federation_shared_secret: str = "local-only"
+    world_simulation_enabled: bool = False
+    strategic_reasoning_enabled: bool = False
+    simulation_max_branches: int = 5
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"
