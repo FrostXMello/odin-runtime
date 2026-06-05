@@ -317,3 +317,23 @@ async def mission_beliefs(mission_id: str, request: Request) -> dict:
     nodes = await app.knowledge_runtime.list_knowledge(limit=100)
     mission_beliefs = [n for n in nodes if n.get("mission_origin") == mission_id]
     return {"mission_id": mission_id, "beliefs": beliefs, "mission_facts": mission_beliefs}
+
+
+@router.get("/{mission_id}/collaboration")
+async def mission_collaboration(mission_id: str, request: Request) -> dict:
+    app = request.app.state.odin
+    delegations = [d for d in app.agent_society._delegations.list_all() if d.get("mission_id") == mission_id]
+    return {"mission_id": mission_id, "delegations": delegations, "graph": app.agent_society._graph.snapshot()}
+
+
+@router.get("/{mission_id}/dialogues")
+async def mission_dialogues(mission_id: str, request: Request) -> dict:
+    app = request.app.state.odin
+    return {"mission_id": mission_id, "messages": app.agent_messages.dialogues()[-20:]}
+
+
+@router.get("/{mission_id}/delegation")
+async def mission_delegation(mission_id: str, request: Request) -> dict:
+    app = request.app.state.odin
+    delegations = [d for d in app.agent_society._delegations.list_all() if d.get("mission_id") == mission_id]
+    return {"mission_id": mission_id, "delegations": delegations}

@@ -56,7 +56,11 @@ async def runtime_models_unload(body: LoadModelRequest, request: Request) -> dic
 @router.get("/agents")
 async def runtime_agents(request: Request) -> dict:
     app = request.app.state.odin
-    return {"agents": app.cognitive_agents.list_agents()}
+    society = await app.agent_society.list_agents() if hasattr(app, "agent_society") else []
+    return {
+        "agents": app.cognitive_agents.list_agents(),
+        "society_agents": society,
+    }
 
 
 @router.get("/reasoning")

@@ -291,6 +291,19 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         channels.append("worldmodel:runtime")
     if event.kind == TraceEventKind.TREND_DETECTED:
         channels.append("trends:runtime")
+    if event.kind in (TraceEventKind.AGENT_SPAWNED, TraceEventKind.EXPERTISE_UPDATED, TraceEventKind.AGENT_REFLECTION_GENERATED):
+        channels.append("agents:runtime")
+        channels.append("society:runtime")
+    if event.kind in (TraceEventKind.DELEGATION_CREATED, TraceEventKind.COLLABORATION_FORMED, TraceEventKind.CONSENSUS_REACHED):
+        channels.append("collaboration:runtime")
+        channels.append("society:runtime")
+    if event.kind in (TraceEventKind.DEBATE_STARTED, TraceEventKind.REASONING_SHARED):
+        channels.append("dialogues:runtime")
+    if event.kind in (TraceEventKind.OBJECTIVE_ASSIGNED, TraceEventKind.CONTINUITY_RESTORED):
+        channels.append("objectives:runtime")
+        channels.append("society:runtime")
+    if event.kind == TraceEventKind.DEBATE_STARTED:
+        channels.append("society:runtime")
     return channels
 
 

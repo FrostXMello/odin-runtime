@@ -123,6 +123,16 @@ class TraceEventKind(StrEnum):
     HYPOTHESIS_GENERATED = "hypothesis_generated"
     WORLD_MODEL_UPDATED = "world_model_updated"
     STALE_KNOWLEDGE_DETECTED = "stale_knowledge_detected"
+    AGENT_SPAWNED = "agent_spawned"
+    EXPERTISE_UPDATED = "expertise_updated"
+    DELEGATION_CREATED = "delegation_created"
+    DEBATE_STARTED = "debate_started"
+    CONSENSUS_REACHED = "consensus_reached"
+    COLLABORATION_FORMED = "collaboration_formed"
+    OBJECTIVE_ASSIGNED = "objective_assigned"
+    CONTINUITY_RESTORED = "continuity_restored"
+    REASONING_SHARED = "reasoning_shared"
+    AGENT_REFLECTION_GENERATED = "agent_reflection_generated"
 
 
 class TraceEvent(BaseModel):
