@@ -95,6 +95,15 @@ class TraceEventKind(StrEnum):
     SAFETY_INTERVENTION = "safety_intervention"
     LOOP_DETECTED = "loop_detected"
     ENVIRONMENT_ALERT = "environment_alert"
+    PERCEPTION_UPDATED = "perception_updated"
+    WORKSPACE_DETECTED = "workspace_detected"
+    SCREEN_PARSED = "screen_parsed"
+    VOICE_SESSION_STARTED = "voice_session_started"
+    COPILOT_SUGGESTION_GENERATED = "copilot_suggestion_generated"
+    APPROVAL_REQUESTED = "approval_requested"
+    WORKSPACE_PATTERN_LEARNED = "workspace_pattern_learned"
+    PROACTIVE_ASSISTANCE_TRIGGERED = "proactive_assistance_triggered"
+    COLLABORATION_FEEDBACK_RECEIVED = "collaboration_feedback_received"
 
 
 class TraceEvent(BaseModel):

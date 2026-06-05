@@ -243,6 +243,25 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         channels.append("safety:runtime")
     if event.kind == TraceEventKind.ENVIRONMENT_ALERT:
         channels.append("autonomy:runtime")
+    if event.kind in (TraceEventKind.PERCEPTION_UPDATED, TraceEventKind.SCREEN_PARSED):
+        channels.append("perception:runtime")
+    if event.kind == TraceEventKind.WORKSPACE_DETECTED:
+        channels.append("desktop:runtime")
+        channels.append("workspace:runtime")
+    if event.kind == TraceEventKind.VOICE_SESSION_STARTED:
+        channels.append("voice:runtime")
+    if event.kind in (
+        TraceEventKind.COPILOT_SUGGESTION_GENERATED,
+        TraceEventKind.PROACTIVE_ASSISTANCE_TRIGGERED,
+    ):
+        channels.append("copilot:runtime")
+    if event.kind == TraceEventKind.WORKSPACE_PATTERN_LEARNED:
+        channels.append("workspace:runtime")
+    if event.kind in (
+        TraceEventKind.APPROVAL_REQUESTED,
+        TraceEventKind.COLLABORATION_FEEDBACK_RECEIVED,
+    ):
+        channels.append("collaboration:runtime")
     return channels
 
 
