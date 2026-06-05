@@ -9,7 +9,9 @@ from odin_backend.core.resource_optimization.battery_aware_runtime import thrott
 from odin_backend.core.resource_optimization.idle_compaction import compact
 from odin_backend.core.resource_optimization.lightweight_modes import mode_config
 from odin_backend.core.resource_optimization.memory_pressure_runtime import pressure_level
+from odin_backend.core.resource_optimization.emergency_reclaim import emergency_reclaim
 from odin_backend.core.resource_optimization.model_swapper import ModelSwapper
+from odin_backend.core.resource_optimization.survival_modes import survival_config
 
 
 class ResourceOptimizationRuntime:
@@ -37,10 +39,29 @@ class ResourceOptimizationRuntime:
         self._mode = mode
         return mode_config(mode)
 
+    async def survive(self, *, mode: str | None = None) -> dict[str, Any]:
+        if not getattr(self._app.settings, "resource_optimization_enabled", False):
+            return {"accepted": False, "reason": "resource_optimization_disabled"}
+        survival_mode = mode or getattr(self._app.settings, "survival_mode", "balanced")
+        config = survival_config(survival_mode)
+        reclaimed = {}
+        if survival_mode in ("ultra_light", "overnight_daemon"):
+            reclaimed = await emergency_reclaim(self._app)
+        self._mode = survival_mode if survival_mode in ("ultra_light", "overnight_daemon") else self._mode
+        return {"accepted": True, "survival_mode": survival_mode, "config": config, "reclaimed": reclaimed}
+
     def snapshot(self) -> dict[str, Any]:
         vram = getattr(self._app.settings, "local_ai_vram_mb", 4096)
         ram = getattr(self._app.settings, "local_ai_ram_mb", 16384)
-        return {"mode": self._mode, "vram_mb": vram, "ram_mb": ram, "mode_config": mode_config(self._mode)}
+        survival = getattr(self._app.settings, "survival_mode", "balanced")
+        return {
+            "mode": self._mode,
+            "vram_mb": vram,
+            "ram_mb": ram,
+            "mode_config": mode_config(self._mode),
+            "survival_mode": survival,
+            "survival_config": survival_config(survival),
+        }
 
     def _emit(self, kind_name: str, payload: dict) -> None:
         obs = getattr(self._app, "observability", None)
