@@ -168,6 +168,13 @@ class Settings(BaseSettings):
     reflection_time_budget_seconds: float = 30.0
     max_concurrent_inference: int = 2
 
+    # Autonomous operator mode (Prompt 27)
+    autonomous_operator_enabled: bool = False
+    autonomy_mode: str = "supervised"
+    autonomy_cycle_interval_seconds: float = 60.0
+    autonomy_mission_budget_per_hour: int = 5
+    autonomy_max_loop_depth: int = 3
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

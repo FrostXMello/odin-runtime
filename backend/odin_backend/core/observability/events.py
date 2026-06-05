@@ -85,6 +85,16 @@ class TraceEventKind(StrEnum):
     HALLUCINATION_RISK = "hallucination_risk"
     REASONING_CHAIN_EXTENDED = "reasoning_chain_extended"
     CONTEXT_TRUNCATED = "context_truncated"
+    AUTONOMY_CYCLE_STARTED = "autonomy_cycle_started"
+    AUTONOMY_OBJECTIVE_GENERATED = "autonomy_objective_generated"
+    AUTONOMY_PAUSED = "autonomy_paused"
+    OBJECTIVE_COMPLETED = "objective_completed"
+    OBJECTIVE_DEFERRED = "objective_deferred"
+    RESEARCH_ITERATION = "research_iteration"
+    IDENTITY_UPDATED = "identity_updated"
+    SAFETY_INTERVENTION = "safety_intervention"
+    LOOP_DETECTED = "loop_detected"
+    ENVIRONMENT_ALERT = "environment_alert"
 
 
 class TraceEvent(BaseModel):

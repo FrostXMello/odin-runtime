@@ -457,6 +457,21 @@ class OdinApplication:
         self.embedding_runtime = EmbeddingRuntime(self)
         self.model_resource_scheduler = ModelResourceScheduler(self)
         self.cognitive_agents = CognitiveAgentCoordinator(self)
+        from odin_backend.core.autonomy.autonomy_loop import AutonomousLoopEngine
+        from odin_backend.core.autonomy.objective_manager import ObjectiveManager
+        from odin_backend.core.environment.environment_monitor import EnvironmentMonitor
+        from odin_backend.core.research.research_engine import ResearchEngine
+        from odin_backend.core.identity.identity_store import IdentityStore
+        from odin_backend.core.safety.autonomy_policy_engine import AutonomyPolicyEngine
+
+        self.objective_manager = ObjectiveManager(self)
+        self.autonomy_safety = AutonomyPolicyEngine(self)
+        self.autonomous_loop = AutonomousLoopEngine(self)
+        self.environment_monitor = EnvironmentMonitor(self)
+        self.research_engine = ResearchEngine(self)
+        self.identity_store = IdentityStore(self.settings)
+        if getattr(self.settings, "autonomy_mode", "supervised"):
+            self.autonomous_loop.set_mode(self.settings.autonomy_mode)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,
@@ -547,6 +562,10 @@ class OdinApplication:
         if getattr(self.settings, "local_cognition_enabled", True):
             await self.model_manager.connect()
             await self.embedding_runtime.connect()
+        await self.objective_manager.connect()
+        await self.identity_store.connect()
+        if getattr(self.settings, "autonomous_operator_enabled", False):
+            await self.autonomous_loop.start()
         if getattr(self.settings, "cognitive_learning_enabled", True):
             await self._learning_scheduler.start()
         if self._sqlite_execution_store:
@@ -633,6 +652,9 @@ class OdinApplication:
         if self._learning_scheduler._task:
             await self._learning_scheduler.stop()
         await self.tool_memory.disconnect()
+        await self.autonomous_loop.stop()
+        await self.objective_manager.disconnect()
+        await self.identity_store.disconnect()
         if getattr(self.settings, "local_cognition_enabled", True):
             await self.embedding_runtime.disconnect()
             await self.model_manager.disconnect()

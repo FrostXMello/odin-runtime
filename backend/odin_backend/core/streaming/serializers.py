@@ -88,6 +88,16 @@ class StreamEventKind(StrEnum):
     HALLUCINATION_RISK = "hallucination_risk"
     REASONING_CHAIN_EXTENDED = "reasoning_chain_extended"
     CONTEXT_TRUNCATED = "context_truncated"
+    AUTONOMY_CYCLE_STARTED = "autonomy_cycle_started"
+    AUTONOMY_OBJECTIVE_GENERATED = "autonomy_objective_generated"
+    AUTONOMY_PAUSED = "autonomy_paused"
+    OBJECTIVE_COMPLETED = "objective_completed"
+    OBJECTIVE_DEFERRED = "objective_deferred"
+    RESEARCH_ITERATION = "research_iteration"
+    IDENTITY_UPDATED = "identity_updated"
+    SAFETY_INTERVENTION = "safety_intervention"
+    LOOP_DETECTED = "loop_detected"
+    ENVIRONMENT_ALERT = "environment_alert"
 
 
 class StreamEnvelope(BaseModel):
@@ -217,6 +227,22 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         channels.append("reflection:runtime")
     if event.kind == TraceEventKind.REASONING_CHAIN_EXTENDED:
         channels.append("agents:runtime")
+    if event.kind in (
+        TraceEventKind.AUTONOMY_CYCLE_STARTED,
+        TraceEventKind.AUTONOMY_OBJECTIVE_GENERATED,
+        TraceEventKind.AUTONOMY_PAUSED,
+    ):
+        channels.append("autonomy:runtime")
+    if event.kind in (TraceEventKind.OBJECTIVE_COMPLETED, TraceEventKind.OBJECTIVE_DEFERRED):
+        channels.append("objectives:runtime")
+    if event.kind == TraceEventKind.RESEARCH_ITERATION:
+        channels.append("research:runtime")
+    if event.kind == TraceEventKind.IDENTITY_UPDATED:
+        channels.append("identity:runtime")
+    if event.kind in (TraceEventKind.SAFETY_INTERVENTION, TraceEventKind.LOOP_DETECTED):
+        channels.append("safety:runtime")
+    if event.kind == TraceEventKind.ENVIRONMENT_ALERT:
+        channels.append("autonomy:runtime")
     return channels
 
 
