@@ -10,6 +10,7 @@ from odin_backend.core.copilot.operator_intent import detect_intent
 from odin_backend.core.copilot.proactive_workspace_assistance import suggest
 from odin_backend.core.copilot.realtime_assistant import assist
 from odin_backend.core.copilot.ui_understanding import understand
+from odin_backend.core.copilot.operator_workflow_profiles import OperatorWorkflowProfiles
 from odin_backend.core.copilot.workspace_continuity import WorkspaceContinuity
 
 
@@ -18,6 +19,7 @@ class CopilotProductionRuntime:
         self._app = app
         self._attention = AttentionModel()
         self._continuity = WorkspaceContinuity()
+        self._profiles = OperatorWorkflowProfiles()
         self._actions: list[str] = []
 
     async def process_snapshot(self, snapshot: dict) -> dict[str, Any]:
@@ -27,6 +29,7 @@ class CopilotProductionRuntime:
         self._attention.update(app=ui["app"], duration_s=snapshot.get("focus_duration_s", 0))
         assistance = await assist(self._app, context=snapshot)
         intent = detect_intent(self._actions[-10:])
+        profile = self._profiles.adapt(actions=self._actions)
         proactive = suggest(focus_app=ui["app"], patterns=self._actions)
         help_ctx = generate_help(app=ui["app"], task=intent.get("intent", "work"))
         ws_snap = self._continuity.capture(workspace=snapshot)
@@ -39,7 +42,16 @@ class CopilotProductionRuntime:
             "help": help_ctx,
             "attention": self._attention.update(app=ui["app"], duration_s=snapshot.get("focus_duration_s", 0)),
             "workspace_snapshot_id": ws_snap["id"],
+            "workflow_profile": profile,
         }
+
+    async def resume_session(self) -> dict[str, Any]:
+        restored = await self.restore_workspace()
+        if hasattr(self._app, "project_os") and self._app.project_os._registry.list_all():
+            pid = self._app.project_os._registry.list_all()[-1]["id"]
+            proj = await self._app.project_os.restore(pid)
+            restored["project"] = proj
+        return {"accepted": True, "resume": "where_you_left_off", **restored}
 
     async def restore_workspace(self) -> dict[str, Any]:
         restored = self._continuity.restore_latest()
@@ -59,6 +71,7 @@ class CopilotProductionRuntime:
             "attention_app": self._attention._focus_app,
             "action_count": len(self._actions),
             "workspace_snapshots": len(self._continuity._snapshots),
+            "workflow_profile": self._profiles._active,
         }
 
     def _emit(self, kind_name: str, payload: dict) -> None:

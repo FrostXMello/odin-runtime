@@ -13,6 +13,7 @@ from odin_backend.core.vector_memory.memory_consolidation import (
     compress_memories,
     summarize_episodic,
 )
+from odin_backend.core.vector_memory.local_search import hybrid_search
 from odin_backend.core.vector_memory.semantic_cache import SemanticCache
 
 
@@ -43,6 +44,13 @@ class VectorMemoryRuntime:
 
     async def search(self, query: str, *, limit: int = 5) -> list[dict[str, Any]]:
         return await retrieve(self._app, query, limit=limit)
+
+    async def search_hybrid(self, query: str, *, limit: int = 10) -> dict[str, Any]:
+        if not getattr(self._app.settings, "local_search_enabled", False):
+            return {"accepted": False, "reason": "local_search_disabled"}
+        result = await hybrid_search(self._app, query, limit=limit)
+        self._emit("semantic_search_completed", {"query": query, "count": result["count"]})
+        return {"accepted": True, **result}
 
     def record_episode(self, *, event: str, context: dict) -> dict[str, Any]:
         return self._episodic.record(event=event, context=context)
