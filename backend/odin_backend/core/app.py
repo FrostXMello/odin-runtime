@@ -519,6 +519,13 @@ class OdinApplication:
         self.web_access = WebAccessRuntime(self)
         self.research_agents = ResearchSwarmCoordinator(self)
         self.reasoning_world = WorldReasoner(self)
+        from odin_backend.core.agent_society import AgentSocietyRuntime
+        from odin_backend.core.agent_messages import AgentMessageBus
+        from odin_backend.core.learning_society import PeerLearningEngine
+
+        self.agent_society = AgentSocietyRuntime(self)
+        self.agent_messages = AgentMessageBus(self)
+        self.peer_learning = PeerLearningEngine(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,
@@ -614,6 +621,7 @@ class OdinApplication:
         await self.workspace_memory.connect()
         await self.workflow_memory.connect()
         await self.knowledge_runtime.connect()
+        await self.agent_society.connect()
         if getattr(self.settings, "action_engine_enabled", False):
             await self.action_scheduler.start()
         if getattr(self.settings, "autonomous_operator_enabled", False):
@@ -710,6 +718,7 @@ class OdinApplication:
         await self.workspace_memory.disconnect()
         await self.workflow_memory.disconnect()
         await self.knowledge_runtime.disconnect()
+        await self.agent_society.disconnect()
         await self.identity_store.disconnect()
         if getattr(self.settings, "local_cognition_enabled", True):
             await self.embedding_runtime.disconnect()

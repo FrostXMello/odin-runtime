@@ -204,6 +204,12 @@ class Settings(BaseSettings):
     web_crawl_max_depth: int = 2
     research_budget_per_hour: int = 10
 
+    # Agent society (Prompt 31)
+    agent_society_enabled: bool = False
+    agent_society_max_agents: int = 12
+    agent_message_rate_per_minute: int = 30
+    agent_debate_max_depth: int = 8
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"
