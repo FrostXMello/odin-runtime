@@ -1,5 +1,5 @@
-"""Cognitive stability loop — self-correction via signals only."""
+"""Runtime stability engine (Prompt 35)."""
 
-from odin_backend.core.stability.loop import StabilityLoop
+from odin_backend.core.stability.runtime_guardian import RuntimeGuardian
 
-__all__ = ["StabilityLoop"]
+__all__ = ["RuntimeGuardian"]
