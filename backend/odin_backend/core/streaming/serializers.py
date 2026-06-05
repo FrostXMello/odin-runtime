@@ -281,6 +281,16 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         channels.append("automation:runtime")
     if event.kind in (TraceEventKind.ACTION_APPROVED, TraceEventKind.AUTOMATION_INTERRUPTED):
         channels.append("supervision:runtime")
+    if event.kind in (TraceEventKind.KNOWLEDGE_CREATED, TraceEventKind.STALE_KNOWLEDGE_DETECTED):
+        channels.append("knowledge:runtime")
+    if event.kind in (TraceEventKind.RESEARCH_STARTED, TraceEventKind.RESEARCH_COMPLETED, TraceEventKind.SOURCE_VERIFIED):
+        channels.append("research:runtime")
+    if event.kind in (TraceEventKind.BELIEF_UPDATED, TraceEventKind.CONTRADICTION_DETECTED):
+        channels.append("beliefs:runtime")
+    if event.kind in (TraceEventKind.WORLD_MODEL_UPDATED, TraceEventKind.HYPOTHESIS_GENERATED):
+        channels.append("worldmodel:runtime")
+    if event.kind == TraceEventKind.TREND_DETECTED:
+        channels.append("trends:runtime")
     return channels
 
 

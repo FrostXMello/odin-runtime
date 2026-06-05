@@ -55,13 +55,13 @@ async def runtime_objectives_create(body: CreateObjectiveRequest, request: Reque
     return obj.model_dump(mode="json")
 
 
-@router.get("/research")
-async def runtime_research(request: Request) -> dict:
+@router.get("/research/debate")
+async def runtime_research_debate(request: Request) -> dict:
     app = request.app.state.odin
     return {"sessions": app.research_engine.list_sessions()}
 
 
-@router.post("/research/start")
+@router.post("/research/debate/start")
 async def runtime_research_start(body: ResearchStartRequest, request: Request) -> dict:
     app = request.app.state.odin
     session = await app.research_engine.start(topic=body.topic)

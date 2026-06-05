@@ -292,3 +292,28 @@ async def mission_memory_grounding(mission_id: str, request: Request) -> dict:
         mission_id=mission_id,
     )
     return {"mission_id": mission_id, "grounding": grounding}
+
+
+@router.get("/{mission_id}/knowledge")
+async def mission_knowledge(mission_id: str, request: Request) -> dict:
+    app = request.app.state.odin
+    nodes = await app.knowledge_runtime.list_knowledge(limit=100)
+    filtered = [n for n in nodes if n.get("mission_origin") == mission_id]
+    return {"mission_id": mission_id, "knowledge": filtered}
+
+
+@router.get("/{mission_id}/research")
+async def mission_research(mission_id: str, request: Request) -> dict:
+    app = request.app.state.odin
+    sessions = app.research_fabric.snapshot().get("sessions", [])
+    filtered = [s for s in sessions if s.get("mission_id") == mission_id]
+    return {"mission_id": mission_id, "research_sessions": filtered}
+
+
+@router.get("/{mission_id}/beliefs")
+async def mission_beliefs(mission_id: str, request: Request) -> dict:
+    app = request.app.state.odin
+    beliefs = app.knowledge_runtime.snapshot().get("beliefs", [])
+    nodes = await app.knowledge_runtime.list_knowledge(limit=100)
+    mission_beliefs = [n for n in nodes if n.get("mission_origin") == mission_id]
+    return {"mission_id": mission_id, "beliefs": beliefs, "mission_facts": mission_beliefs}

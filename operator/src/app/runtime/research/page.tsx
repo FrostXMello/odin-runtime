@@ -7,7 +7,7 @@ import { Card, CardBody, CardHeader } from "@/components/ui/card";
 export default function RuntimeResearchPage() {
   const { data } = useQuery({
     queryKey: ["runtime", "research"],
-    queryFn: () => apiFetch<{ sessions: Array<Record<string, unknown>> }>("/runtime/research"),
+    queryFn: () => apiFetch<{ sessions: Array<Record<string, unknown>> }>("/runtime/research/debate"),
     refetchInterval: 10000,
   });
   const sessions = data?.sessions ?? [];

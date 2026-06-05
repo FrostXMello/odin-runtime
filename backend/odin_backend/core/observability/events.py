@@ -114,6 +114,15 @@ class TraceEventKind(StrEnum):
     AUTOMATION_INTERRUPTED = "automation_interrupted"
     DESTRUCTIVE_ACTION_BLOCKED = "destructive_action_blocked"
     OVERLAY_RENDERED = "overlay_rendered"
+    KNOWLEDGE_CREATED = "knowledge_created"
+    BELIEF_UPDATED = "belief_updated"
+    SOURCE_VERIFIED = "source_verified"
+    RESEARCH_STARTED = "research_started"
+    RESEARCH_COMPLETED = "research_completed"
+    TREND_DETECTED = "trend_detected"
+    HYPOTHESIS_GENERATED = "hypothesis_generated"
+    WORLD_MODEL_UPDATED = "world_model_updated"
+    STALE_KNOWLEDGE_DETECTED = "stale_knowledge_detected"
 
 
 class TraceEvent(BaseModel):

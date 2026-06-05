@@ -194,6 +194,16 @@ class Settings(BaseSettings):
     automation_min_gap_ms: int = 100
     automation_max_per_minute: int = 30
 
+    # Knowledge fabric + research (Prompt 30)
+    knowledge_fabric_enabled: bool = False
+    research_fabric_enabled: bool = False
+    web_access_enabled: bool = False
+    web_access_allowlist: str = ""
+    web_rate_limit_per_minute: int = 20
+    web_max_concurrent: int = 2
+    web_crawl_max_depth: int = 2
+    research_budget_per_hour: int = 10
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

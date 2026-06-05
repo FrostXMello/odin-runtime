@@ -506,6 +506,19 @@ class OdinApplication:
         self.workflow_memory = WorkflowMemoryStore(self.settings)
         self.macro_replay = MacroReplayEngine(self)
         self.overlay_runtime = OverlayRuntime(self)
+        from odin_backend.core.knowledge import KnowledgeRuntime
+        from odin_backend.core.knowledge.research_governance import ResearchGovernance
+        from odin_backend.core.research_engine import ResearchFabricRuntime
+        from odin_backend.core.web_access import WebAccessRuntime
+        from odin_backend.core.research_agents import ResearchSwarmCoordinator
+        from odin_backend.core.reasoning import WorldReasoner
+
+        self.knowledge_runtime = KnowledgeRuntime(self)
+        self.research_governance = ResearchGovernance(self)
+        self.research_fabric = ResearchFabricRuntime(self)
+        self.web_access = WebAccessRuntime(self)
+        self.research_agents = ResearchSwarmCoordinator(self)
+        self.reasoning_world = WorldReasoner(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,
@@ -600,6 +613,7 @@ class OdinApplication:
         await self.identity_store.connect()
         await self.workspace_memory.connect()
         await self.workflow_memory.connect()
+        await self.knowledge_runtime.connect()
         if getattr(self.settings, "action_engine_enabled", False):
             await self.action_scheduler.start()
         if getattr(self.settings, "autonomous_operator_enabled", False):
@@ -695,6 +709,7 @@ class OdinApplication:
         await self.action_scheduler.stop()
         await self.workspace_memory.disconnect()
         await self.workflow_memory.disconnect()
+        await self.knowledge_runtime.disconnect()
         await self.identity_store.disconnect()
         if getattr(self.settings, "local_cognition_enabled", True):
             await self.embedding_runtime.disconnect()
