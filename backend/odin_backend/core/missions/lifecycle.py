@@ -58,7 +58,13 @@ MISSION_TRANSITIONS: dict[MissionLifecycle, frozenset[MissionLifecycle]] = {
         }
     ),
     MissionLifecycle.BLOCKED: frozenset(
-        {MissionLifecycle.RUNNING, MissionLifecycle.RETRYING, MissionLifecycle.ESCALATED, MissionLifecycle.CANCELLED}
+        {
+            MissionLifecycle.RUNNING,
+            MissionLifecycle.RETRYING,
+            MissionLifecycle.ESCALATED,
+            MissionLifecycle.COMPLETED,
+            MissionLifecycle.CANCELLED,
+        }
     ),
     MissionLifecycle.RETRYING: frozenset(
         {MissionLifecycle.RUNNING, MissionLifecycle.FAILED, MissionLifecycle.ESCALATED}
@@ -82,7 +88,9 @@ TASK_TRANSITIONS: dict[TaskNodeStatus, frozenset[TaskNodeStatus]] = {
     TaskNodeStatus.PENDING: frozenset(
         {TaskNodeStatus.READY, TaskNodeStatus.SKIPPED, TaskNodeStatus.BLOCKED, TaskNodeStatus.FAILED}
     ),
-    TaskNodeStatus.READY: frozenset({TaskNodeStatus.ASSIGNED, TaskNodeStatus.SKIPPED, TaskNodeStatus.BLOCKED}),
+    TaskNodeStatus.READY: frozenset(
+        {TaskNodeStatus.ASSIGNED, TaskNodeStatus.COMPLETE, TaskNodeStatus.SKIPPED, TaskNodeStatus.BLOCKED}
+    ),
     TaskNodeStatus.ASSIGNED: frozenset({TaskNodeStatus.EXECUTING, TaskNodeStatus.BLOCKED, TaskNodeStatus.FAILED}),
     TaskNodeStatus.EXECUTING: frozenset(
         {TaskNodeStatus.RUNNING, TaskNodeStatus.COMPLETE, TaskNodeStatus.FAILED, TaskNodeStatus.BLOCKED, TaskNodeStatus.PENDING}
