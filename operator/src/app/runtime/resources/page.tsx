@@ -1,29 +1,28 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiFetch } from "@/lib/api/client";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
 
-export default function RuntimeResourcesPage() {
+export default function ResourcesPage() {
+  const qc = useQueryClient();
   const { data } = useQuery({
     queryKey: ["runtime", "resources"],
-    queryFn: () => apiFetch<Record<string, unknown>>("/runtime/resources"),
+    queryFn: () => apiFetch<Record<string, unknown>>("/runtime/resource-optimization"),
     refetchInterval: 5000,
   });
-  const ram = (data?.ram as Record<string, unknown>) ?? {};
-  const gpu = (data?.gpu as Record<string, unknown>) ?? {};
-  const loaded = (data?.loaded as string[]) ?? [];
-
+  const res = (data?.resources as Record<string, unknown>) ?? {};
+  const optimize = useMutation({
+    mutationFn: () => apiFetch("/runtime/resource-optimization/optimize", { method: "POST" }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["runtime", "resources"] }),
+  });
   return (
     <div className="space-y-4">
-      <h2 className="text-sm font-medium text-slate-200">Model resources</h2>
+      <h2 className="text-sm font-medium text-slate-200">Resource dashboard</h2>
+      <button className="rounded bg-odin-accent/20 px-3 py-1 text-xs text-odin-cyan" onClick={() => optimize.mutate()}>Optimize</button>
       <Card>
-        <CardHeader title="Memory pressure" subtitle={`${Math.round(Number(data?.memory_pressure ?? 0) * 100)}%`} />
-        <CardBody className="font-mono text-xs text-slate-400 space-y-1">
-          <div>RAM available: {String(ram.available_mb)} MB</div>
-          <div>GPU detected: {String(gpu.gpu_detected)}</div>
-          <div>Loaded models: {loaded.join(", ") || "none"}</div>
-        </CardBody>
+        <CardHeader title="Hardware" subtitle={`VRAM: ${String(res.vram_mb ?? 0)}MB | RAM: ${String(res.ram_mb ?? 0)}MB`} />
+        <CardBody className="font-mono text-xs text-slate-400">Mode: {String(res.mode ?? "normal")}</CardBody>
       </Card>
     </div>
   );
