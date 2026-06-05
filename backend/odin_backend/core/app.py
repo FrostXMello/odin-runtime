@@ -526,6 +526,19 @@ class OdinApplication:
         self.agent_society = AgentSocietyRuntime(self)
         self.agent_messages = AgentMessageBus(self)
         self.peer_learning = PeerLearningEngine(self)
+        from odin_backend.core.federation import FederationRuntime
+        from odin_backend.core.federated_agents import SocietyFederation
+        from odin_backend.core.world_simulation import WorldSimulationRuntime
+        from odin_backend.core.strategic_reasoning import StrategicReasoningRuntime
+        from odin_backend.core.federated_memory import FederatedMemoryRuntime
+        from odin_backend.core.federation_governance import FederationGovernanceRuntime
+
+        self.federation_runtime = FederationRuntime(self)
+        self.society_federation = SocietyFederation(self)
+        self.world_simulation = WorldSimulationRuntime(self)
+        self.strategic_reasoning = StrategicReasoningRuntime(self)
+        self.federated_memory = FederatedMemoryRuntime(self)
+        self.federation_governance = FederationGovernanceRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,
@@ -622,6 +635,9 @@ class OdinApplication:
         await self.workflow_memory.connect()
         await self.knowledge_runtime.connect()
         await self.agent_society.connect()
+        await self.federation_runtime.connect()
+        await self.world_simulation.connect()
+        await self.federated_memory.connect()
         if getattr(self.settings, "action_engine_enabled", False):
             await self.action_scheduler.start()
         if getattr(self.settings, "autonomous_operator_enabled", False):
@@ -719,6 +735,9 @@ class OdinApplication:
         await self.workflow_memory.disconnect()
         await self.knowledge_runtime.disconnect()
         await self.agent_society.disconnect()
+        await self.federated_memory.disconnect()
+        await self.world_simulation.disconnect()
+        await self.federation_runtime.disconnect()
         await self.identity_store.disconnect()
         if getattr(self.settings, "local_cognition_enabled", True):
             await self.embedding_runtime.disconnect()
