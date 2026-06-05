@@ -221,6 +221,17 @@ class Settings(BaseSettings):
     strategic_reasoning_enabled: bool = False
     simulation_max_branches: int = 5
 
+    # Adaptive infrastructure (Prompt 33)
+    runtime_continuity_enabled: bool = False
+    background_cognition_enabled: bool = False
+    runtime_evolution_enabled: bool = False
+    cognitive_economy_enabled: bool = False
+    cognitive_economy_mode: str = "balanced"
+    meta_reasoning_enabled: bool = False
+    operational_planning_enabled: bool = False
+    operator_relationship_enabled: bool = False
+    distributed_optimization_enabled: bool = False
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"
