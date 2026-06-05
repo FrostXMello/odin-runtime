@@ -104,6 +104,16 @@ class TraceEventKind(StrEnum):
     WORKSPACE_PATTERN_LEARNED = "workspace_pattern_learned"
     PROACTIVE_ASSISTANCE_TRIGGERED = "proactive_assistance_triggered"
     COLLABORATION_FEEDBACK_RECEIVED = "collaboration_feedback_received"
+    ACTION_PROPOSED = "action_proposed"
+    ACTION_APPROVED = "action_approved"
+    ACTION_EXECUTED = "action_executed"
+    ACTION_REVERTED = "action_reverted"
+    WORKFLOW_RECORDED = "workflow_recorded"
+    MACRO_GENERATED = "macro_generated"
+    BROWSER_NAVIGATION = "browser_navigation"
+    AUTOMATION_INTERRUPTED = "automation_interrupted"
+    DESTRUCTIVE_ACTION_BLOCKED = "destructive_action_blocked"
+    OVERLAY_RENDERED = "overlay_rendered"
 
 
 class TraceEvent(BaseModel):

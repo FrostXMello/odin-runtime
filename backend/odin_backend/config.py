@@ -183,6 +183,17 @@ class Settings(BaseSettings):
     whisper_model: str = "base"
     piper_voice_path: str = ""
 
+    # Safe action engine (Prompt 29)
+    action_engine_enabled: bool = False
+    desktop_automation_enabled: bool = False
+    browser_operator_enabled: bool = False
+    automation_simulation_mode: bool = True
+    approval_mode: str = "manual_every_step"
+    overlay_enabled: bool = False
+    action_pace_ms: int = 250
+    automation_min_gap_ms: int = 100
+    automation_max_per_minute: int = 30
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

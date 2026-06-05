@@ -487,6 +487,25 @@ class OdinApplication:
         self.copilot_runtime = CopilotRuntime(self)
         self.workspace_memory = WorkspaceMemoryStore(self.settings)
         self.collaboration_runtime = CollaborationRuntime(self)
+        from odin_backend.core.actions import ActionRuntime
+        from odin_backend.core.actions.action_scheduler import ActionScheduler
+        from odin_backend.core.automation import AutomationSandbox
+        from odin_backend.core.browser_operator import BrowserOperatorRuntime
+        from odin_backend.core.supervision import SupervisionRuntime
+        from odin_backend.core.workflow_macros import MacroReplayEngine
+        from odin_backend.core.workflow_macros.workflow_memory import WorkflowMemoryStore
+        from odin_backend.core.action_safety import ActionSafetyEngine
+        from odin_backend.core.overlay import OverlayRuntime
+
+        self.action_safety = ActionSafetyEngine(self)
+        self.action_runtime = ActionRuntime(self)
+        self.action_scheduler = ActionScheduler(self)
+        self.automation_sandbox = AutomationSandbox(self)
+        self.browser_operator = BrowserOperatorRuntime(self)
+        self.supervision_runtime = SupervisionRuntime(self)
+        self.workflow_memory = WorkflowMemoryStore(self.settings)
+        self.macro_replay = MacroReplayEngine(self)
+        self.overlay_runtime = OverlayRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,
@@ -580,6 +599,9 @@ class OdinApplication:
         await self.objective_manager.connect()
         await self.identity_store.connect()
         await self.workspace_memory.connect()
+        await self.workflow_memory.connect()
+        if getattr(self.settings, "action_engine_enabled", False):
+            await self.action_scheduler.start()
         if getattr(self.settings, "autonomous_operator_enabled", False):
             await self.autonomous_loop.start()
         if getattr(self.settings, "cognitive_learning_enabled", True):
@@ -670,7 +692,9 @@ class OdinApplication:
         await self.tool_memory.disconnect()
         await self.autonomous_loop.stop()
         await self.objective_manager.disconnect()
+        await self.action_scheduler.stop()
         await self.workspace_memory.disconnect()
+        await self.workflow_memory.disconnect()
         await self.identity_store.disconnect()
         if getattr(self.settings, "local_cognition_enabled", True):
             await self.embedding_runtime.disconnect()

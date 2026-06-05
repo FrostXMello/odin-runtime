@@ -262,6 +262,25 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         TraceEventKind.COLLABORATION_FEEDBACK_RECEIVED,
     ):
         channels.append("collaboration:runtime")
+    if event.kind in (
+        TraceEventKind.ACTION_PROPOSED,
+        TraceEventKind.ACTION_APPROVED,
+        TraceEventKind.ACTION_EXECUTED,
+        TraceEventKind.ACTION_REVERTED,
+        TraceEventKind.DESTRUCTIVE_ACTION_BLOCKED,
+    ):
+        channels.append("actions:runtime")
+    if event.kind == TraceEventKind.AUTOMATION_INTERRUPTED:
+        channels.append("automation:runtime")
+        channels.append("supervision:runtime")
+    if event.kind == TraceEventKind.BROWSER_NAVIGATION:
+        channels.append("browser:runtime")
+    if event.kind in (TraceEventKind.WORKFLOW_RECORDED, TraceEventKind.MACRO_GENERATED):
+        channels.append("workflows:runtime")
+    if event.kind == TraceEventKind.OVERLAY_RENDERED:
+        channels.append("automation:runtime")
+    if event.kind in (TraceEventKind.ACTION_APPROVED, TraceEventKind.AUTOMATION_INTERRUPTED):
+        channels.append("supervision:runtime")
     return channels
 
 
