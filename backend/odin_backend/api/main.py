@@ -47,6 +47,7 @@ from odin_backend.api.routes import (
     knowledge_runtime,
     society_runtime,
     federation_runtime,
+    infrastructure_runtime,
     traces,
     ws,
     executions,
@@ -116,6 +117,7 @@ def create_api(odin_app: OdinApplication | None = None) -> FastAPI:
     app.include_router(knowledge_runtime.router, prefix="/api/v1")
     app.include_router(society_runtime.router, prefix="/api/v1")
     app.include_router(federation_runtime.router, prefix="/api/v1")
+    app.include_router(infrastructure_runtime.router, prefix="/api/v1")
     app.include_router(traces.router, prefix="/api/v1")
     app.include_router(ws.router, prefix="/api/v1")
     app.include_router(executions.router, prefix="/api/v1")

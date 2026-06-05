@@ -358,3 +358,21 @@ async def mission_federation(mission_id: str, request: Request) -> dict:
     delegations = app.society_federation._delegations.list_for_mission(mission_id)
     reasoning = app.society_federation._reasoning.list_for_mission(mission_id)
     return {"mission_id": mission_id, "delegations": delegations, "remote_reasoning": reasoning}
+
+
+@router.get("/{mission_id}/economy")
+async def mission_economy(mission_id: str, request: Request) -> dict:
+    app = request.app.state.odin
+    return {"mission_id": mission_id, "economy": app.cognitive_economy.mission_economy(mission_id)}
+
+
+@router.get("/{mission_id}/continuity")
+async def mission_continuity(mission_id: str, request: Request) -> dict:
+    app = request.app.state.odin
+    return {"mission_id": mission_id, "continuity": app.continuity_runtime.missions_for(mission_id)}
+
+
+@router.get("/{mission_id}/meta-analysis")
+async def mission_meta_analysis(mission_id: str, request: Request) -> dict:
+    app = request.app.state.odin
+    return {"mission_id": mission_id, "analyses": app.meta_reasoning.mission_analysis(mission_id)}

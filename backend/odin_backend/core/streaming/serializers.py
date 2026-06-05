@@ -329,6 +329,20 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         channels.append("federation:runtime")
     if event.kind == TraceEventKind.KNOWLEDGE_SHARED:
         channels.append("federation:runtime")
+    if event.kind == TraceEventKind.CONTINUITY_RESTORED:
+        channels.append("continuity:runtime")
+    if event.kind == TraceEventKind.MEMORY_CONSOLIDATED:
+        channels.append("continuity:runtime")
+    if event.kind in (TraceEventKind.POLICY_OPTIMIZED, TraceEventKind.ROUTING_OPTIMIZED, TraceEventKind.EVOLUTION_CYCLE_COMPLETED):
+        channels.append("evolution:runtime")
+    if event.kind == TraceEventKind.COGNITION_BUDGET_UPDATED:
+        channels.append("economy:runtime")
+    if event.kind in (TraceEventKind.META_ANALYSIS_GENERATED, TraceEventKind.HALLUCINATION_DETECTED):
+        channels.append("meta:runtime")
+    if event.kind == TraceEventKind.OPERATOR_PATTERN_LEARNED:
+        channels.append("continuity:runtime")
+    if event.kind == TraceEventKind.WORKLOAD_REBALANCED:
+        channels.append("optimization:runtime")
     return channels
 
 

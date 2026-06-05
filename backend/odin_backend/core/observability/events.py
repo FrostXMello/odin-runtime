@@ -145,6 +145,15 @@ class TraceEventKind(StrEnum):
     GOVERNANCE_VIOLATION = "governance_violation"
     NODE_QUARANTINED = "node_quarantined"
     KNOWLEDGE_SHARED = "knowledge_shared"
+    MEMORY_CONSOLIDATED = "memory_consolidated"
+    POLICY_OPTIMIZED = "policy_optimized"
+    ROUTING_OPTIMIZED = "routing_optimized"
+    COGNITION_BUDGET_UPDATED = "cognition_budget_updated"
+    META_ANALYSIS_GENERATED = "meta_analysis_generated"
+    HALLUCINATION_DETECTED = "hallucination_detected"
+    OPERATOR_PATTERN_LEARNED = "operator_pattern_learned"
+    WORKLOAD_REBALANCED = "workload_rebalanced"
+    EVOLUTION_CYCLE_COMPLETED = "evolution_cycle_completed"
 
 
 class TraceEvent(BaseModel):
