@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   Activity,
   Brain,
+  ChevronRight,
   GitBranch,
   Layers,
   MemoryStick,
@@ -21,16 +23,7 @@ import { useRuntimeStream } from "@/hooks/useRuntimeStream";
 import { LiveIndicator, ConnectionHealthBadge } from "@/components/stream/live-indicator";
 import { ActivityTicker } from "@/components/stream/activity-ticker";
 
-/** Focus mode — three surfaces only during real work sessions. */
-const FOCUS_NAV = [
-  { href: "/missions", label: "Missions", icon: Route },
-  { href: "/runtime-health", label: "Health", icon: Activity },
-  { href: "/session-persistence", label: "Sessions", icon: GitBranch },
-] as const;
-
-const FOCUS_HREFS = new Set(FOCUS_NAV.map((item) => item.href));
-
-/** Five surfaces for daily engineering work — everything else is debug/legacy. */
+/** Five surfaces for daily product mode — primary workflow only. */
 const DAILY_NAV = [
   { href: "/missions", label: "Missions", icon: Route },
   { href: "/runtime-health", label: "Health", icon: Activity },
@@ -40,6 +33,11 @@ const DAILY_NAV = [
 ] as const;
 
 const DAILY_HREFS = new Set(DAILY_NAV.map((item) => item.href));
+
+function isDailyPath(pathname: string): boolean {
+  if (pathname === "/missions" || pathname.startsWith("/missions/")) return true;
+  return DAILY_HREFS.has(pathname);
+}
 
 const NAV = [
   { href: "/runtime", label: "Runtime", icon: Activity },
@@ -401,52 +399,144 @@ const NAV = [
   { href: "/memory", label: "Memory Audit", icon: MemoryStick },
 ].filter((item) => !DAILY_HREFS.has(item.href));
 
+const INTERNAL_SYSTEMS_HREFS = new Set(["/executions", "/graph", "/diagnostics", "/memory"]);
+
+const INTERNAL_SYSTEMS_NAV = NAV.filter(
+  (item) => item.href.startsWith("/runtime") || INTERNAL_SYSTEMS_HREFS.has(item.href)
+);
+
+const LEGACY_NAV = NAV.filter(
+  (item) => !item.href.startsWith("/runtime") && !INTERNAL_SYSTEMS_HREFS.has(item.href)
+);
+
+type NavTier = "daily" | "internal" | "legacy";
+
 function NavLink({
   href,
   label,
   icon: Icon,
   pathname,
-  daily = false,
+  tier = "internal",
 }: {
   href: string;
   label: string;
   icon: typeof Activity;
   pathname: string;
-  daily?: boolean;
+  tier?: NavTier;
 }) {
   const active = pathname === href || pathname.startsWith(`${href}/`);
   return (
     <Link
       href={href}
       className={cn(
-        "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-colors",
-        daily && "font-medium",
+        "flex items-center gap-2.5 rounded-lg px-3 py-2 transition-colors",
+        tier === "daily" && "text-sm font-semibold",
+        tier === "internal" && "py-1.5 text-xs font-normal",
+        tier === "legacy" && "py-1.5 text-[11px] font-normal opacity-75",
         active
           ? "bg-odin-accent/15 text-odin-cyan"
-          : "text-slate-400 hover:bg-odin-border/40 hover:text-slate-200"
+          : tier === "daily"
+            ? "text-slate-200 hover:bg-odin-border/40 hover:text-odin-cyan"
+            : tier === "internal"
+              ? "text-slate-500 hover:bg-odin-border/30 hover:text-slate-400"
+              : "text-slate-600 hover:bg-odin-border/20 hover:text-slate-500"
       )}
     >
-      <Icon className="h-4 w-4 shrink-0" />
+      <Icon className={cn("shrink-0", tier === "daily" ? "h-4 w-4" : "h-3.5 w-3.5")} />
       {label}
     </Link>
   );
 }
 
+function InternalDeveloperSection({
+  pathname,
+  expanded,
+  onToggle,
+}: {
+  pathname: string;
+  expanded: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <div className="mt-3 border-t border-odin-border/50 pt-2">
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={expanded}
+        className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left transition-colors hover:bg-odin-border/25"
+      >
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+            Internal / Developer Mode
+          </p>
+          <p className="text-[9px] text-slate-600">
+            {expanded ? "Click to collapse" : `${NAV.length + 1} advanced routes · click to expand`}
+          </p>
+        </div>
+        <ChevronRight
+          className={cn("h-3.5 w-3.5 shrink-0 text-slate-600 transition-transform", expanded && "rotate-90")}
+        />
+      </button>
+      {expanded && (
+        <div className="mt-1 space-y-1 border-l border-odin-border/30 pl-2 ml-2 max-h-[50vh] overflow-y-auto">
+          <p className="px-2 pt-1 text-[9px] font-semibold uppercase tracking-wider text-slate-600">
+            Internal Systems (Advanced)
+          </p>
+          {INTERNAL_SYSTEMS_NAV.map(({ href, label, icon }) => (
+            <NavLink key={href} href={href} label={label} icon={icon} pathname={pathname} tier="internal" />
+          ))}
+          <Link
+            href="/traces"
+            className={cn(
+              "flex items-center gap-2.5 rounded-lg px-3 py-1.5 text-xs transition-colors",
+              pathname.startsWith("/traces")
+                ? "bg-odin-accent/15 text-odin-cyan"
+                : "text-slate-500 hover:bg-odin-border/30 hover:text-slate-400"
+            )}
+          >
+            <Search className="h-3.5 w-3.5 shrink-0" />
+            Traces
+          </Link>
+          {LEGACY_NAV.length > 0 && (
+            <>
+              <p className="px-2 pt-3 text-[9px] font-semibold uppercase tracking-wider text-slate-600/70">
+                Legacy & archives
+              </p>
+              {LEGACY_NAV.map(({ href, label, icon }) => (
+                <NavLink key={href} href={href} label={label} icon={icon} pathname={pathname} tier="legacy" />
+              ))}
+            </>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function resolveNavLabel(pathname: string): string {
-  const focus = FOCUS_NAV.find((n) => pathname === n.href || pathname.startsWith(`${n.href}/`));
-  if (focus) return focus.label;
   if (pathname.startsWith("/missions/")) return "Mission";
   const daily = DAILY_NAV.find((n) => pathname === n.href || pathname.startsWith(`${n.href}/`));
   if (daily) return daily.label;
+  if (pathname.startsWith("/traces")) return "Traces";
   const item = NAV.find((n) => pathname === n.href || pathname.startsWith(`${n.href}/`));
   return item?.label ?? "Trace Explorer";
 }
 
 export function OperatorShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { pollIntervalMs, liveRefresh, focusMode, setPollInterval, setLiveRefresh, setFocusMode } =
+  const { pollIntervalMs, liveRefresh, focusMode, visualMode, setPollInterval, setLiveRefresh, setFocusMode, setVisualMode } =
     useOperatorStore();
+  const [internalExpanded, setInternalExpanded] = useState(false);
+  const missionCommandSurface =
+    pathname === "/missions" || pathname.startsWith("/missions/") || pathname.startsWith("/missions?");
+  const effectiveFocus = focusMode || missionCommandSurface;
   useRuntimeStream(liveRefresh);
+
+  useEffect(() => {
+    if (!effectiveFocus && !isDailyPath(pathname)) {
+      setInternalExpanded(true);
+    }
+  }, [pathname, effectiveFocus]);
 
   return (
     <div className="flex min-h-screen bg-odin-bg text-slate-200">
@@ -460,60 +550,51 @@ export function OperatorShell({ children }: { children: React.ReactNode }) {
               <p className="text-xs font-bold tracking-[0.2em] text-odin-cyan">ODIN</p>
               <p className="text-[10px] text-odin-muted">Operator Console</p>
               <p className="text-[9px] leading-tight text-odin-muted/80">
-                {focusMode ? "Focus: missions · health · sessions" : "Daily: missions · health · sessions"}
+                {missionCommandSurface
+                  ? "Command OS · stream only"
+                  : effectiveFocus
+                    ? "Product mode · daily workflow only"
+                    : "Product mode · 5 core surfaces"}
               </p>
             </div>
           </div>
         </div>
-        <nav className="flex-1 space-y-0.5 overflow-y-auto p-2">
-          {focusMode ? (
-            <>
-              <p className="px-3 pb-1 pt-1 text-[10px] font-semibold uppercase tracking-wider text-odin-cyan/80">
-                Focus mode
-              </p>
-              {FOCUS_NAV.map(({ href, label, icon }) => (
-                <NavLink key={href} href={href} label={label} icon={icon} pathname={pathname} daily />
-              ))}
-              {pathname.startsWith("/missions/") && !FOCUS_HREFS.has(pathname) && (
-                <NavLink
-                  href={pathname}
-                  label="Current mission"
-                  icon={Route}
-                  pathname={pathname}
-                  daily
-                />
-              )}
-            </>
-          ) : (
-            <>
-              <p className="px-3 pb-1 pt-1 text-[10px] font-semibold uppercase tracking-wider text-odin-cyan/80">
-                Daily
-              </p>
-              {DAILY_NAV.map(({ href, label, icon }) => (
-                <NavLink key={href} href={href} label={label} icon={icon} pathname={pathname} daily />
-              ))}
-              <p className="px-3 pb-1 pt-3 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
-                Debug & legacy
-              </p>
-              {NAV.map(({ href, label, icon }) => (
-                <NavLink key={href} href={href} label={label} icon={icon} pathname={pathname} />
-              ))}
-              <Link
-                href="/traces"
-                className={cn(
-                  "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-colors",
-                  pathname.startsWith("/traces")
-                    ? "bg-odin-accent/15 text-odin-cyan"
-                    : "text-slate-400 hover:bg-odin-border/40 hover:text-slate-200"
-                )}
-              >
-                <Search className="h-4 w-4" />
-                Traces
-              </Link>
-            </>
+        <nav className="flex flex-1 flex-col overflow-hidden p-2">
+          <div className="shrink-0 space-y-0.5">
+            <p className="px-3 pb-1 pt-1 text-[10px] font-bold uppercase tracking-wider text-odin-cyan">
+              Daily
+            </p>
+            {DAILY_NAV.map(({ href, label, icon }) => (
+              <NavLink key={href} href={href} label={label} icon={icon} pathname={pathname} tier="daily" />
+            ))}
+            {pathname.startsWith("/missions/") && (
+              <NavLink
+                href={pathname}
+                label="Current mission"
+                icon={Route}
+                pathname={pathname}
+                tier="daily"
+              />
+            )}
+          </div>
+          {!effectiveFocus && (
+            <InternalDeveloperSection
+              pathname={pathname}
+              expanded={internalExpanded}
+              onToggle={() => setInternalExpanded((v) => !v)}
+            />
           )}
         </nav>
         <div className="border-t border-odin-border p-3 space-y-2">
+          <label className="flex items-center justify-between text-[10px] text-odin-muted">
+            <span>Odyssey Visual Mode</span>
+            <input
+              type="checkbox"
+              checked={visualMode}
+              onChange={(e) => setVisualMode(e.target.checked)}
+              className="accent-odin-accent"
+            />
+          </label>
           <label className="flex items-center justify-between text-[10px] text-odin-muted">
             <span>Focus mode</span>
             <input
