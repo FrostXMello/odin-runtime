@@ -1,32 +1,30 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiFetch } from "@/lib/api/client";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
 
-export default function RuntimePerformancePage() {
+const btn = "rounded bg-odin-accent/20 px-3 py-1 text-xs text-odin-cyan";
+
+export default function PerformancePage() {
   const { data } = useQuery({
-    queryKey: ["runtime", "capability-performance"],
-    queryFn: () =>
-      apiFetch<{ capabilities: Record<string, Record<string, number>> }>(
-        "/runtime/capability-performance"
-      ),
-    refetchInterval: 5000,
+    queryKey: ["runtime", "performance"],
+    queryFn: () => apiFetch<Record<string, unknown>>("/runtime/performance"),
+    refetchInterval: 10000,
   });
-
-  const caps = data?.capabilities ?? {};
-
+  const optimize = useMutation({
+    mutationFn: () => apiFetch<Record<string, unknown>>("/runtime/performance/optimize", { method: "POST" }),
+  });
+  const p = (data?.performance as Record<string, unknown>) ?? {};
   return (
     <div className="space-y-4">
-      <h2 className="text-sm font-medium text-slate-200">Capability performance</h2>
-      {Object.entries(caps).map(([name, m]) => (
-        <Card key={name}>
-          <CardHeader title={name} />
-          <CardBody className="text-xs font-mono text-slate-400">
-            reliability {(m.reliability * 100).toFixed(0)}% · fail rate {(m.failure_rate * 100).toFixed(0)}%
-          </CardBody>
-        </Card>
-      ))}
+      <h2 className="text-sm font-medium text-slate-200">Performance</h2>
+      <Card>
+        <CardHeader title="Optimizations" subtitle={`${String(p.optimizations ?? 0)} cycles`} />
+        <CardBody className="flex gap-2">
+          <button type="button" className={btn} onClick={() => optimize.mutate()}>Optimize now</button>
+        </CardBody>
+      </Card>
     </div>
   );
 }
