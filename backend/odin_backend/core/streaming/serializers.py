@@ -577,6 +577,39 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         channels.append("cognition:continuity")
     if event.kind == TraceEventKind.UNFINISHED_WORK_DETECTED:
         channels.append("cognition:continuity")
+    if event.kind == TraceEventKind.DESKTOP_SESSION_RESTORED:
+        channels.append("desktop:runtime")
+    if event.kind in (
+        TraceEventKind.CONVERSATION_WORKSPACE_OPENED,
+        TraceEventKind.LIVE_REASONING_RENDERED,
+    ):
+        channels.append("workspace-ui:runtime")
+        channels.append("thought-stream:runtime")
+    if event.kind in (
+        TraceEventKind.VISUALIZATION_SYNCED,
+        TraceEventKind.LIVE_REASONING_RENDERED,
+    ):
+        channels.append("visualization:runtime")
+        channels.append("cognition-live:runtime")
+        channels.append("reasoning-streams:runtime")
+    if event.kind in (
+        TraceEventKind.WORKSPACE_REHYDRATED,
+        TraceEventKind.OPERATOR_FOCUS_SHIFTED,
+        TraceEventKind.EVOLUTION_REVIEW_OPENED,
+    ):
+        channels.append("operator-experience:runtime")
+    if event.kind == TraceEventKind.OVERLAY_ATTACHED:
+        channels.append("overlay:runtime")
+        channels.append("desktop:runtime")
+    if event.kind == TraceEventKind.VOICE_INTERRUPT_DETECTED:
+        channels.append("voice:runtime")
+        channels.append("desktop:runtime")
+    if event.kind == TraceEventKind.MEMORY_SURFACE_RENDERED:
+        channels.append("memory-threads:runtime")
+        channels.append("visualization:runtime")
+    if event.kind == TraceEventKind.EVOLUTION_REVIEW_OPENED:
+        channels.append("evolution:runtime")
+        channels.append("self-development:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

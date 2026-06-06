@@ -254,6 +254,16 @@ class TraceEventKind(StrEnum):
     ADAPTIVE_PRESENCE_UPDATED = "adaptive_presence_updated"
     COGNITIVE_SURFACE_UPDATED = "cognitive_surface_updated"
     WORKFLOW_PREDICTION_GENERATED = "workflow_prediction_generated"
+    DESKTOP_SESSION_RESTORED = "desktop_session_restored"
+    CONVERSATION_WORKSPACE_OPENED = "conversation_workspace_opened"
+    LIVE_REASONING_RENDERED = "live_reasoning_rendered"
+    OVERLAY_ATTACHED = "overlay_attached"
+    VOICE_INTERRUPT_DETECTED = "voice_interrupt_detected"
+    WORKSPACE_REHYDRATED = "workspace_rehydrated"
+    OPERATOR_FOCUS_SHIFTED = "operator_focus_shifted"
+    VISUALIZATION_SYNCED = "visualization_synced"
+    EVOLUTION_REVIEW_OPENED = "evolution_review_opened"
+    MEMORY_SURFACE_RENDERED = "memory_surface_rendered"
 
 
 class TraceEvent(BaseModel):
