@@ -1,0 +1,75 @@
+:root {
+  color-scheme: dark;
+  font-family: Inter, system-ui, sans-serif;
+  background: #070b12;
+  color: #e2e8f0;
+}
+
+.cognitive-workspace main {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+}
+
+.cognitive-workspace main.immersive {
+  background: radial-gradient(circle at 30% 20%, #1e1b4b, #070b12);
+}
+
+.panel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.panel {
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  padding: 8px;
+  background: rgba(15, 23, 42, 0.8);
+}
+
+.mission-dock, .agent-inspector {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.token-stream .token {
+  margin-right: 6px;
+  color: #67e8f9;
+}
+
+.attention-heatmap {
+  display: flex;
+  gap: 4px;
+}
+
+.attention-heatmap .cell {
+  width: 16px;
+  height: 24px;
+  background: #6366f1;
+}
+
+.memory-pulse {
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #a78bfa, transparent);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+.adaptive-shell button.active {
+  color: #22d3ee;
+}
+
+.command-palette {
+  width: 100%;
+  margin: 8px 12px;
+  padding: 8px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  color: inherit;
+}
