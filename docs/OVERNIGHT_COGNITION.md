@@ -1,20 +1,27 @@
 # Overnight Cognition
 
-Overnight daemon V2 cycles for idle-time optimization and memory consolidation.
+`core/overnight_cognition/` — persistent overnight cognitive orchestration.
+
+App handle: `app.overnight_cognition`
 
 ## Enable
 
 ```env
 ODIN_OVERNIGHT_COGNITION_ENABLED=1
-ODIN_COGNITIVE_DAEMON_V2_ENABLED=1
+ODIN_OVERNIGHT_MODE=balanced
+ODIN_OVERNIGHT_MAX_CYCLES=32
 ```
 
-## Profile
+## API
 
-Use `overnight_autonomous` on adaptive runtime for reduced FPS and stream density.
+- `POST /api/v1/runtime/overnight/start`
+- `POST /api/v1/runtime/overnight/pause`
+- `GET /api/v1/runtime/overnight/summary`
 
-Traces: `overnight_cycle_completed`, `overnight_optimization_completed`
+## Channel
 
-Resource-aware for GTX 1650 Ti / 16GB RAM / M-series MacBooks.
+`overnight:runtime`
 
-Operator page: `/overnight-cognition`
+Integrates with `unified_cognitive_core`, `cognitive_scheduler`, `cognitive_daemon_v2`, `autonomous_loop_v2`.
+
+No autonomous deployment. Bounded cognition cycles only.
