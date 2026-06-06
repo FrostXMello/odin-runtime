@@ -988,6 +988,34 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         TraceEventKind.WORKFLOW_STATE_CHECKPOINTED,
     ):
         channels.append("autonomous-workflows:runtime")
+    if event.kind in (
+        TraceEventKind.GOVERNANCE_CYCLE_INITIALIZED,
+        TraceEventKind.GOVERNANCE_PRESSURE_REBALANCED,
+    ):
+        channels.append("predictive-governance:runtime")
+    if event.kind in (
+        TraceEventKind.RUNTIME_INSTABILITY_DETECTED,
+        TraceEventKind.RUNTIME_STABILIZATION_APPLIED,
+    ):
+        channels.append("runtime-stabilization:runtime")
+    if event.kind in (
+        TraceEventKind.COGNITIVE_RISK_FORECASTED,
+        TraceEventKind.FAILURE_CHAIN_SIMULATED,
+        TraceEventKind.GOVERNANCE_DRIFT_DETECTED,
+    ):
+        channels.append("cognitive-risk:runtime")
+    if event.kind in (
+        TraceEventKind.OPERATOR_TRUST_UPDATED,
+        TraceEventKind.SUPERVISION_INTEGRITY_EVALUATED,
+    ):
+        channels.append("trust-surfaces:runtime")
+    if event.kind in (
+        TraceEventKind.EXECUTION_CONFIDENCE_ESTIMATED,
+        TraceEventKind.WORKFLOW_COMPLETION_FORECASTED,
+    ):
+        channels.append("execution-confidence:runtime")
+    if event.kind == TraceEventKind.GOVERNANCE_SURFACE_RENDERED:
+        channels.append("governance-visualization:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

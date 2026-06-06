@@ -474,6 +474,17 @@ class Settings(BaseSettings):
     execution_dag_mode: str = "adaptive"
     recovery_forecasting_enabled: bool = True
 
+    # Predictive cognitive governance (Prompt 59)
+    predictive_governance_enabled: bool = False
+    runtime_stabilization_enabled: bool = False
+    cognitive_risk_enabled: bool = False
+    trust_surfaces_enabled: bool = False
+    execution_confidence_enabled: bool = False
+    governance_visualization_enabled: bool = False
+    governance_profile: str = "balanced"
+    risk_forecasting_mode: str = "adaptive"
+    runtime_stabilization_mode: str = "balanced"
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

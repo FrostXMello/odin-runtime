@@ -411,6 +411,17 @@ class TraceEventKind(StrEnum):
     OPERATOR_OVERLOAD_DETECTED = "operator_overload_detected"
     AUTONOMOUS_WORKFLOW_CONTINUED = "autonomous_workflow_continued"
     WORKFLOW_STATE_CHECKPOINTED = "workflow_state_checkpointed"
+    GOVERNANCE_CYCLE_INITIALIZED = "governance_cycle_initialized"
+    GOVERNANCE_PRESSURE_REBALANCED = "governance_pressure_rebalanced"
+    RUNTIME_STABILIZATION_APPLIED = "runtime_stabilization_applied"
+    COGNITIVE_RISK_FORECASTED = "cognitive_risk_forecasted"
+    FAILURE_CHAIN_SIMULATED = "failure_chain_simulated"
+    GOVERNANCE_DRIFT_DETECTED = "governance_drift_detected"
+    OPERATOR_TRUST_UPDATED = "operator_trust_updated"
+    SUPERVISION_INTEGRITY_EVALUATED = "supervision_integrity_evaluated"
+    EXECUTION_CONFIDENCE_ESTIMATED = "execution_confidence_estimated"
+    WORKFLOW_COMPLETION_FORECASTED = "workflow_completion_forecasted"
+    GOVERNANCE_SURFACE_RENDERED = "governance_surface_rendered"
 
 
 class TraceEvent(BaseModel):

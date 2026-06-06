@@ -882,6 +882,19 @@ class OdinApplication:
         self.cross_workspace_coordination = CrossWorkspaceCoordinationRuntime(self)
         self.intervention_intelligence = InterventionIntelligenceRuntime(self)
         self.autonomous_workflows = AutonomousWorkflowsRuntime(self)
+        from odin_backend.core.predictive_governance import PredictiveGovernanceRuntime
+        from odin_backend.core.runtime_stabilization import RuntimeStabilizationRuntime
+        from odin_backend.core.cognitive_risk import CognitiveRiskRuntime
+        from odin_backend.core.trust_surfaces import TrustSurfacesRuntime
+        from odin_backend.core.execution_confidence import ExecutionConfidenceRuntime
+        from odin_backend.core.governance_visualization import GovernanceVisualizationRuntime
+
+        self.predictive_governance = PredictiveGovernanceRuntime(self)
+        self.runtime_stabilization = RuntimeStabilizationRuntime(self)
+        self.cognitive_risk = CognitiveRiskRuntime(self)
+        self.trust_surfaces = TrustSurfacesRuntime(self)
+        self.execution_confidence = ExecutionConfidenceRuntime(self)
+        self.governance_visualization = GovernanceVisualizationRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,
