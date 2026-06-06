@@ -201,6 +201,15 @@ class TraceEventKind(StrEnum):
     RETRY_STRATEGY_SELECTED = "retry_strategy_selected"
     MODEL_ROUTE_SELECTED = "model_route_selected"
     SYNTHESIS_VALIDATED = "synthesis_validated"
+    BUG_LOCALIZED = "bug_localized"
+    PATCH_GENERATED = "patch_generated"
+    PATCH_VALIDATED = "patch_validated"
+    ARCHITECTURE_DRIFT_DETECTED = "architecture_drift_detected"
+    ENGINEERING_GOAL_CREATED = "engineering_goal_created"
+    IMPLEMENTATION_BLOCKED = "implementation_blocked"
+    REPOSITORY_GRAPH_UPDATED = "repository_graph_updated"
+    DEBUGGING_STRATEGY_SELECTED = "debugging_strategy_selected"
+    ROLLBACK_PREPARED = "rollback_prepared"
 
 
 class TraceEvent(BaseModel):

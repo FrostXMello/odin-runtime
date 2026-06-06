@@ -280,6 +280,16 @@ class Settings(BaseSettings):
     model_orchestration_enabled: bool = False
     autonomy_reliability_enabled: bool = False
 
+    # Autonomous engineering workspace (Prompt 39)
+    engineering_memory_enabled: bool = False
+    autonomous_debugging_enabled: bool = False
+    safe_patching_enabled: bool = False
+    dev_workflows_enabled: bool = False
+    validation_fabric_enabled: bool = False
+    repository_graph_enabled: bool = False
+    engineering_agents_enabled: bool = False
+    engineering_workspace_enabled: bool = False
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

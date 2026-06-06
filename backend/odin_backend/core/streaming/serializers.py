@@ -434,6 +434,33 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         channels.append("reasoning:runtime")
     if event.kind == TraceEventKind.SYNTHESIS_VALIDATED:
         channels.append("intelligence:runtime")
+    if event.kind in (
+        TraceEventKind.BUG_LOCALIZED,
+        TraceEventKind.DEBUGGING_STRATEGY_SELECTED,
+    ):
+        channels.append("debugging:runtime")
+    if event.kind in (
+        TraceEventKind.PATCH_GENERATED,
+        TraceEventKind.PATCH_VALIDATED,
+        TraceEventKind.ROLLBACK_PREPARED,
+    ):
+        channels.append("patches:runtime")
+    if event.kind in (
+        TraceEventKind.REGRESSION_DETECTED,
+    ):
+        channels.append("testing:runtime")
+        channels.append("debugging:runtime")
+    if event.kind in (
+        TraceEventKind.REPOSITORY_GRAPH_UPDATED,
+        TraceEventKind.ARCHITECTURE_DRIFT_DETECTED,
+    ):
+        channels.append("repositories:runtime")
+        channels.append("engineering:runtime")
+    if event.kind in (
+        TraceEventKind.ENGINEERING_GOAL_CREATED,
+        TraceEventKind.IMPLEMENTATION_BLOCKED,
+    ):
+        channels.append("engineering:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

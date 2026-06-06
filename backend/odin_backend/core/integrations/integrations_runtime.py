@@ -45,6 +45,29 @@ class IntegrationsRuntime:
         self._terminal.append(session_id, line)
         return {"accepted": True, "session_id": session_id}
 
+    async def ingest_ide_context(self, *, snapshot: dict[str, Any]) -> dict[str, Any]:
+        if not getattr(self._app.settings, "developer_integrations_enabled", False):
+            return {"accepted": False, "reason": "developer_integrations_disabled"}
+        editor = snapshot.get("editor", "vscode")
+        ctx = await self.ingest_editor(editor=editor, snapshot=snapshot)
+        branch = snapshot.get("branch", "main")
+        tabs = snapshot.get("open_tabs", [])
+        diff = snapshot.get("git_diff", "")
+        runtime_error = snapshot.get("runtime_error")
+        debugging = bool(runtime_error)
+        cognition = {
+            "branch": branch,
+            "open_tabs": len(tabs),
+            "diff_lines": len(diff.splitlines()) if diff else 0,
+            "debugging_session": debugging,
+            "error_correlation": runtime_error is not None,
+        }
+        if hasattr(self._app, "engineering_memory") and tabs:
+            await self._app.engineering_memory.start_session(
+                repo=snapshot.get("repo", "local"), focus=tabs[0] if tabs else "unknown"
+            )
+        return {"accepted": True, "editor": ctx, "cognition": cognition}
+
     async def watch_files(self, *, paths: list[str]) -> dict[str, Any]:
         after = set(paths)
         changes = detect_changes(before=self._watched_files, after=after)

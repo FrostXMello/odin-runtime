@@ -23,7 +23,24 @@ class DailyWorkflowRuntime:
         briefing = None
         if hasattr(self._app, "communications_runtime"):
             briefing = await self._app.communications_runtime.briefing()
+        if getattr(self._app.settings, "engineering_workspace_enabled", False):
+            eng = await self.engineering_briefing()
+            suggestions.extend(eng.get("suggestions", []))
         return {"accepted": True, "suggestions": suggestions, "briefing": briefing}
+
+    async def engineering_briefing(self) -> dict[str, Any]:
+        suggestions: list[str] = []
+        if hasattr(self._app, "engineering_memory"):
+            abandoned = self._app.engineering_memory._sessions.abandoned()
+            if abandoned:
+                suggestions.append(f"{len(abandoned)} debugging sessions abandoned recently.")
+        if hasattr(self._app, "dev_workflows"):
+            blocked = [i for i in getattr(self._app.dev_workflows._issues, "_issues", []) if i.get("blocked")]
+            if blocked:
+                suggestions.append(f"{len(blocked)} implementation tasks blocked.")
+        if hasattr(self._app, "autonomous_debugging"):
+            suggestions.append("Review open debugging cases in engineering console.")
+        return {"suggestions": suggestions}
 
     async def idle_consolidation(self) -> dict[str, Any]:
         results: dict[str, Any] = {}

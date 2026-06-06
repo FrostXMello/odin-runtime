@@ -617,6 +617,21 @@ class OdinApplication:
         self.operator_intelligence = OperatorIntelligenceRuntime(self)
         self.model_orchestration = ModelOrchestrationRuntime(self)
         self.autonomy_reliability = AutonomyReliabilityRuntime(self)
+        from odin_backend.core.engineering_memory import EngineeringMemoryRuntime
+        from odin_backend.core.autonomous_debugging import AutonomousDebuggingRuntime
+        from odin_backend.core.patching import PatchingRuntime
+        from odin_backend.core.dev_workflows import DevWorkflowsRuntime
+        from odin_backend.core.validation_fabric import ValidationFabricRuntime
+        from odin_backend.core.copilot.repository_graph_runtime import RepositoryGraphRuntime
+        from odin_backend.core.agent_society.engineering_agents_runtime import EngineeringAgentsRuntime
+
+        self.engineering_memory = EngineeringMemoryRuntime(self)
+        self.autonomous_debugging = AutonomousDebuggingRuntime(self)
+        self.patching = PatchingRuntime(self)
+        self.dev_workflows = DevWorkflowsRuntime(self)
+        self.validation_fabric = ValidationFabricRuntime(self)
+        self.repository_graph = RepositoryGraphRuntime(self)
+        self.engineering_agents = EngineeringAgentsRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,
