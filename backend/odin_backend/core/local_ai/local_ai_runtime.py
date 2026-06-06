@@ -10,6 +10,7 @@ from odin_backend.core.local_ai.model_profiles import get_profile
 from odin_backend.core.local_ai.quantization_profiles import profile_for_hardware
 from odin_backend.core.local_ai.streaming_decoder import StreamingDecoder
 from odin_backend.core.local_ai.token_accounting import TokenAccounting
+from odin_backend.core.local_ai.model_registry import MODELS, chain_for_mode
 from odin_backend.core.local_ai.unified_prompting import build_prompt
 
 
@@ -23,6 +24,19 @@ class LocalAIRuntime:
         self._tokens = TokenAccounting()
         self._hardware = profile_for_hardware(vram_mb=vram, ram_mb=ram)
         self._loaded: set[str] = set()
+        self._inference_mode = getattr(app.settings, "local_ai_mode", "balanced")
+
+    async def set_mode(self, mode: str) -> dict[str, Any]:
+        if mode not in MODELS:
+            return {"accepted": False, "reason": "invalid_mode"}
+        self._inference_mode = mode
+        return {"accepted": True, "mode": mode, "chain": chain_for_mode(mode)}
+
+    async def route_with_fallback(self, *, complexity: float = 0.5) -> dict[str, Any]:
+        chain = chain_for_mode(self._inference_mode)
+        routed = await self.route_model(complexity=complexity)
+        routed["fallback_chain"] = chain
+        return routed
 
     async def connect(self) -> None:
         if getattr(self._app.settings, "local_ai_warm_on_startup", False):
@@ -99,4 +113,6 @@ class LocalAIRuntime:
             "gpu": self._gpu.snapshot(),
             "hardware": self._hardware,
             "tokens": self._tokens.snapshot(),
+            "inference_mode": self._inference_mode,
+            "model_registry": list(MODELS.keys()),
         }

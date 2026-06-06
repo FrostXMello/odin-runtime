@@ -11,6 +11,8 @@ from odin_backend.core.stability.health_supervisor import HealthSupervisor
 from odin_backend.core.stability.runtime_repair import repair_runtime
 from odin_backend.core.stability.state_checkpointing import StateCheckpointing
 from odin_backend.core.stability.watchdog_runtime import WatchdogRuntime
+from odin_backend.core.stability.recovery_report import build_recovery_report
+from odin_backend.core.stability.safe_boot import safe_boot_plan
 
 
 class RuntimeGuardian:
@@ -76,6 +78,21 @@ class RuntimeGuardian:
         state = self.snapshot()
         ckpt = self._checkpoints.create(label=label, state=state)
         return ckpt
+
+    async def recovery_report(self) -> dict[str, Any]:
+        healing = self._app.self_healing.snapshot() if hasattr(self._app, "self_healing") else {}
+        daemon = self._app.daemon_runtime.snapshot() if hasattr(self._app, "daemon_runtime") else {}
+        report = build_recovery_report(guardian=self.snapshot(), healing=healing, daemon=daemon)
+        return {"accepted": True, "report": report}
+
+    async def safe_boot(self) -> dict[str, Any]:
+        if not getattr(self._app.settings, "runtime_guardian_enabled", False):
+            return {"accepted": False, "reason": "runtime_guardian_disabled"}
+        plan = safe_boot_plan()
+        self._mode = "safe"
+        self._degraded = True
+        self._emit("recovery_completed", plan)
+        return {"accepted": True, "plan": plan}
 
     def snapshot(self) -> dict[str, Any]:
         return {

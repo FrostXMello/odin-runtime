@@ -8,7 +8,8 @@ from odin_backend.core.storage_optimization.archive_runtime import archive_entri
 from odin_backend.core.storage_optimization.cold_storage import ColdStorage
 from odin_backend.core.storage_optimization.embedding_cache import EmbeddingCache
 from odin_backend.core.storage_optimization.retrieval_acceleration import accelerate
-from odin_backend.core.storage_optimization.semantic_compaction import compact_chunks
+from odin_backend.core.storage_optimization.archival_policy import apply_archival
+from odin_backend.core.storage_optimization.storage_analytics import analyze_storage
 
 
 class StorageOptimizationRuntime:
@@ -33,6 +34,23 @@ class StorageOptimizationRuntime:
         for _ in range(result["archived"]):
             self._cold.store({"archived": True})
         return {"accepted": True, **result}
+
+    async def analytics(self) -> dict[str, Any]:
+        projects = 0
+        if hasattr(self._app, "project_os"):
+            projects = len(self._app.project_os._registry.list_all())
+        return analyze_storage(
+            cache_size=self._cache.size(),
+            cold_size=self._cold.count(),
+            projects=projects,
+        )
+
+    async def apply_retention(self) -> dict[str, Any]:
+        if not getattr(self._app.settings, "storage_optimization_enabled", False):
+            return {"accepted": False, "reason": "storage_optimization_disabled"}
+        stats = await self.analytics()
+        policy = apply_archival(cache_entries=stats["cache_entries"])
+        return {"accepted": True, "analytics": stats, "policy": policy}
 
     def snapshot(self) -> dict[str, Any]:
         return {"cache_size": self._cache.size(), "cold_storage": self._cold.count()}

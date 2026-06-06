@@ -11,6 +11,8 @@ from odin_backend.core.daemon.idle_sleep_scheduler import should_wake, sleep_int
 from odin_backend.core.daemon.persistent_sessions import DaemonSessions
 from odin_backend.core.daemon.startup_manager import StartupManager
 from odin_backend.core.daemon.tray_runtime import TrayRuntime
+from odin_backend.core.daemon.daemon_supervisor import mode_config as daemon_mode_config
+from odin_backend.core.daemon.daemon_supervisor import MODES as DAEMON_MODES
 from odin_backend.core.daemon.wake_scheduler import WakeScheduler
 
 
@@ -24,6 +26,9 @@ class DaemonRuntime:
         self._heartbeat = HeartbeatPersistence()
         self._idle = False
         self._uptime_s = 0.0
+        self._mode = "desktop_assistant"
+        self._restarts = 0
+        self._memory_samples: list[int] = []
 
     async def start(self) -> dict[str, Any]:
         if not getattr(self._app.settings, "daemon_mode_enabled", False):
@@ -63,6 +68,31 @@ class DaemonRuntime:
         self._heartbeat.beat(component="daemon", uptime_s=self._uptime_s)
         return {"idle": self._idle, "poll_s": interval, "uptime_s": self._uptime_s}
 
+    async def set_mode(self, mode: str) -> dict[str, Any]:
+        if mode not in DAEMON_MODES:
+            return {"accepted": False, "reason": "invalid_mode"}
+        self._mode = mode
+        return {"accepted": True, "mode": mode, "config": daemon_mode_config(mode)}
+
+    async def watchdog_restart(self) -> dict[str, Any]:
+        self._restarts += 1
+        self._emit("daemon_restarted", {"restarts": self._restarts, "mode": self._mode})
+        return {"accepted": True, "restarts": self._restarts}
+
+    async def graceful_shutdown(self) -> dict[str, Any]:
+        self._idle = True
+        if hasattr(self._app, "local_ai"):
+            for m in list(getattr(self._app.local_ai, "_loaded", set())):
+                await self._app.local_ai.evict(m)
+        return {"accepted": True, "shutdown": True}
+
+    def record_memory_sample(self, mb: int) -> dict[str, Any]:
+        self._memory_samples.append(mb)
+        if len(self._memory_samples) > 100:
+            self._memory_samples = self._memory_samples[-100:]
+        leak_suspected = len(self._memory_samples) >= 10 and self._memory_samples[-1] > self._memory_samples[0] * 1.5
+        return {"mb": mb, "leak_suspected": leak_suspected}
+
     def snapshot(self) -> dict[str, Any]:
         return {
             "started_at": self._startup._started_at,
@@ -71,6 +101,8 @@ class DaemonRuntime:
             "idle": self._idle,
             "tray_visible": self._tray._visible,
             "uptime_s": self._uptime_s,
+            "mode": self._mode,
+            "restarts": self._restarts,
             "heartbeat": self._heartbeat.snapshot(),
         }
 
