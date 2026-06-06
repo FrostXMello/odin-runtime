@@ -1,32 +1,37 @@
 # Cognitive Daemon
 
-Extended `core/daemon/` with persistent cognitive presence.
+`core/cognitive_daemon/` — continuous cognitive presence orchestration.
 
-## New modules
+Extends existing `daemon_runtime` without rewriting it.
 
-- `persistent_presence`, `cognition_scheduler`, `wake_intelligence`
-- `deferred_reasoning`, `realtime_attention`, `operator_interrupts`
+## Modules
 
-## Capabilities
-
-- Bounded background cognition ticks
-- Wakeword-triggered attention (local-only)
-- Deferred reasoning queue
-- Interruption recovery
-- Overnight survival mode throttling
+- `daemon_orchestrator.py` — `CognitiveDaemonOrchestrator` (`app.cognitive_daemon`)
+- `continuous_attention.py` — heartbeat
+- `idle_reasoning.py` — deferred thoughts
+- `proactive_memory_refresh.py` — memory refresh
+- `background_reflection.py` — overnight-style reflection
+- `environment_awareness_loop.py` — live environment sync
+- `task_resumption.py` — unfinished work resurfacing
+- `adaptive_focus_scheduler.py` — resource-aware tick intervals
 
 ## Enable
 
 ```env
-ODIN_DAEMON_MODE_ENABLED=1
 ODIN_COGNITIVE_DAEMON_ENABLED=1
 ```
 
 ## API
 
-- `GET /api/v1/runtime/cognitive-daemon`
 - `POST /api/v1/runtime/cognitive-daemon/tick`
+- `POST /api/v1/runtime/cognitive-daemon/profile`
 
-Traces: `daemon_attention_shifted`, `persistent_presence_updated`, `operator_interrupt_received`
+## Channel
 
-Channel: `daemon:runtime`
+`daemon-cognition:runtime`
+
+## Traces
+
+`daemon_attention_shifted`, `unfinished_task_resurfaced`
+
+Resource-aware for GTX 1650 Ti, 16GB RAM, M-series MacBooks.
