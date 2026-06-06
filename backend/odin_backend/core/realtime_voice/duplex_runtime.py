@@ -9,6 +9,11 @@ from odin_backend.core.realtime_voice.emotional_tone import estimate_tone
 from odin_backend.core.realtime_voice.interruption_detection import InterruptionDetection
 from odin_backend.core.realtime_voice.latency_optimizer import optimize
 from odin_backend.core.realtime_voice.voice_activity_detection import is_speech_active
+from odin_backend.core.realtime_voice.emotional_tts import emotional_tts
+from odin_backend.core.realtime_voice.conversational_interrupts import handle_interrupt
+from odin_backend.core.realtime_voice.live_transcription_overlay import overlay as transcription_overlay
+from odin_backend.core.realtime_voice.adaptive_voice_profiles import profile as voice_profile
+from odin_backend.core.realtime_voice.low_latency_streaming import stream_config
 
 
 class RealtimeVoiceRuntime:
@@ -31,13 +36,27 @@ class RealtimeVoiceRuntime:
         if hasattr(self._app, "local_ai"):
             gen = await self._app.local_ai.generate(prompt=text, template="summary")
             response = gen.get("text", response)
+        vp = voice_profile("engineering")
+        tts = emotional_tts(text=response, mood=tone.get("mood", "neutral"))
+        stream = stream_config(mode=getattr(self._app.settings, "cognitive_interface_mode", "balanced"))
+        partial = transcription_overlay(partial=text)
         self._memory.add_turn(role="assistant", content=response)
         lat = optimize(stt_ms=50, llm_ms=200, tts_ms=80)
         self._emit("voice_turn_completed", {"latency_ms": lat["total_ms"]})
-        return {"accepted": True, "response": response, "tone": tone, "latency": lat}
+        return {
+            "accepted": True,
+            "response": response,
+            "tone": tone,
+            "latency": lat,
+            "voice_profile": vp,
+            "tts": tts,
+            "stream": stream,
+            "transcription": partial,
+        }
 
-    def interrupt(self) -> None:
+    def interrupt(self) -> dict[str, Any]:
         self._interrupt.signal()
+        return handle_interrupt(speaking=True)
 
     def snapshot(self) -> dict[str, Any]:
         return {"turns": len(self._memory._turns), "session_id": self._session_id}
