@@ -410,6 +410,30 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         channels.append("privacy:runtime")
     if event.kind == TraceEventKind.COMMAND_EXECUTED:
         channels.append("activity:runtime")
+    if event.kind in (
+        TraceEventKind.REASONING_QUALITY_SCORED,
+        TraceEventKind.HALLUCINATION_RISK_DETECTED,
+    ):
+        channels.append("intelligence:runtime")
+    if event.kind == TraceEventKind.REASONING_QUALITY_SCORED:
+        channels.append("reasoning:runtime")
+    if event.kind in (TraceEventKind.RETRIEVAL_RANKED, TraceEventKind.MEMORY_STITCHED):
+        channels.append("retrieval:runtime")
+    if event.kind == TraceEventKind.CODE_PATCH_GENERATED:
+        channels.append("copilot:runtime")
+        channels.append("debugging:runtime")
+    if event.kind in (
+        TraceEventKind.DELEGATION_OPTIMIZED,
+        TraceEventKind.RETRY_STRATEGY_SELECTED,
+    ):
+        channels.append("intelligence:runtime")
+    if event.kind == TraceEventKind.OPERATOR_INTENT_INFERRED:
+        channels.append("intelligence:runtime")
+        channels.append("activity:runtime")
+    if event.kind == TraceEventKind.MODEL_ROUTE_SELECTED:
+        channels.append("reasoning:runtime")
+    if event.kind == TraceEventKind.SYNTHESIS_VALIDATED:
+        channels.append("intelligence:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

@@ -191,6 +191,16 @@ class TraceEventKind(StrEnum):
     DEPLOYMENT_VALIDATED = "deployment_validated"
     COMMAND_EXECUTED = "command_executed"
     PRIVACY_FILTER_TRIGGERED = "privacy_filter_triggered"
+    REASONING_QUALITY_SCORED = "reasoning_quality_scored"
+    HALLUCINATION_RISK_DETECTED = "hallucination_risk_detected"
+    RETRIEVAL_RANKED = "retrieval_ranked"
+    MEMORY_STITCHED = "memory_stitched"
+    CODE_PATCH_GENERATED = "code_patch_generated"
+    DELEGATION_OPTIMIZED = "delegation_optimized"
+    OPERATOR_INTENT_INFERRED = "operator_intent_inferred"
+    RETRY_STRATEGY_SELECTED = "retry_strategy_selected"
+    MODEL_ROUTE_SELECTED = "model_route_selected"
+    SYNTHESIS_VALIDATED = "synthesis_validated"
 
 
 class TraceEvent(BaseModel):

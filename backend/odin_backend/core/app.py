@@ -606,6 +606,17 @@ class OdinApplication:
         self.privacy = PrivacyRuntime(self)
         self.operator_shell = OperatorShellRuntime(self)
         self.daily_workflow = DailyWorkflowRuntime(self)
+        from odin_backend.core.intelligence_quality import IntelligenceQualityRuntime
+        from odin_backend.core.copilot.code_copilot_runtime import CodeCopilotRuntime
+        from odin_backend.core.operator_relationship.operator_intelligence_runtime import OperatorIntelligenceRuntime
+        from odin_backend.core.local_ai.model_orchestration_runtime import ModelOrchestrationRuntime
+        from odin_backend.core.autonomy.autonomy_reliability_runtime import AutonomyReliabilityRuntime
+
+        self.intelligence_quality = IntelligenceQualityRuntime(self)
+        self.code_copilot = CodeCopilotRuntime(self)
+        self.operator_intelligence = OperatorIntelligenceRuntime(self)
+        self.model_orchestration = ModelOrchestrationRuntime(self)
+        self.autonomy_reliability = AutonomyReliabilityRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,

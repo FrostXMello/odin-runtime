@@ -272,6 +272,14 @@ class Settings(BaseSettings):
     daily_driver_enabled: bool = False
     local_ai_mode: str = "balanced"
 
+    # Intelligence refinement (Prompt 38)
+    intelligence_quality_enabled: bool = False
+    advanced_retrieval_enabled: bool = False
+    code_copilot_enabled: bool = False
+    operator_intelligence_enabled: bool = False
+    model_orchestration_enabled: bool = False
+    autonomy_reliability_enabled: bool = False
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"
