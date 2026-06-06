@@ -1,30 +1,28 @@
 # Odin Runtime
 
-**Local-first autonomous cognitive operating system.**
+**A supervised cognitive operating infrastructure for autonomous engineering, execution orchestration, and persistent desktop cognition.**
 
-Odin Runtime is a production-grade personal cognitive operating platform — an orchestrated runtime that coordinates reasoning, memory, missions, desktop awareness, and operator supervision on your own hardware.
+Odin Runtime is a local-first cognitive operating platform — an orchestrated stack of 130+ runtime modules that coordinate reasoning, execution, governance, memory, missions, and desktop awareness on your own hardware.
 
 ---
 
 ## Vision
 
-Odin exists to give a single developer a continuously operating cognitive layer: one that remembers context across sessions, coordinates long-horizon work, surfaces unfinished missions, and assists engineering — without sending cognition to the cloud or acting without supervision.
+Odin gives a single developer a continuously operating cognitive layer: one that remembers context across sessions, coordinates long-horizon work across multiple workspaces, executes supervised engineering pipelines, and governs cognition — without cloud dependency or unsupervised autonomy.
 
-The system is designed to feel alive: live orchestration streams, objective rivers, mission graphs, and a cinematic operator console — while remaining bounded, local, and approval-gated.
+The system is designed to feel alive: live orchestration, execution DAGs, governance HUDs, and cinematic operator surfaces — while remaining bounded, reversible, approval-gated, and operator-supervised.
 
 ---
 
-## What Odin Actually Is
+## Why Odin Exists
 
-Odin is **not** a chatbot wrapper or a single-agent demo. It is a modular runtime composed of:
+Most AI tooling is ephemeral: chat sessions vanish, context resets, execution is opaque, and autonomy is either absent or unrestricted. Odin bridges that gap with:
 
-- A **FastAPI cognitive backend** with 100+ specialized runtime modules
-- An **Electron/React cognitive workspace** for daily operation
-- An **Operator Console** for situational awareness and supervision
-- A **streaming observability layer** for real-time runtime visibility
-- **SQLite-backed persistence** for sessions, objectives, and mission graphs
-
-Every capability is opt-in via environment flags. Nothing runs hidden. Nothing deploys autonomously.
+- **Persistent cognition** — sessions, objectives, mission graphs, execution memory
+- **Supervised execution** — reversible pipelines, checkpoints, rollback graphs
+- **Governed autonomy** — predictive stabilization, risk forecasting, trust surfaces
+- **Desktop integration** — window awareness, overlays, workspace sessions
+- **Operator sovereignty** — every action is visible, approval-gated, and reversible
 
 ---
 
@@ -32,65 +30,65 @@ Every capability is opt-in via environment flags. Nothing runs hidden. Nothing d
 
 | Principle | Implementation |
 |-----------|----------------|
-| Local-first | All cognition, memory, and monitoring stay on-device |
+| Local-first | All cognition, memory, governance, and monitoring stay on-device |
 | Approval-gated | Destructive actions require explicit operator approval |
-| Bounded cognition | Reasoning budgets, cycle limits, throttling |
-| Transparent orchestration | All monitoring is operator-visible |
+| Bounded cognition | Reasoning budgets, cycle limits, throttling, cooldowns |
+| Transparent governance | All risk, trust, and confidence scoring is operator-visible |
+| Reversible execution | Checkpoints, rollback graphs, execution replay chains |
 | Incremental architecture | New releases extend; they do not rewrite |
 | Backward compatible | Dispatcher semantics and streaming contracts preserved |
 
 ---
 
-## System Architecture
+## Safety & Governance Model
 
 ```mermaid
 flowchart TB
-    subgraph Operator["Operator Layer"]
-        OC[Operator Console]
-        CW[Cognitive Workspace]
+    subgraph Operator["Operator Supervision"]
+        APPROVE[Approval Gate]
+        VETO[Operator Veto]
+        TRUST[Trust Surfaces]
+    end
+
+    subgraph Governance["Cognitive Governance (v0.59)"]
+        PG[Predictive Governance]
+        RS[Runtime Stabilization]
+        CR[Cognitive Risk]
+        EC[Execution Confidence]
+    end
+
+    subgraph Execution["Distributed Execution (v0.58)"]
+        DE[Distributed Execution]
+        EG[Execution Graph]
+        AW[Autonomous Workflows]
     end
 
     subgraph Orchestration["Live Orchestration (v0.56)"]
         LO[Live Orchestration]
-        OS[Objective Streams]
         MG[Mission Graph]
-        RC[Realtime Coordination]
-        OSA[Operator Awareness]
-        CVL[Cognitive Visual Layers]
     end
 
-    subgraph Coordination["Cognitive Coordination (v0.55)"]
-        AC[Autonomous Coordination]
-        OM[Objective Management]
-        CS[Context Sync]
-        MC[Mission Continuity]
-        CP[Cognitive Planning]
-        OA[Operator Alignment]
-    end
-
-    subgraph Desktop["Native Desktop (v0.54)"]
-        ND[Native Desktop]
-        WA[Window Awareness]
-        LO2[Live Overlays V2]
-        WS[Workspace Sessions]
-        OF[Operator Focus]
-        DA[Desktop Attention]
-    end
-
-    subgraph Core["Unified Core (v0.52)"]
-        UCC[Unified Cognitive Core]
-        AE[Attention Engine]
-        SCH[Cognitive Scheduler]
-        RC2[Runtime Coordination]
-    end
-
-    OC --> LO
-    CW --> LO
-    LO --> AC
-    AC --> UCC
-    ND --> LO
-    UCC --> AE
+    Operator --> Governance
+    Governance --> Execution
+    Execution --> Orchestration
+    CR -->|forecast| APPROVE
+    TRUST -->|surface| Operator
 ```
+
+No unrestricted autonomy. No hidden execution. No self-authoritative governance. No autonomous deployment.
+
+---
+
+## Local-First Architecture
+
+| Guarantee | Detail |
+|-----------|--------|
+| On-device processing | Cognition, memory, governance, window tracking |
+| No cloud requirement | Mock provider works fully offline |
+| Transparent monitoring | All awareness runtimes expose `operator_visible: true` |
+| Configurable exclusions | Window and workspace exclusion lists |
+| Bounded retention | SQLite stores capped per subsystem |
+| Reversible state | Checkpoints across execution, governance, and workflows |
 
 ---
 
@@ -99,123 +97,184 @@ flowchart TB
 | Version | Era | Focus |
 |---------|-----|-------|
 | v0.49 | Adaptive Autonomous OS | Adaptive runtime, autonomous workspace |
-| v0.50 | Real Autonomous Cognitive OS | Native OS, memory fabric v2, deep focus |
-| v0.51 | Cognitive Infrastructure | Realtime cognition, engineering infrastructure |
+| v0.50 | Real Autonomous Cognitive OS | Native OS, memory fabric v2 |
+| v0.51 | Cognitive Infrastructure | Realtime cognition, engineering infra |
 | v0.52 | Unified Cognitive Core | Attention engine, cognitive scheduler |
 | v0.53 | Autonomous Overnight Cognition | Deferred reasoning, morning briefing |
-| v0.54 | Native Autonomous Desktop | Window awareness, live overlays, sessions |
-| v0.55 | Autonomous Cognitive Coordination | Objectives, context sync, mission continuity |
-| **v0.56** | **Live Cognitive Orchestration** | Live streams, mission graph, visual layers |
+| v0.54 | Native Autonomous Desktop | Window awareness, live overlays |
+| v0.55 | Autonomous Cognitive Coordination | Objectives, context sync |
+| v0.56 | Live Cognitive Orchestration | Live streams, mission graph |
+| v0.57 | Operational Execution System | Supervised pipelines, agent collaboration |
+| v0.58 | Distributed Cognitive Execution | Multi-workspace DAG federation |
+| **v0.59** | **Predictive Cognitive Governance** | Risk forecasting, trust surfaces, stabilization |
 
 ---
 
-## Cognitive Runtime Map
+## Full System Architecture
 
+```mermaid
+flowchart TB
+    subgraph UI["Operator & Desktop"]
+        OC[Operator Console]
+        CW[Cognitive Workspace]
+        ND[Native Desktop]
+    end
+
+    subgraph Gov["Governance Layer"]
+        PG[predictive_governance]
+        RS[runtime_stabilization]
+        CR[cognitive_risk]
+        TS[trust_surfaces]
+        EC[execution_confidence]
+        GV[governance_visualization]
+    end
+
+    subgraph Exec["Execution Layer"]
+        ES[execution_system]
+        DE[distributed_execution]
+        EG[execution_graph]
+        AW[autonomous_workflows]
+    end
+
+    subgraph Orch["Orchestration Layer"]
+        LO[live_orchestration]
+        AC[autonomous_coordination]
+        MG[mission_graph]
+    end
+
+    subgraph Core["Cognitive Core"]
+        UCC[unified_cognitive_core]
+        SCH[cognitive_scheduler]
+        AE[attention_engine]
+    end
+
+    UI --> Gov
+    Gov --> Exec
+    Exec --> Orch
+    Orch --> Core
 ```
-OdinApplication
-├── Kernel & Missions
-├── Unified Cognitive Core
-├── Live Orchestration          ← v0.56
-│   ├── live_orchestration
-│   ├── objective_streams
-│   ├── mission_graph
-│   ├── realtime_coordination
-│   ├── operator_situational_awareness
-│   └── cognitive_visual_layers
-├── Autonomous Coordination     ← v0.55
-├── Native Desktop              ← v0.54
-├── Overnight Cognition         ← v0.53
-└── Operator Intelligence v1–v4
-```
 
 ---
 
-## Desktop Experience
+## Cognitive Governance Layer
 
-Odin provides a native desktop cognition layer:
-
-- **Window awareness** — local, exclusion-aware active window tracking
-- **Live overlays** — floating HUD with focus-aware suppression
-- **Workspace sessions** — SQLite-backed session restore chains
-- **Operator focus** — deep work sessions with distraction pressure
-- **Desktop attention** — salience scoring and surface prioritization
-
-### Desktop Modes
-
-| Mode | Description |
-|------|-------------|
-| `compact` | Minimal overlays, low-power rendering |
-| `balanced` | Default daily operation |
-| `immersive` | Full cognitive surfaces |
-| `engineering` | Engineering-focused overlays |
-| `overnight` | Bounded overnight cognition |
-| `cinematic` | Visual layers at full density |
+| Module | App Handle | Role |
+|--------|-----------|------|
+| `predictive_governance` | `app.predictive_governance` | Governance cycles, pressure balancing |
+| `runtime_stabilization` | `app.runtime_stabilization` | Instability suppression, cooldowns |
+| `cognitive_risk` | `app.cognitive_risk` | Risk forecasting, failure simulation |
+| `trust_surfaces` | `app.trust_surfaces` | Operator trust, supervision integrity |
+| `execution_confidence` | `app.execution_confidence` | Confidence scoring, workflow probability |
+| `governance_visualization` | `app.governance_visualization` | Governance HUD, risk heatmaps |
 
 ---
 
-## Autonomous Engineering
+## Distributed Execution Layer
 
-Odin assists engineering workflows with:
+- **Execution system** — supervised pipelines with reversible checkpoints
+- **Execution graph** — SQLite DAG registry with rollback graphs
+- **Distributed execution** — cross-workspace pipeline federation
+- **Predictive recovery** — blocker forecasting and recovery simulation
+- **Autonomous workflows** — bounded supervised automation loops (max 48 cycles)
 
-- Idle engineering analysis (supervised, no auto-deploy)
-- Regression risk simulation
-- Technical debt tracking
-- Implementation pipeline visibility
-- Engineering council and review center
+---
 
-All engineering automation is **approval-gated**. Odin proposes; the operator approves.
+## Desktop Cognition Layer
+
+- Window awareness (local, exclusion-aware)
+- Live overlays v2 (adaptive throttling)
+- Workspace sessions (SQLite restore chains)
+- Operator focus (distraction pressure)
+- Desktop attention (salience scoring)
 
 ---
 
 ## Overnight Cognition
 
-When idle, Odin can run bounded overnight cognition:
-
-- Deferred reasoning chains restored on resume
-- Continuity forecasting for abandoned work
-- Morning briefing generation
-- Cognitive maintenance (memory compaction)
-- Idle repository analysis
-
-Limits: `ODIN_OVERNIGHT_MAX_CYCLES=32`, configurable reasoning budget. No autonomous deployment.
+Bounded overnight cycles with deferred reasoning, continuity forecasting, morning briefing, and cognitive maintenance. Limits: `ODIN_OVERNIGHT_MAX_CYCLES=32`. No autonomous deployment.
 
 ---
 
-## Safety & Supervision Model
+## Mission Orchestration
 
-```
-Operator Request
-      │
-      ▼
-┌─────────────┐     ┌──────────────┐
-│  Reasoning  │────▶│ Approval Gate │
-└─────────────┘     └──────┬───────┘
-                           │
-              ┌────────────┼────────────┐
-              ▼            ▼            ▼
-          Approved     Deferred     Rejected
-              │            │            │
-              ▼            ▼            ▼
-          Execute    Queue for     Log + notify
-                     operator
-```
-
-- No unrestricted OS control
-- No hidden monitoring
-- No autonomous privilege escalation
-- No deceptive autonomy claims
+Objective trees, mission graphs, resume chains, and continuity scoring across sessions. All mission state is supervised and locally persisted.
 
 ---
 
-## Privacy & Local-First Design
+## Autonomous Workflows
 
-| Guarantee | Detail |
-|-----------|--------|
-| Local processing | Window tracking, memory, objectives — all on-device |
-| No cloud requirement | Mock provider works offline |
-| Transparent monitoring | `monitoring_visible: true` on all awareness runtimes |
-| Configurable exclusions | Window and workspace exclusion lists |
-| Bounded retention | SQLite stores capped (200 objectives, 300 graph nodes) |
+Bounded automation loops with checkpointing and stabilization. `no_auto_deploy: true` on all workflow continuation. Operator override required for escalation.
+
+---
+
+## Operator Supervision Model
+
+```
+Cognition → Governance Check → Risk Forecast → Trust Surface
+                                    │
+                                    ▼
+                            Approval Gate
+                                    │
+                    ┌───────────────┼───────────────┐
+                    ▼               ▼               ▼
+                Execute         Defer           Reject
+                    │               │               │
+                    ▼               ▼               ▼
+              Checkpoint      Queue           Log + Notify
+```
+
+---
+
+## Streaming Architecture
+
+### Stream Topology
+
+```
+runtime (global)
+├── predictive-governance:runtime
+├── runtime-stabilization:runtime
+├── cognitive-risk:runtime
+├── trust-surfaces:runtime
+├── execution-confidence:runtime
+├── governance-visualization:runtime
+├── distributed-execution:runtime
+├── execution-graph:runtime
+├── live-orchestration:runtime
+└── ... (50+ domain channels)
+```
+
+Events flow through `resolve_channels_for_trace()` without breaking dispatcher semantics.
+
+---
+
+## Native Desktop Integration
+
+Tray coordination, native notifications, low-power mode, window classification, and workspace session restore. See `docs/NATIVE_DESKTOP_RUNTIME.md`.
+
+---
+
+## Performance Profiles
+
+| Profile | Cognition | Rendering | Use Case |
+|---------|-----------|-----------|----------|
+| `compact` | Low | Minimal | Background, low-power |
+| `balanced` | Medium | Adaptive | Daily development |
+| `engineering_operations` | High | Standard | Active coding |
+| `immersive` | High | Full | Deep work |
+| `cinematic` | High | Maximum | Visual surfaces |
+| `overnight_governance` | Bounded | Low-power | Idle governance cycles |
+
+---
+
+## Hardware Targets
+
+| Profile | GPU | RAM | Recommended Mode |
+|---------|-----|-----|------------------|
+| Minimum | GTX 1650 Ti | 16 GB | `compact` / `balanced` |
+| Recommended | RTX 3060+ | 32 GB | `balanced` / `immersive` |
+| Apple Silicon | M-series | 16 GB | `balanced` |
+
+Adaptive governance throttling, lazy visualization hydration, and bounded simulation loops ensure operation within constraints.
 
 ---
 
@@ -225,10 +284,8 @@ Operator Request
 
 - Python 3.11+
 - Node.js 18+
-- Redis (optional, for pub/sub)
+- Redis (optional)
 - 16 GB RAM recommended
-
-### Clone
 
 ```bash
 git clone https://github.com/FrostXMello/odin-runtime.git
@@ -244,12 +301,6 @@ cp backend/.env.example backend/.env
 
 API docs: http://127.0.0.1:8000/docs
 
-### Frontend
-
-```powershell
-.\scripts\start-frontend.ps1
-```
-
 ### Operator Console
 
 ```powershell
@@ -262,178 +313,121 @@ npm run dev
 
 ## Quick Start
 
-1. Enable core flags in `backend/.env`:
-
 ```env
+# Enable governance + execution core
+ODIN_PREDICTIVE_GOVERNANCE_ENABLED=1
+ODIN_RUNTIME_STABILIZATION_ENABLED=1
+ODIN_DISTRIBUTED_EXECUTION_ENABLED=1
+ODIN_EXECUTION_SYSTEM_ENABLED=1
 ODIN_LIVE_ORCHESTRATION_ENABLED=1
-ODIN_OBJECTIVE_STREAMS_ENABLED=1
-ODIN_MISSION_GRAPH_ENABLED=1
-ODIN_NATIVE_DESKTOP_ENABLED=1
-ODIN_AUTONOMOUS_COORDINATION_ENABLED=1
 ```
 
-2. Start backend and operator console
-3. Open `/live-orchestration` in the operator console
-4. Stream orchestration state via `POST /api/v1/runtime/live-orchestration/stream`
+1. Start backend and operator console
+2. Open `/predictive-governance` for governance health
+3. Open `/execution-system` for supervised pipelines
+4. Stream governance events on `predictive-governance:runtime`
 
 ---
 
-## Running the Cognitive Workspace
+## Environment Configuration
 
-The cognitive workspace (`frontend/cognitive_workspace/`) provides:
+See `backend/.env.example` for all flags. Key governance flags:
 
-- Live orchestration HUD
-- Runtime constellation map
-- Objective river renderer
-- Cognition pulse visualizer
+```env
+ODIN_PREDICTIVE_GOVERNANCE_ENABLED=1
+ODIN_COGNITIVE_RISK_ENABLED=1
+ODIN_TRUST_SURFACES_ENABLED=1
+ODIN_GOVERNANCE_PROFILE=balanced
+ODIN_RISK_FORECASTING_MODE=adaptive
+ODIN_RUNTIME_STABILIZATION_MODE=balanced
+```
 
-Profiles: `compact`, `balanced`, `immersive`, `cinematic`, `overnight_autonomous`
+---
+
+## API Structure
+
+```
+/api/v1/runtime/
+├── predictive-governance/     # Governance cycles
+├── runtime-stabilization/     # Instability suppression
+├── cognitive-risk/            # Risk forecasting
+├── trust-surfaces/            # Trust scoring
+├── execution-confidence/      # Confidence estimation
+├── governance-visualization/  # HUD rendering
+├── distributed-execution/     # Cross-workspace federation
+├── execution-graph/           # DAG management
+├── execution-system/          # Supervised pipelines
+├── live-orchestration/        # Live orchestration
+└── ... (100+ route groups)
+```
 
 ---
 
 ## Operator Console
 
-200+ pages for runtime visibility. Key surfaces:
+250+ pages for runtime visibility. Key governance surfaces:
 
 | Page | Purpose |
 |------|---------|
-| `/live-orchestration` | Real-time orchestration health |
-| `/objective-streams` | Live objective progression |
-| `/mission-graph` | Mission dependency graph |
-| `/operator-awareness` | Situational brief |
-| `/runtime-constellation` | Cinematic runtime map |
-| `/cognition-pulse` | Live cognition pulse |
+| `/predictive-governance` | Governance cycle health |
+| `/runtime-stabilization` | Instability suppression |
+| `/cognitive-risk` | Risk forecasting |
+| `/trust-surfaces` | Operator trust scoring |
+| `/execution-confidence` | Workflow probability |
+| `/governance-visualization` | Governance HUD |
 
 ---
 
-## Native Desktop Layer
+## Safety Guarantees
 
-See `docs/NATIVE_DESKTOP_RUNTIME.md`. Key APIs:
-
-- `GET /api/v1/runtime/native-desktop/status`
-- `GET /api/v1/runtime/window-awareness/active`
-- `POST /api/v1/runtime/workspace-sessions/save`
-
----
-
-## Streaming & APIs
-
-### Channels (v0.56)
-
-| Channel | Runtime |
-|---------|---------|
-| `live-orchestration:runtime` | Live orchestration state |
-| `objective-streams:runtime` | Objective progression |
-| `mission-graph:runtime` | Graph linkage events |
-| `realtime-coordination:runtime` | Stream multiplexing |
-| `operator-awareness:runtime` | Operator briefs |
-| `visual-layers:runtime` | Visual rendering |
-
-### Example
-
-```bash
-curl http://127.0.0.1:8000/api/v1/runtime/live-orchestration/health
-curl -X POST http://127.0.0.1:8000/api/v1/runtime/mission-graph/link \
-  -H "Content-Type: application/json" \
-  -d '{"src": "feature-auth", "dst": "feature-api"}'
-```
-
-Full API reference: http://127.0.0.1:8000/docs
+| Guarantee | Enforcement |
+|-----------|-------------|
+| No hidden execution | All runtimes return `transparent: true` |
+| No auto-deploy | `no_auto_deploy: true` on workflows |
+| Approval-gated | `approval_gated: true` on execution and simulation |
+| Reversible | Checkpoints, rollback graphs, replay chains |
+| Bounded cycles | Max limits on loops, streams, simulations |
+| Operator override | `operator_override: true` on alignment and intervention |
+| Local-only | `local_first: true` on awareness and federation |
 
 ---
 
-## Hardware Profiles
+## Scaling Constraints
 
-| Profile | GPU | RAM | Notes |
-|---------|-----|-----|-------|
-| Minimum | GTX 1650 Ti | 16 GB | `compact` profile, adaptive rendering |
-| Recommended | RTX 3060+ | 32 GB | `balanced` / `immersive` |
-| Apple Silicon | M-series | 16 GB | `balanced`, low-power cinematic |
-
-Adaptive render scaling, graph virtualization, and orchestration throttling ensure bounded resource use.
-
----
-
-## Screenshots / Visual Placeholders
-
-> Screenshots coming soon. Placeholder regions:
-
-| Surface | Path |
-|---------|------|
-| Live Orchestration HUD | `frontend/cognitive_workspace/src/live_orchestration/` |
-| Runtime Constellation | `/runtime-constellation` operator page |
-| Objective River | `/objective-river` operator page |
-| Mission Graph | `/mission-graph` operator page |
+- Adaptive governance throttling
+- Runtime cooldowns (stabilization, federation, workflows)
+- Lazy visualization hydration
+- Low-power governance mode
+- Bounded risk simulation loops (max 36)
+- Governance stream compression
+- DAG virtualization (400 node cap)
+- SQLite retention limits per subsystem
 
 ---
 
-## Feature Matrix
+## Runtime Feature Matrix
 
-| Feature | v0.54 | v0.55 | v0.56 |
-|---------|-------|-------|-------|
-| Native desktop | ✅ | ✅ | ✅ |
-| Objective trees | — | ✅ | ✅ |
-| Live orchestration streams | — | — | ✅ |
-| Mission graph | — | — | ✅ |
-| Cinematic visual layers | — | — | ✅ |
-| Operator situational awareness | — | — | ✅ |
-
-### Cognition Modes
-
-| Mode | Budget | Use Case |
-|------|--------|----------|
-| `compact` | Low | Background, low-power |
-| `balanced` | Medium | Daily development |
-| `engineering` | High | Active coding sessions |
-| `immersive` | High | Deep work |
-| `overnight_autonomous` | Bounded | Idle overnight cycles |
+| Feature | v0.56 | v0.57 | v0.58 | v0.59 |
+|---------|-------|-------|-------|-------|
+| Live orchestration | ✅ | ✅ | ✅ | ✅ |
+| Supervised execution | — | ✅ | ✅ | ✅ |
+| Distributed DAG | — | — | ✅ | ✅ |
+| Predictive governance | — | — | — | ✅ |
+| Risk forecasting | — | — | — | ✅ |
+| Trust surfaces | — | — | — | ✅ |
+| Runtime stabilization | — | — | — | ✅ |
 
 ---
 
-## Project Structure
-
-```
-odin/
-├── backend/
-│   ├── odin_backend/
-│   │   ├── core/              # 100+ runtime modules
-│   │   ├── api/routes/        # FastAPI route modules
-│   │   └── config.py          # Environment-driven settings
-│   ├── tests/                 # 30,000+ generated tests
-│   └── scripts/               # Bootstrap and test generators
-├── frontend/
-│   └── cognitive_workspace/   # React cognitive UI
-├── operator/                  # Next.js operator console
-├── docs/                      # Runtime documentation
-└── infrastructure/            # Docker, Redis
-```
-
----
-
-## Development Workflow
-
-```powershell
-# Generate tests for a prompt
-python backend/scripts/gen_p56_tests.py
-
-# Run smoke tests (fast)
-python -m pytest backend/tests/test_live_orchestration_integration_p56.py -k "not bulk"
-
-# Incremental commits by subsystem
-git add backend/odin_backend/core/live_orchestration
-git commit -m "feat(live-orchestration): add live orchestration runtime"
-```
-
----
-
-## Roadmap
+## Roadmap (v0.60+)
 
 | Version | Focus |
 |---------|-------|
-| v0.57 | Federated mission graphs across workspaces |
-| v0.58 | Predictive orchestration with interruption windows |
-| v0.59 | Multi-operator coordination (team mode) |
-| v0.60 | Unified cinematic dashboard |
+| v0.60 | Unified governance + execution + orchestration dashboard |
+| v0.61 | Closed-loop predictive recovery with operator veto gates |
+| v0.62 | Multi-operator team governance (shared trust surfaces) |
+| v0.63 | Real-time DAG visualization with live rollback animation |
+| v0.64 | Federated governance across opt-in workspace boundaries |
 
 ---
 
@@ -441,7 +435,7 @@ git commit -m "feat(live-orchestration): add live orchestration runtime"
 
 1. Fork the repository
 2. Create a feature branch from `master`
-3. Follow incremental extension — do not rewrite dispatcher semantics
+3. Extend incrementally — do not rewrite dispatcher semantics
 4. Add tests via `gen_p{N}_tests.py` pattern
 5. Document in `docs/`
 6. Submit a pull request
@@ -455,6 +449,6 @@ See [LICENSE](LICENSE) in the repository root.
 ---
 
 <p align="center">
-  <strong>Odin Runtime v0.56</strong> — Live Cognitive Orchestration<br>
-  Local-first · Approval-gated · Operator-supervised
+  <strong>Odin Runtime v0.59</strong> — Predictive Cognitive Governance<br>
+  Local-first · Approval-gated · Operator-supervised · Governed
 </p>
