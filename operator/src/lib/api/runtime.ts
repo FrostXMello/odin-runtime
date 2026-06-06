@@ -35,6 +35,42 @@ export const runtimeApi = {
   missions: (limit = 50) =>
     apiFetch<MissionSummary[]>("/missions", { params: { limit } }),
 
+  createMission: (body: {
+    objective: string;
+    priority?: number;
+    autonomy_level?: number;
+    human_approved?: boolean;
+    start_worker?: boolean;
+  }) =>
+    apiFetch<MissionSummary>("/missions/create", {
+      method: "POST",
+      body: JSON.stringify({
+        priority: 50,
+        autonomy_level: 1,
+        human_approved: false,
+        start_worker: true,
+        ...body,
+      }),
+    }),
+
+  resumeMission: (missionId: string) =>
+    apiFetch<{ mission_id: string; state: string }>(`/missions/${missionId}/resume`, {
+      method: "POST",
+    }),
+
+  pauseMission: (missionId: string) =>
+    apiFetch<{ mission_id: string; state: string }>(`/missions/${missionId}/pause`, {
+      method: "POST",
+    }),
+
+  recoverSession: () =>
+    apiFetch<Record<string, unknown>>("/runtime/session-persistence-v2/recover", {
+      method: "POST",
+    }),
+
+  p64RuntimeHealth: () =>
+    apiFetch<Record<string, unknown>>("/runtime/runtime-health"),
+
   missionTimeline: (missionId: string) =>
     apiFetch<MissionTimeline>(`/missions/${missionId}/timeline`),
 
