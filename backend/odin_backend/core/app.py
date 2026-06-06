@@ -725,6 +725,21 @@ class OdinApplication:
         self.evolution_review = EvolutionReviewRuntime(self)
         self.cognitive_daemon = CognitiveDaemonOrchestrator(self)
         self.operator_productivity = OperatorProductivityRuntime(self)
+        from odin_backend.core.live_engineering_orchestrator import LiveEngineeringOrchestratorRuntime
+        from odin_backend.core.autonomous_debugging.pipeline_runtime import AutonomousDebuggingPipelineRuntime
+        from odin_backend.core.engineering_workflows_v2 import EngineeringWorkflowsV2Runtime
+        from odin_backend.core.self_improvement_sandbox import SelfImprovementSandboxRuntime
+        from odin_backend.core.project_memory import ProjectMemoryRuntime
+        from odin_backend.core.engineering_society import EngineeringSocietyRuntime
+        from odin_backend.core.continuous_engineering import ContinuousEngineeringRuntime
+
+        self.live_engineering_orchestrator = LiveEngineeringOrchestratorRuntime(self)
+        self.autonomous_debugging_pipeline = AutonomousDebuggingPipelineRuntime(self)
+        self.engineering_workflows_v2 = EngineeringWorkflowsV2Runtime(self)
+        self.self_improvement_sandbox = SelfImprovementSandboxRuntime(self)
+        self.project_memory = ProjectMemoryRuntime(self)
+        self.engineering_society = EngineeringSocietyRuntime(self)
+        self.continuous_engineering = ContinuousEngineeringRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,

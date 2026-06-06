@@ -643,6 +643,36 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
     if event.kind == TraceEventKind.OPERATOR_FOCUS_DEGRADED:
         channels.append("productivity:runtime")
         channels.append("live-environment:runtime")
+    if event.kind in (
+        TraceEventKind.ENGINEERING_GOAL_DETECTED,
+        TraceEventKind.ENGINEERING_SESSION_RESTORED,
+        TraceEventKind.IMPLEMENTATION_STAGE_ADVANCED,
+    ):
+        channels.append("engineering-live:runtime")
+    if event.kind in (
+        TraceEventKind.LIVE_ENGINEERING_DETECTED,
+        TraceEventKind.LIVE_PATCH_SUGGESTED,
+    ):
+        channels.append("engineering-live:runtime")
+    if event.kind in (
+        TraceEventKind.DEBUG_CLUSTER_CREATED,
+        TraceEventKind.REGRESSION_RISK_DETECTED,
+        TraceEventKind.PATCH_HYPOTHESIS_GENERATED,
+    ):
+        channels.append("debugging-live:runtime")
+    if event.kind == TraceEventKind.ENGINEERING_SESSION_RESTORED:
+        channels.append("project-memory:runtime")
+    if event.kind in (
+        TraceEventKind.ARCHITECTURE_DEBATE_STARTED,
+        TraceEventKind.REVIEW_CONSENSUS_REACHED,
+    ):
+        channels.append("engineering-society:runtime")
+        channels.append("society:runtime")
+    if event.kind == TraceEventKind.SANDBOX_VALIDATION_COMPLETED:
+        channels.append("sandbox:runtime")
+    if event.kind == TraceEventKind.OVERNIGHT_ANALYSIS_COMPLETED:
+        channels.append("repo-watch:runtime")
+        channels.append("daemon-cognition:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

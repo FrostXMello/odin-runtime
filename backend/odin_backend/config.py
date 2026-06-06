@@ -353,6 +353,14 @@ class Settings(BaseSettings):
     evolution_review_enabled: bool = False
     operator_productivity_enabled: bool = False
 
+    # Autonomous engineering workstation (Prompt 47)
+    live_engineering_orchestrator_enabled: bool = False
+    engineering_workflows_v2_enabled: bool = False
+    self_improvement_sandbox_enabled: bool = False
+    project_memory_enabled: bool = False
+    engineering_society_enabled: bool = False
+    continuous_engineering_enabled: bool = False
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

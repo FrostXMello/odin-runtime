@@ -272,6 +272,16 @@ class TraceEventKind(StrEnum):
     OPERATOR_FOCUS_DEGRADED = "operator_focus_degraded"
     COGNITIVE_TRANSITION_RENDERED = "cognitive_transition_rendered"
     LIVE_PRESENCE_UPDATED = "live_presence_updated"
+    ENGINEERING_GOAL_DETECTED = "engineering_goal_detected"
+    DEBUG_CLUSTER_CREATED = "debug_cluster_created"
+    REGRESSION_RISK_DETECTED = "regression_risk_detected"
+    PATCH_HYPOTHESIS_GENERATED = "patch_hypothesis_generated"
+    ENGINEERING_SESSION_RESTORED = "engineering_session_restored"
+    ARCHITECTURE_DEBATE_STARTED = "architecture_debate_started"
+    REVIEW_CONSENSUS_REACHED = "review_consensus_reached"
+    SANDBOX_VALIDATION_COMPLETED = "sandbox_validation_completed"
+    OVERNIGHT_ANALYSIS_COMPLETED = "overnight_analysis_completed"
+    IMPLEMENTATION_STAGE_ADVANCED = "implementation_stage_advanced"
 
 
 class TraceEvent(BaseModel):
