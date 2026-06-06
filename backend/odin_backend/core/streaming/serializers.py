@@ -673,6 +673,35 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
     if event.kind == TraceEventKind.OVERNIGHT_ANALYSIS_COMPLETED:
         channels.append("repo-watch:runtime")
         channels.append("daemon-cognition:runtime")
+    if event.kind in (
+        TraceEventKind.KERNEL_ATTENTION_SHIFTED,
+        TraceEventKind.COGNITIVE_TICK_EXECUTED,
+        TraceEventKind.CROSS_RUNTIME_SYNC_COMPLETED,
+    ):
+        channels.append("kernel:runtime")
+        channels.append("cognitive-orchestration:runtime")
+    if event.kind == TraceEventKind.MEMORY_FABRIC_LINKED:
+        channels.append("memory-fabric:runtime")
+        channels.append("memory-threads:runtime")
+    if event.kind in (
+        TraceEventKind.ENVIRONMENT_CONTEXT_DETECTED,
+        TraceEventKind.WORKFLOW_PREDICTION_GENERATED,
+    ):
+        channels.append("environment:runtime")
+        channels.append("live-environment:runtime")
+    if event.kind in (
+        TraceEventKind.THOUGHT_STREAM_COMPRESSED,
+        TraceEventKind.REASONING_BRANCH_RENDERED,
+    ):
+        channels.append("cognitive-streams:runtime")
+    if event.kind == TraceEventKind.PRESENCE_FAMILIARITY_UPDATED:
+        channels.append("presence-personal:runtime")
+        channels.append("presence-live:runtime")
+    if event.kind == TraceEventKind.ASSISTANCE_INTERVENTION_GENERATED:
+        channels.append("assistance:runtime")
+    if event.kind == TraceEventKind.OVERNIGHT_REFLECTION_COMPLETED:
+        channels.append("cognitive-orchestration:runtime")
+        channels.append("daemon-cognition:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

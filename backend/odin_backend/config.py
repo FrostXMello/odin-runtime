@@ -361,6 +361,15 @@ class Settings(BaseSettings):
     engineering_society_enabled: bool = False
     continuous_engineering_enabled: bool = False
 
+    # Persistent cognitive computer (Prompt 48)
+    cognitive_kernel_enabled: bool = False
+    memory_fabric_enabled: bool = False
+    environment_intelligence_enabled: bool = False
+    cognitive_streams_enabled: bool = False
+    personal_presence_enabled: bool = False
+    proactive_assistance_runtime_enabled: bool = False
+    cognitive_orchestration_enabled: bool = False
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

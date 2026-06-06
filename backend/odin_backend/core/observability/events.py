@@ -282,6 +282,15 @@ class TraceEventKind(StrEnum):
     SANDBOX_VALIDATION_COMPLETED = "sandbox_validation_completed"
     OVERNIGHT_ANALYSIS_COMPLETED = "overnight_analysis_completed"
     IMPLEMENTATION_STAGE_ADVANCED = "implementation_stage_advanced"
+    KERNEL_ATTENTION_SHIFTED = "kernel_attention_shifted"
+    MEMORY_FABRIC_LINKED = "memory_fabric_linked"
+    ENVIRONMENT_CONTEXT_DETECTED = "environment_context_detected"
+    THOUGHT_STREAM_COMPRESSED = "thought_stream_compressed"
+    PRESENCE_FAMILIARITY_UPDATED = "presence_familiarity_updated"
+    ASSISTANCE_INTERVENTION_GENERATED = "assistance_intervention_generated"
+    COGNITIVE_TICK_EXECUTED = "cognitive_tick_executed"
+    OVERNIGHT_REFLECTION_COMPLETED = "overnight_reflection_completed"
+    CROSS_RUNTIME_SYNC_COMPLETED = "cross_runtime_sync_completed"
 
 
 class TraceEvent(BaseModel):

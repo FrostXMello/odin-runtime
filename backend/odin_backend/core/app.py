@@ -740,6 +740,21 @@ class OdinApplication:
         self.project_memory = ProjectMemoryRuntime(self)
         self.engineering_society = EngineeringSocietyRuntime(self)
         self.continuous_engineering = ContinuousEngineeringRuntime(self)
+        from odin_backend.core.cognitive_kernel import CognitiveKernelRuntime
+        from odin_backend.core.memory_fabric import MemoryFabricRuntime
+        from odin_backend.core.environment_intelligence import EnvironmentIntelligenceRuntime
+        from odin_backend.core.cognitive_streams import CognitiveStreamsRuntime
+        from odin_backend.core.personal_presence import PersonalPresenceRuntime
+        from odin_backend.core.proactive_assistance import ProactiveAssistanceRuntime
+        from odin_backend.core.cognitive_orchestration import CognitiveOrchestrationRuntime
+
+        self.cognitive_kernel = CognitiveKernelRuntime(self)
+        self.memory_fabric = MemoryFabricRuntime(self)
+        self.environment_intelligence = EnvironmentIntelligenceRuntime(self)
+        self.cognitive_streams = CognitiveStreamsRuntime(self)
+        self.personal_presence = PersonalPresenceRuntime(self)
+        self.proactive_assistance_runtime = ProactiveAssistanceRuntime(self)
+        self.cognitive_orchestration = CognitiveOrchestrationRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,
