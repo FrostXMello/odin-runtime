@@ -363,6 +363,18 @@ class TraceEventKind(StrEnum):
     FOCUS_BREAKDOWN_DETECTED = "focus_breakdown_detected"
     DESKTOP_ATTENTION_REBALANCED = "desktop_attention_rebalanced"
     WORKSPACE_SALIENCE_UPDATED = "workspace_salience_updated"
+    RUNTIME_COORDINATION_STARTED = "runtime_coordination_started"
+    RUNTIME_COORDINATION_RESTORED = "runtime_coordination_restored"
+    OBJECTIVE_TREE_CREATED = "objective_tree_created"
+    OBJECTIVE_PROGRESS_UPDATED = "objective_progress_updated"
+    STALLED_OBJECTIVE_DETECTED = "stalled_objective_detected"
+    CONTEXT_SURFACES_SYNCHRONIZED = "context_surfaces_synchronized"
+    CONTEXT_DIVERGENCE_DETECTED = "context_divergence_detected"
+    MISSION_RESUME_CHAIN_BUILT = "mission_resume_chain_built"
+    WORKFLOW_INTERRUPTION_DETECTED = "workflow_interruption_detected"
+    COGNITIVE_PLAN_GENERATED = "cognitive_plan_generated"
+    REASONING_BUDGET_REBALANCED = "reasoning_budget_rebalanced"
+    OPERATOR_ALIGNMENT_UPDATED = "operator_alignment_updated"
 
 
 class TraceEvent(BaseModel):

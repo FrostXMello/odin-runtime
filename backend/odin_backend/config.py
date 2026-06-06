@@ -430,6 +430,17 @@ class Settings(BaseSettings):
     window_tracking_enabled: bool = True
     overlay_mode: str = "adaptive"
 
+    # Autonomous cognitive coordination (Prompt 55)
+    autonomous_coordination_enabled: bool = False
+    objective_management_enabled: bool = False
+    context_synchronization_enabled: bool = False
+    mission_continuity_enabled: bool = False
+    cognitive_planning_enabled: bool = False
+    operator_alignment_enabled: bool = False
+    coordination_profile: str = "balanced"
+    reasoning_budget_mode: str = "adaptive"
+    continuity_tracking_enabled: bool = True
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

@@ -876,6 +876,34 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         TraceEventKind.WORKSPACE_SALIENCE_UPDATED,
     ):
         channels.append("desktop-attention:runtime")
+    if event.kind in (
+        TraceEventKind.RUNTIME_COORDINATION_STARTED,
+        TraceEventKind.RUNTIME_COORDINATION_RESTORED,
+    ):
+        channels.append("autonomous-coordination:runtime")
+    if event.kind in (
+        TraceEventKind.OBJECTIVE_TREE_CREATED,
+        TraceEventKind.OBJECTIVE_PROGRESS_UPDATED,
+        TraceEventKind.STALLED_OBJECTIVE_DETECTED,
+    ):
+        channels.append("objective-management:runtime")
+    if event.kind in (
+        TraceEventKind.CONTEXT_SURFACES_SYNCHRONIZED,
+        TraceEventKind.CONTEXT_DIVERGENCE_DETECTED,
+    ):
+        channels.append("context-sync:runtime")
+    if event.kind in (
+        TraceEventKind.MISSION_RESUME_CHAIN_BUILT,
+        TraceEventKind.WORKFLOW_INTERRUPTION_DETECTED,
+    ):
+        channels.append("mission-continuity:runtime")
+    if event.kind in (
+        TraceEventKind.COGNITIVE_PLAN_GENERATED,
+        TraceEventKind.REASONING_BUDGET_REBALANCED,
+    ):
+        channels.append("cognitive-planning:runtime")
+    if event.kind == TraceEventKind.OPERATOR_ALIGNMENT_UPDATED:
+        channels.append("operator-alignment:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

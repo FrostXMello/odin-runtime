@@ -830,6 +830,19 @@ class OdinApplication:
         self.workspace_sessions = WorkspaceSessionsRuntime(self)
         self.operator_focus = OperatorFocusRuntime(self)
         self.desktop_attention = DesktopAttentionRuntime(self)
+        from odin_backend.core.autonomous_coordination import AutonomousCoordinationRuntime
+        from odin_backend.core.objective_management import ObjectiveManagementRuntime
+        from odin_backend.core.context_synchronization import ContextSynchronizationRuntime
+        from odin_backend.core.mission_continuity import MissionContinuityRuntime
+        from odin_backend.core.cognitive_planning import CognitivePlanningRuntime
+        from odin_backend.core.operator_alignment import OperatorAlignmentRuntime
+
+        self.autonomous_coordination = AutonomousCoordinationRuntime(self)
+        self.objective_management = ObjectiveManagementRuntime(self)
+        self.context_synchronization = ContextSynchronizationRuntime(self)
+        self.mission_continuity = MissionContinuityRuntime(self)
+        self.cognitive_planning = CognitivePlanningRuntime(self)
+        self.operator_alignment = OperatorAlignmentRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,
