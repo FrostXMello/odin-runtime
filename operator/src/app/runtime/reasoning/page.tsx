@@ -4,26 +4,19 @@ import { useQuery } from "@tanstack/react-query";
 import { apiFetch } from "@/lib/api/client";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
 
-export default function RuntimeReasoningPage() {
+export default function ReasoningPage() {
   const { data } = useQuery({
     queryKey: ["runtime", "reasoning"],
     queryFn: () => apiFetch<Record<string, unknown>>("/runtime/reasoning"),
-    refetchInterval: 8000,
+    refetchInterval: 10000,
   });
-  const runtimeMetrics = (data?.runtime_metrics as Record<string, number>) ?? {};
-  const embedMetrics = (data?.embedding_metrics as Record<string, number>) ?? {};
-
+  const routing = (data?.routing as Record<string, unknown>) ?? {};
   return (
     <div className="space-y-4">
-      <h2 className="text-sm font-medium text-slate-200">Memory-grounded reasoning</h2>
+      <h2 className="text-sm font-medium text-slate-200">Reasoning</h2>
       <Card>
-        <CardHeader title="Pipeline metrics" subtitle={String(data?.pipeline ?? "—")} />
-        <CardBody className="font-mono text-xs text-slate-400">
-          <div>Inferences: {runtimeMetrics.inferences ?? 0}</div>
-          <div>Truncated: {runtimeMetrics.truncated ?? 0}</div>
-          <div>Embeddings: {embedMetrics.embedded ?? 0}</div>
-          <div>Searches: {embedMetrics.searches ?? 0}</div>
-        </CardBody>
+        <CardHeader title="Model routes" subtitle={`${String(routing.routes ?? 0)} routed`} />
+        <CardBody className="text-xs text-slate-400">Live reasoning chain quality and routing overlay</CardBody>
       </Card>
     </div>
   );
