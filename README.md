@@ -1,238 +1,261 @@
-# Odin Runtime
+﻿# Odin Runtime
 
-**A supervised cognitive recovery and operational resilience infrastructure.**
+**Collaborative Cognitive Infrastructure Atlas**
 
-Odin Runtime is a local-first cognitive platform — a unified stack of 142+ runtime modules that converge orchestration, execution, governance, recovery, and persistent desktop cognition into one self-stabilizing supervised mission control system on your own hardware.
-
----
-
-## Vision
-
-Odin gives a single developer a continuously operating cognitive layer that detects instability early, simulates recovery paths, preserves mission continuity, and stabilizes runtime pressure — while every recovery action remains approval-gated, reversible, and operator-supervised.
-
-The system is designed to feel resilient: predictive failure forecasting, rollback DAGs, recovery orchestration dashboards, and trust-preserving veto gates — without hidden rollback execution or unrestricted self-modification.
+Odin Runtime is a local-first collaborative cognitive infrastructure for supervised engineering, orchestration, governance, recovery, and persistent desktop cognition. v0.62 extends Odin from a single-operator command center into a multi-operator collaborative cognition environment with transparent roles, shared mission control, bounded delegation, and supervised collaborative recovery.
 
 ---
 
-## Why Odin Exists
+## Positioning
 
-Most AI tooling fails silently: context is lost, execution is opaque, recovery is manual, and autonomy is either absent or unrestricted. Odin bridges that gap with:
+Odin is a supervised cognitive operating infrastructure for teams and solo operators who need persistent engineering cognition without hidden autonomy. It coordinates command surfaces, missions, recovery, delegation, and operator presence while preserving local-first operation, approval gates, reversibility, and transparent supervision.
 
-- **Predictive recovery** — failure forecasting, recovery path simulation, probability estimation
-- **Supervised rollback** — rollback intelligence, checkpoint selection, operator veto gates
-- **Mission continuity** — interrupted workflow recovery, cognition restoration, overnight replay
-- **Stability loops** — bounded stabilization, cascade suppression, recovery throttling
-- **Unified command center** — orchestration + execution + governance convergence
-- **Operator sovereignty** — every recovery action is visible, approval-gated, and reversible
+Odin does not grant unrestricted multi-user execution, remote control, hidden collaboration, or autonomous authority escalation.
 
 ---
 
-## Core Principles
+## Core Guarantees
 
-| Principle | Implementation |
-|-----------|----------------|
-| Local-first | All cognition, recovery, and monitoring stay on-device |
-| Approval-gated rollback | All recovery execution routes through `operator_veto` |
-| Bounded stabilization | Recovery cycles, replay loops, and simulation limits |
-| Transparent intervention | All risk, trust, and recovery scoring is operator-visible |
-| Reversible recovery | Checkpoints, rollback graphs, continuity replay chains |
-| Incremental architecture | New releases extend; they do not rewrite |
-| Backward compatible | Dispatcher semantics and streaming contracts preserved |
+| Guarantee | Enforcement |
+|-----------|-------------|
+| Local-first | Collaboration state persists locally in SQLite-backed registries |
+| Permission-aware | Operator roles, authority, and ownership are explicit |
+| Approval-gated | Delegation and shared recovery preserve approval routing |
+| Observable | Collaboration emits trace events and domain channels |
+| Reversible | Delegation revoke, recovery replay, mission control transfer |
+| Bounded | Synchronization, rebalance, replay, and DAG limits |
+| Backward compatible | Dispatcher semantics and prior runtime separation preserved |
 
 ---
 
-## Recovery Orchestration Architecture (v0.61)
+## Collaborative Cognition Architecture
 
 ```mermaid
 flowchart TB
-    subgraph Recovery["Closed-Loop Predictive Recovery"]
-        PR[predictive_recovery_v2]
-        RO[recovery_orchestration]
-        RI[rollback_intelligence]
-        CR[continuity_recovery]
-        SL[stability_loops]
-        OV[operator_veto]
+    subgraph Collaboration["Collaborative Cognition (v0.62)"]
+        CC[collaborative_cognition]
+        OS[operator_sessions]
+        SMC[shared_mission_control]
+        DE[delegation_engine]
+        TC[team_coordination]
+        CR[collaborative_recovery]
     end
 
-    subgraph Operator["Operator Supervision"]
-        APPROVE[Approval Gate]
-        VETO[Operator Veto]
-        TRUST[Trust Surfaces]
-    end
-
-    subgraph Command["Command Center (v0.60)"]
+    subgraph Command["Unified Command Center (v0.60)"]
         UCC[unified_command_center]
         MC[mission_command]
+        RF[runtime_fusion]
     end
 
-    subgraph Governance["Cognitive Governance"]
-        PG[predictive_governance]
-        RS[runtime_stabilization]
-        CRisk[cognitive_risk]
+    subgraph Recovery["Closed-Loop Recovery (v0.61)"]
+        PR[predictive_recovery_v2]
+        OV[operator_veto]
+        RI[rollback_intelligence]
     end
 
-    PR -->|forecast| RO
-    RO -->|orchestrate| RI
-    RI -->|rollback| OV
-    OV -->|authorize| APPROVE
-    CR -->|restore| MC
-    SL -->|stabilize| RS
-    Operator --> OV
-    UCC --> Recovery
-    Governance --> PR
+    OS --> CC
+    CC --> SMC
+    CC --> TC
+    SMC --> MC
+    DE --> OV
+    CR --> OV
+    CR --> RI
+    UCC --> CC
+    PR --> CR
 ```
-
-No autonomous destructive recovery. No hidden rollback execution. No unsupervised intervention.
 
 ---
 
-## Recovery Modules
+## Runtime Modules
 
 | Module | App Handle | Role |
-|--------|-----------|------|
-| `predictive_recovery_v2` | `app.predictive_recovery_v2` | Failure forecasting, recovery simulation, probability estimation |
-| `recovery_orchestration` | `app.recovery_orchestration` | Supervised recovery coordination, phase transitions |
-| `rollback_intelligence` | `app.rollback_intelligence` | Rollback graph generation, replay analysis, confidence scoring |
-| `continuity_recovery` | `app.continuity_recovery` | Mission continuity, workspace rebuild, cognition restoration |
-| `stability_loops` | `app.stability_loops` | Bounded stabilization, cascade suppression, recovery throttling |
-| `operator_veto` | `app.operator_veto` | Recovery approval routing, veto chain management |
+|--------|------------|------|
+| `collaborative_cognition` | `app.collaborative_cognition` | Multi-operator cognition orchestration and shared attention |
+| `operator_sessions` | `app.operator_sessions` | Identity, role, authority, presence, replay |
+| `shared_mission_control` | `app.shared_mission_control` | Shared mission DAGs and ownership transfer |
+| `delegation_engine` | `app.delegation_engine` | Supervised delegation and authority validation |
+| `team_coordination` | `app.team_coordination` | Team pressure, attention balancing, interruption routing |
+| `collaborative_recovery` | `app.collaborative_recovery` | Shared recovery authorization and collaborative rollback |
 
 ---
 
-## Rollback DAG Example
-
-```mermaid
-flowchart TD
-    CP1[checkpoint_a] --> CP2[checkpoint_b]
-    CP2 --> RT[rollback_target]
-    RT -->|authorize| EXEC[recovery_execution]
-    EXEC --> VAL[validation]
-    VAL --> CONT[continuity_restore]
-```
-
-Rollback intelligence generates virtualized DAGs (600 node cap). All rollback execution requires operator authorization.
-
----
-
-## Recovery Replay Lifecycle
-
-```mermaid
-sequenceDiagram
-    participant Op as Operator
-    participant PR as predictive_recovery_v2
-    participant RI as rollback_intelligence
-    participant OV as operator_veto
-    participant RO as recovery_orchestration
-
-    PR->>PR: forecast_operational_failure()
-    PR->>PR: simulate_recovery_paths()
-    RI->>RI: generate_rollback_graph()
-    RI->>RI: replay_execution_window()
-    OV->>Op: request_recovery_approval()
-    Op->>OV: authorize_recovery_chain()
-    RO->>RO: validate_recovery_integrity()
-```
-
-Bounded replay loops (max 40). Lazy replay hydration. Adaptive replay compression.
-
----
-
-## Continuity Restoration Flow
+## Operator Trust Model
 
 ```mermaid
 flowchart LR
-    DET[detection] --> STAB[stabilization]
-    STAB --> RB[rollback_review]
-    RB --> REC[recovery_execution]
-    REC --> VAL[validation]
-    VAL --> CONT[continuity_restore]
-    CONT -->|replay| TIMELINE[live_cognition_timeline]
+    ID[Operator Identity] --> ROLE[Role]
+    ROLE --> AUTH[Approval Authority]
+    AUTH --> SCOPE[Supervision Scope]
+    SCOPE --> OWN[Runtime Ownership]
+    OWN --> TRACE[Observable Trace]
 ```
 
-Continuity recovery integrates with `mission_command`, `mission_continuity`, `deferred_reasoning`, and `live_cognition_timeline`.
+Trust is explicit rather than inferred. Odin records role, authority, focus state, active missions, runtime ownership, and supervision scope.
 
 ---
 
-## Instability Suppression Graph
+## Delegation Safety Model
 
 ```mermaid
 flowchart TB
-    INST[Instability Detected] --> SL[stability_loops]
-    SL --> SUP[suppress_instability_cascades]
-    SUP --> RF[runtime_fusion]
-    RF --> RS[runtime_stabilization]
-    RS --> THR[throttle_recovery_density]
-    THR --> LP[Low-Power Mode]
+    TASK[Task] --> VALIDATE[validate_operator_authority]
+    VALIDATE -->|valid| DELEGATE[delegate_execution]
+    VALIDATE -->|invalid| DENY[authority_denied]
+    DELEGATE --> TRACK[execution ownership tracking]
+    TRACK --> REVOKE[revoke_delegation]
+    REVOKE --> REPLAY[replay_delegation_chain]
 ```
 
-Bounded stabilization loops (max 48). Recovery cooldown scheduling.
+Delegation is supervised, approval-aware, reversible, and permission-aware. Revocation preserves operator control.
 
 ---
 
-## Operator Veto Routing
+## Multi-Operator Governance
 
 ```mermaid
 flowchart TB
-    REC[Recovery Recommendation] --> REQ[request_recovery_approval]
-    REQ --> OP{Operator Decision}
-    OP -->|authorize| AUTH[authorize_recovery_chain]
-    OP -->|veto| VETO[veto_recovery_path]
-    OP -->|escalate| ESC[escalate_recovery_risk]
-    AUTH --> EXEC[Supervised Recovery Execution]
-    VETO --> LOG[Transparent Log + Notify]
+    OP1[Operator A] --> OS[operator_sessions]
+    OP2[Operator B] --> OS
+    OS --> CC[collaborative_cognition]
+    CC --> TC[team_coordination]
+    TC --> OV[operator_veto]
+    OV --> APPROVE[Approval Gate]
+    OV --> VETO[Veto Path]
 ```
 
-All recovery execution must route through `operator_veto`. Trust-preserving escalation.
+Collaboration does not bypass governance. Operator veto and approval gates remain in the recovery and delegation paths.
 
 ---
 
-## Checkpoint Recovery Chain
+## Mission Federation
 
+```mermaid
+flowchart TD
+    CREATE[create_shared_mission] --> DAG[Shared Mission DAG]
+    DAG --> OWNER[Current Owner]
+    OWNER --> TRANSFER[transfer_mission_control]
+    TRANSFER --> SYNC[synchronize_mission_state]
+    SYNC --> PRESSURE[generate_team_pressure_map]
 ```
-Failure Forecast → Recovery Simulation → Rollback Graph → Operator Approval
-        │                    │                  │                │
-        ▼                    ▼                  ▼                ▼
-   Risk Surface      Recovery Paths      Checkpoint Select    Veto Gate
-        │                    │                  │                │
-        └────────────────────┴──────────────────┴────────────────┘
-                                    │
-                                    ▼
-                          Supervised Recovery Execution
-                                    │
-                                    ▼
-                          Continuity Restoration
+
+Shared mission control supports ownership transfer, collaborative planning surfaces, and team pressure maps while preserving mission command separation.
+
+---
+
+## Collaboration Lifecycle
+
+```mermaid
+sequenceDiagram
+    participant A as Operator A
+    participant OS as operator_sessions
+    participant CC as collaborative_cognition
+    participant SMC as shared_mission_control
+    participant DE as delegation_engine
+    participant TC as team_coordination
+
+    A->>OS: create_operator_session()
+    OS->>CC: synchronize_operator_state()
+    CC->>SMC: create_shared_mission()
+    SMC->>DE: delegate_execution()
+    DE->>TC: estimate_team_pressure()
+    TC->>CC: rebalance_shared_attention()
 ```
 
 ---
 
-## Stabilization Loop Topology
+## Operator Authority Matrix
 
-```
-stability-loops:runtime
-├── initialize_stability_loop()
-├── rebalance_runtime_pressure()
-├── throttle_recovery_density()
-└── suppress_instability_cascades()
-    ├── runtime_stabilization
-    ├── unified_command_center
-    └── runtime_fusion
-```
+| Role | Mission Control | Delegation | Recovery Authorization | Veto |
+|------|-----------------|------------|------------------------|------|
+| `observer` | View | No | No | No |
+| `contributor` | Participate | Limited | No | No |
+| `supervisor` | Transfer | Yes | Yes | Yes |
+| `admin` | Transfer | Yes | Yes | Yes |
+
+The initial runtime uses conservative local roles and keeps remote authority out of scope.
 
 ---
 
-## Unified Stream Topology
+## Cinematic Collaboration Surfaces
+
+Placeholders are available in `frontend/cognitive_workspace/src/collaboration/`:
+
+- Multi-operator cognition map
+- Shared mission DAG
+- Operator constellation
+- Delegation flow graph
+- Team pressure radar
+- Collaborative replay timeline
+- Supervision authority overlay
+- Collaborative cognition pulse
+
+Supported profiles: `compact`, `balanced`, `immersive`, `cinematic`, `supervisory`.
+
+---
+
+## Streaming Topology
 
 ```
 runtime (global)
-├── predictive-recovery-v2:runtime
-├── recovery-orchestration:runtime
-├── rollback-intelligence:runtime
-├── continuity-recovery:runtime
-├── stability-loops:runtime
+├── collaborative-cognition:runtime
+├── operator-sessions:runtime
+├── shared-mission-control:runtime
+├── delegation-engine:runtime
+├── team-coordination:runtime
+├── collaborative-recovery:runtime
 ├── operator-veto:runtime
 ├── unified-command:runtime
-├── predictive-governance:runtime
-└── ... (62+ domain channels)
+└── ... (collaboration, recovery, command, governance channels)
+```
+
+---
+
+## APIs
+
+```
+/api/v1/runtime/
+├── collaborative-cognition/    # shared cognition state
+├── operator-sessions/          # identity, presence, replay
+├── shared-mission-control/     # shared DAGs and ownership
+├── delegation-engine/          # supervised delegation
+├── team-coordination/          # pressure and attention
+├── collaborative-recovery/     # shared recovery authorization
+├── shared-command/             # command synchronization
+├── operator-presence/          # live presence
+└── collaboration-replay/       # bounded replay
+```
+
+---
+
+## Operator Console
+
+| Page | Purpose |
+|------|---------|
+| `/collaborative-cognition` | Multi-operator cognition state |
+| `/operator-sessions` | Active operator sessions |
+| `/shared-missions` | Shared mission control |
+| `/team-coordination` | Team coordination snapshot |
+| `/delegation-center` | Delegation ownership and revoke |
+| `/collaborative-recovery` | Shared recovery supervision |
+| `/team-pressure` | Team pressure radar |
+| `/shared-command` | Shared command synchronization |
+| `/operator-presence` | Operator constellation |
+| `/collaboration-replay` | Collaborative replay timeline |
+
+---
+
+## Environment Configuration
+
+```env
+ODIN_COLLABORATIVE_COGNITION_ENABLED=1
+ODIN_OPERATOR_SESSIONS_ENABLED=1
+ODIN_SHARED_MISSION_CONTROL_ENABLED=1
+ODIN_DELEGATION_ENGINE_ENABLED=1
+ODIN_TEAM_COORDINATION_ENABLED=1
+ODIN_COLLABORATIVE_RECOVERY_ENABLED=1
+ODIN_COLLABORATION_PROFILE=balanced
+ODIN_TEAM_SYNC_MODE=adaptive
+ODIN_COLLABORATIVE_RECOVERY_MODE=supervised
 ```
 
 ---
@@ -241,260 +264,57 @@ runtime (global)
 
 | Version | Era | Focus |
 |---------|-----|-------|
-| v0.56 | Live Cognitive Orchestration | Live streams, mission graph |
-| v0.57 | Operational Execution System | Supervised pipelines |
-| v0.58 | Distributed Cognitive Execution | Multi-workspace DAG federation |
-| v0.59 | Predictive Cognitive Governance | Risk forecasting, trust surfaces |
-| v0.60 | Unified Cognitive Command Center | Mission control, runtime fusion |
-| **v0.61** | **Closed-Loop Predictive Recovery** | Recovery orchestration, operator veto |
+| v0.49 | Adaptive Autonomous OS | Adaptive runtime and workspace autonomy |
+| v0.50 | Real Autonomous Cognitive OS | Native OS and memory fabric v2 |
+| v0.51 | Cognitive Infrastructure | Realtime cognition and engineering infrastructure |
+| v0.52 | Unified Cognitive Core | Attention engine and scheduler |
+| v0.53 | Autonomous Overnight Cognition | Deferred reasoning and morning briefing |
+| v0.54 | Native Autonomous Desktop | Window awareness and overlays |
+| v0.55 | Autonomous Cognitive Coordination | Objectives and mission continuity |
+| v0.56 | Live Cognitive Orchestration | Live streams and mission graph |
+| v0.57 | Operational Execution System | Supervised execution pipelines |
+| v0.58 | Distributed Cognitive Execution | Multi-workspace execution DAGs |
+| v0.59 | Predictive Cognitive Governance | Risk, trust, stabilization |
+| v0.60 | Unified Cognitive Command Center | Mission control and runtime fusion |
+| v0.61 | Closed-Loop Predictive Recovery | Recovery orchestration and operator veto |
+| **v0.62** | **Multi-Operator Collaborative Cognition** | Collaborative cognition and shared supervision |
 
 ---
 
-## Full System Architecture
+## Scaling Notes
 
-```mermaid
-flowchart TB
-    subgraph UI["Operator & Desktop"]
-        OC[Operator Console]
-        CW[Cognitive Workspace]
-        RS_UI[Recovery System HUD]
-    end
+- Operator stream compression
+- Adaptive collaboration throttling
+- Lazy replay hydration
+- Bounded synchronization loops (max 48)
+- Collaborative DAG virtualization
+- Low-power supervisory mode
+- Replay density throttling
+- SQLite session retention (500 sessions)
 
-    subgraph Recovery["Recovery Layer (v0.61)"]
-        PR[predictive_recovery_v2]
-        RO[recovery_orchestration]
-        RI[rollback_intelligence]
-        CR[continuity_recovery]
-        SL[stability_loops]
-        OV[operator_veto]
-    end
-
-    subgraph Command["Command Center (v0.60)"]
-        UCC[unified_command_center]
-        MC[mission_command]
-    end
-
-    subgraph Gov["Governance Layer"]
-        PG[predictive_governance]
-        RS[runtime_stabilization]
-    end
-
-    subgraph Exec["Execution Layer"]
-        ES[execution_system]
-        DE[distributed_execution]
-    end
-
-    UI --> Recovery
-    Recovery --> Command
-    Recovery --> Gov
-    Gov --> Exec
-    OV --> UI
-```
+Target hardware remains GTX 1650 Ti, 16GB RAM, and M-series MacBook profiles.
 
 ---
 
-## Local-First Architecture
-
-| Guarantee | Detail |
-|-----------|--------|
-| On-device processing | Cognition, recovery, governance, window tracking |
-| No cloud requirement | Mock provider works fully offline |
-| Transparent monitoring | All recovery runtimes expose `operator_visible: true` |
-| Bounded retention | SQLite rollback registry (600 nodes), timeline (500 events) |
-| Reversible state | Checkpoints across execution, recovery, and workflows |
-
----
-
-## Performance Profiles
-
-| Profile | Recovery | Rendering | Use Case |
-|---------|----------|-----------|----------|
-| `compact` | Low | Minimal | Background, low-power |
-| `balanced` | Medium | Adaptive | Daily development |
-| `immersive` | High | Full | Deep work |
-| `cinematic` | High | Maximum | Visual surfaces |
-| `overnight_recovery` | Bounded | Low-power | Idle recovery cycles |
-
----
-
-## Hardware Targets
-
-| Profile | GPU | RAM | Recommended Mode |
-|---------|-----|-----|------------------|
-| Minimum | GTX 1650 Ti | 16 GB | `compact` / `balanced` |
-| Recommended | RTX 3060+ | 32 GB | `balanced` / `immersive` |
-| Apple Silicon | M-series | 16 GB | `balanced` |
-
-Adaptive recovery throttling, lazy replay hydration, and bounded stabilization loops ensure operation within constraints.
-
----
-
-## Installation
-
-```bash
-git clone https://github.com/FrostXMello/odin-runtime.git
-cd odin-runtime/odin
-cp backend/.env.example backend/.env
-```
-
-### Backend
-
-```powershell
-.\scripts\start-backend.ps1
-```
-
-### Operator Console
-
-```powershell
-cd operator
-npm install
-npm run dev
-```
-
----
-
-## Quick Start
-
-```env
-# Enable recovery + command center core
-ODIN_PREDICTIVE_RECOVERY_V2_ENABLED=1
-ODIN_RECOVERY_ORCHESTRATION_ENABLED=1
-ODIN_ROLLBACK_INTELLIGENCE_ENABLED=1
-ODIN_CONTINUITY_RECOVERY_ENABLED=1
-ODIN_STABILITY_LOOPS_ENABLED=1
-ODIN_OPERATOR_VETO_ENABLED=1
-ODIN_UNIFIED_COMMAND_CENTER_ENABLED=1
-```
-
-1. Start backend and operator console
-2. Open `/predictive-recovery-v2` for failure forecasting
-3. Open `/recovery-orchestration` for supervised recovery coordination
-4. Open `/operator-veto` for recovery approval routing
-5. Stream recovery events on `predictive-recovery-v2:runtime`
-
----
-
-## Environment Configuration
-
-```env
-ODIN_PREDICTIVE_RECOVERY_V2_ENABLED=1
-ODIN_RECOVERY_ORCHESTRATION_ENABLED=1
-ODIN_ROLLBACK_INTELLIGENCE_ENABLED=1
-ODIN_CONTINUITY_RECOVERY_ENABLED=1
-ODIN_STABILITY_LOOPS_ENABLED=1
-ODIN_OPERATOR_VETO_ENABLED=1
-ODIN_RECOVERY_PROFILE=balanced
-ODIN_RECOVERY_DENSITY=adaptive
-ODIN_STABILITY_MODE=balanced
-```
-
----
-
-## API Structure
-
-```
-/api/v1/runtime/
-├── predictive-recovery-v2/    # Failure forecasting
-├── recovery-orchestration/    # Recovery coordination
-├── rollback-intelligence/   # Rollback graphs
-├── continuity-recovery/     # Mission continuity
-├── stability-loops/         # Stabilization loops
-├── operator-veto/           # Recovery approval
-├── unified-command/         # Command center
-└── ... (120+ route groups)
-```
-
----
-
-## Operator Console
-
-270+ pages for runtime visibility. Key recovery surfaces:
-
-| Page | Purpose |
-|------|---------|
-| `/predictive-recovery-v2` | Failure forecasting and simulation |
-| `/recovery-orchestration` | Supervised recovery coordination |
-| `/recovery-phases` | Recovery phase transitions |
-| `/rollback-intelligence` | Rollback graph generation |
-| `/rollback-replay` | Execution window replay |
-| `/continuity-recovery` | Mission continuity restoration |
-| `/stability-loops` | Bounded stabilization loops |
-| `/runtime-stability` | Instability cascade suppression |
-| `/operator-veto` | Recovery approval routing |
-| `/recovery-authorization` | Supervised rollback authorization |
-
----
-
-## Safety Guarantees
-
-| Guarantee | Enforcement |
-|-----------|-------------|
-| No hidden rollback | All recovery returns `transparent: true` |
-| Approval-gated | `approval_gated: true` on all recovery paths |
-| Operator veto | All execution routes through `operator_veto` |
-| Reversible | Checkpoints, rollback graphs, replay chains |
-| Bounded cycles | Max limits on recovery, replay, stabilization loops |
-| Local-only | `local_first: true` on all recovery subsystems |
-
----
-
-## Scaling Constraints
-
-- Rollback DAG virtualization (600 node cap)
-- Adaptive replay compression
-- Bounded recovery cycles (max 48)
-- Recovery cooldown scheduling
-- Stabilization density throttling
-- Low-power replay rendering
-- Stream prioritization under instability
-- Lazy continuity hydration
-
----
-
-## Runtime Feature Matrix
-
-| Feature | v0.59 | v0.60 | v0.61 |
-|---------|-------|-------|-------|
-| Predictive governance | ✅ | ✅ | ✅ |
-| Unified command center | — | ✅ | ✅ |
-| Predictive recovery v2 | — | — | ✅ |
-| Recovery orchestration | — | — | ✅ |
-| Rollback intelligence | — | — | ✅ |
-| Operator veto gates | — | — | ✅ |
-| Stability loops | — | — | ✅ |
-
----
-
-## Roadmap (v0.62+)
+## Future Upgrade Path
 
 | Version | Focus |
 |---------|-------|
-| v0.62 | Multi-operator collaborative cognition |
 | v0.63 | Real-time rollback DAG animation engine |
 | v0.64 | Federated cognition across opt-in workspaces |
 | v0.65 | Unified cinematic operational desktop |
 | v0.66 | Predictive mission continuity forecasting |
+| v0.67 | Persistent collaborative cognition memory fabric |
 
 ---
 
-## Contributing
+## Safety Statement
 
-1. Fork the repository
-2. Create a feature branch from `master`
-3. Extend incrementally — do not rewrite dispatcher semantics
-4. Add tests via `gen_p{N}_tests.py` pattern
-5. Document in `docs/`
-6. Submit a pull request
-
----
-
-## License
-
-See [LICENSE](LICENSE) in the repository root.
+Odin v0.62 supports collaboration without granting hidden authority. Every collaborative path remains transparent, permission-aware, approval-gated, observable, reversible, and bounded.
 
 ---
 
 <p align="center">
-  <strong>Odin Runtime v0.61</strong> — Closed-Loop Predictive Recovery<br>
-  Local-first · Approval-gated · Operator-supervised · Resilient
+  <strong>Odin Runtime v0.62</strong> — Multi-Operator Collaborative Cognition<br>
+  Local-first · Approval-gated · Operator-supervised · Collaborative
 </p>
