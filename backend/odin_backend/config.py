@@ -26,6 +26,8 @@ class Settings(BaseSettings):
     redis_url: str = "redis://127.0.0.1:6379/0"
     redis_event_channel: str = "odin:events"
     redis_task_queue: str = "odin:tasks"
+    redis_enabled: bool = False
+    event_bus_mode: str = "local"  # local | redis — local never requires Redis at startup
 
     database_url: str = "sqlite+aiosqlite:///./data/odin.db"
     chroma_persist_dir: Path = Field(default=Path("./data/chroma"))

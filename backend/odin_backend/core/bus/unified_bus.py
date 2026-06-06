@@ -100,6 +100,21 @@ class SignalUnificationBus(EventBus):
     async def disconnect(self) -> None:
         await self._inner.disconnect()
 
+    async def _safe_inner_publish(self, event: Event) -> None:
+        """Never crash routing when inner bus (e.g. Redis) is unavailable."""
+        try:
+            await self._inner.publish(event)
+        except RuntimeError as exc:
+            if "not connected" in str(exc).lower():
+                if not getattr(self, "_logged_inner_disconnected", False):
+                    logger.warning(
+                        "inner_event_bus_not_connected_events_dropped",
+                        inner=type(self._inner).__name__,
+                    )
+                    self._logged_inner_disconnected = True
+                return
+            raise
+
     async def publish(self, event: Event) -> None:
         """Auto-classify origin and route."""
         await self._route(event, origin=None, fast=False)
@@ -157,7 +172,7 @@ class SignalUnificationBus(EventBus):
         try:
             if bypass:
                 self._internal_bypassed += 1
-                await self._inner.publish(event)
+                await self._safe_inner_publish(event)
                 self._record_signal(
                     signal,
                     suppressed=False,
@@ -181,7 +196,7 @@ class SignalUnificationBus(EventBus):
             await self._process_through_kernel(signal)
             self._kernel_processed += 1
             self._recursion_guard.record_kernel_processed()
-            await self._inner.publish(event)
+            await self._safe_inner_publish(event)
             self._record_signal(
                 signal,
                 suppressed=False,

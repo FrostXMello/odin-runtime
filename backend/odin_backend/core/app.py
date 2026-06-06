@@ -116,10 +116,15 @@ class OdinApplication:
         self,
         settings: Settings | None = None,
         *,
-        use_redis: bool = True,
+        use_redis: bool | None = None,
         env_config: Any = None,
     ) -> None:
         self.settings = settings or get_settings()
+        if use_redis is None:
+            use_redis = (
+                self.settings.redis_enabled
+                and self.settings.event_bus_mode.lower() == "redis"
+            )
         if env_config is not None:
             self.env_config = env_config
         else:
@@ -1034,9 +1039,15 @@ class OdinApplication:
                 self._inner_bus = InMemoryEventBus()
                 self.event_bus = SignalUnificationBus(self._inner_bus)
                 self.event_bus.set_kernel(self.kernel)
+                if isinstance(self.event_bus, SignalUnificationBus):
+                    self.event_bus.set_kernel_enabled(self.env_config.kernel_enabled)
+                    self.event_bus.set_observability(self.observability)
+                logger.info("event_bus_running_in_local_noop_mode", backend="in_memory_fallback")
                 await self.event_bus.connect()
         else:
             await self.event_bus.connect()
+            if not self.use_redis:
+                logger.info("event_bus_running_in_local_noop_mode", backend="in_memory")
 
         await self.memory.startup()
         await self.mission_manager.connect()
