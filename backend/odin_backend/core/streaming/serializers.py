@@ -958,6 +958,36 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         TraceEventKind.EXECUTION_PRESSURE_UPDATED,
     ):
         channels.append("execution-visibility:runtime")
+    if event.kind in (
+        TraceEventKind.DISTRIBUTED_EXECUTION_FEDERATED,
+        TraceEventKind.DISTRIBUTED_PIPELINE_SYNCHRONIZED,
+    ):
+        channels.append("distributed-execution:runtime")
+    if event.kind in (
+        TraceEventKind.EXECUTION_DAG_GENERATED,
+        TraceEventKind.ROLLBACK_GRAPH_GENERATED,
+    ):
+        channels.append("execution-graph:runtime")
+    if event.kind in (
+        TraceEventKind.EXECUTION_FAILURE_FORECASTED,
+        TraceEventKind.RECOVERY_PATH_SIMULATED,
+    ):
+        channels.append("predictive-recovery:runtime")
+    if event.kind in (
+        TraceEventKind.WORKSPACE_CONTEXTS_SYNCHRONIZED,
+        TraceEventKind.WORKSPACE_DEPENDENCY_PRESSURE_UPDATED,
+    ):
+        channels.append("cross-workspace:runtime")
+    if event.kind in (
+        TraceEventKind.OPERATOR_INTERVENTION_FORECASTED,
+        TraceEventKind.OPERATOR_OVERLOAD_DETECTED,
+    ):
+        channels.append("intervention-intelligence:runtime")
+    if event.kind in (
+        TraceEventKind.AUTONOMOUS_WORKFLOW_CONTINUED,
+        TraceEventKind.WORKFLOW_STATE_CHECKPOINTED,
+    ):
+        channels.append("autonomous-workflows:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

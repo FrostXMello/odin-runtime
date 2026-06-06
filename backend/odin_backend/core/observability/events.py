@@ -399,6 +399,18 @@ class TraceEventKind(StrEnum):
     EXECUTION_CHAIN_PERSISTED = "execution_chain_persisted"
     EXECUTION_VISIBILITY_STREAMED = "execution_visibility_streamed"
     EXECUTION_PRESSURE_UPDATED = "execution_pressure_updated"
+    DISTRIBUTED_EXECUTION_FEDERATED = "distributed_execution_federated"
+    DISTRIBUTED_PIPELINE_SYNCHRONIZED = "distributed_pipeline_synchronized"
+    EXECUTION_DAG_GENERATED = "execution_dag_generated"
+    ROLLBACK_GRAPH_GENERATED = "rollback_graph_generated"
+    EXECUTION_FAILURE_FORECASTED = "execution_failure_forecasted"
+    RECOVERY_PATH_SIMULATED = "recovery_path_simulated"
+    WORKSPACE_CONTEXTS_SYNCHRONIZED = "workspace_contexts_synchronized"
+    WORKSPACE_DEPENDENCY_PRESSURE_UPDATED = "workspace_dependency_pressure_updated"
+    OPERATOR_INTERVENTION_FORECASTED = "operator_intervention_forecasted"
+    OPERATOR_OVERLOAD_DETECTED = "operator_overload_detected"
+    AUTONOMOUS_WORKFLOW_CONTINUED = "autonomous_workflow_continued"
+    WORKFLOW_STATE_CHECKPOINTED = "workflow_state_checkpointed"
 
 
 class TraceEvent(BaseModel):

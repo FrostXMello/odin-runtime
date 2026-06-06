@@ -869,6 +869,19 @@ class OdinApplication:
         self.workspace_operations = WorkspaceOperationsRuntime(self)
         self.execution_memory = ExecutionMemoryRuntime(self)
         self.runtime_execution_visibility = RuntimeExecutionVisibilityRuntime(self)
+        from odin_backend.core.distributed_execution import DistributedExecutionRuntime
+        from odin_backend.core.execution_graph import ExecutionGraphRuntime
+        from odin_backend.core.predictive_recovery import PredictiveRecoveryRuntime
+        from odin_backend.core.cross_workspace_coordination import CrossWorkspaceCoordinationRuntime
+        from odin_backend.core.intervention_intelligence import InterventionIntelligenceRuntime
+        from odin_backend.core.autonomous_workflows import AutonomousWorkflowsRuntime
+
+        self.distributed_execution = DistributedExecutionRuntime(self)
+        self.execution_graph = ExecutionGraphRuntime(self)
+        self.predictive_recovery = PredictiveRecoveryRuntime(self)
+        self.cross_workspace_coordination = CrossWorkspaceCoordinationRuntime(self)
+        self.intervention_intelligence = InterventionIntelligenceRuntime(self)
+        self.autonomous_workflows = AutonomousWorkflowsRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,

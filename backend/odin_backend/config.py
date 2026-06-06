@@ -463,6 +463,17 @@ class Settings(BaseSettings):
     execution_queue_mode: str = "adaptive"
     execution_stream_density: str = "balanced"
 
+    # Distributed cognitive execution (Prompt 58)
+    distributed_execution_enabled: bool = False
+    execution_graph_enabled: bool = False
+    predictive_recovery_enabled: bool = False
+    cross_workspace_coordination_enabled: bool = False
+    intervention_intelligence_enabled: bool = False
+    autonomous_workflows_enabled: bool = False
+    distributed_profile: str = "balanced"
+    execution_dag_mode: str = "adaptive"
+    recovery_forecasting_enabled: bool = True
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"
