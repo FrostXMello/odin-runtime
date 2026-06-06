@@ -1081,6 +1081,36 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         TraceEventKind.RECOVERY_PATH_VETOED,
     ):
         channels.append("operator-veto:runtime")
+    if event.kind == TraceEventKind.COLLABORATIVE_COGNITION_INITIALIZED:
+        channels.append("collaborative-cognition:runtime")
+    if event.kind in (
+        TraceEventKind.OPERATOR_SESSION_CREATED,
+        TraceEventKind.OPERATOR_SESSION_RESTORED,
+    ):
+        channels.append("operator-sessions:runtime")
+    if event.kind in (
+        TraceEventKind.SHARED_MISSION_CREATED,
+        TraceEventKind.MISSION_CONTROL_TRANSFERRED,
+    ):
+        channels.append("shared-mission-control:runtime")
+    if event.kind in (
+        TraceEventKind.DELEGATION_CHAIN_CREATED,
+        TraceEventKind.DELEGATION_AUTHORITY_VALIDATED,
+    ):
+        channels.append("delegation-engine:runtime")
+    if event.kind in (
+        TraceEventKind.TEAM_ATTENTION_REBALANCED,
+        TraceEventKind.TEAM_PRESSURE_UPDATED,
+        TraceEventKind.CROSS_OPERATOR_NOISE_SUPPRESSED,
+    ):
+        channels.append("team-coordination:runtime")
+    if event.kind in (
+        TraceEventKind.COLLABORATIVE_RECOVERY_REQUESTED,
+        TraceEventKind.SHARED_RECOVERY_AUTHORIZED,
+        TraceEventKind.COLLABORATIVE_ROLLBACK_GENERATED,
+        TraceEventKind.SHARED_CONTINUITY_RESTORED,
+    ):
+        channels.append("collaborative-recovery:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

@@ -450,6 +450,20 @@ class TraceEventKind(StrEnum):
     OPERATOR_VETO_REQUESTED = "operator_veto_requested"
     RECOVERY_CHAIN_AUTHORIZED = "recovery_chain_authorized"
     RECOVERY_PATH_VETOED = "recovery_path_vetoed"
+    COLLABORATIVE_COGNITION_INITIALIZED = "collaborative_cognition_initialized"
+    OPERATOR_SESSION_CREATED = "operator_session_created"
+    OPERATOR_SESSION_RESTORED = "operator_session_restored"
+    SHARED_MISSION_CREATED = "shared_mission_created"
+    MISSION_CONTROL_TRANSFERRED = "mission_control_transferred"
+    DELEGATION_CHAIN_CREATED = "delegation_chain_created"
+    DELEGATION_AUTHORITY_VALIDATED = "delegation_authority_validated"
+    TEAM_ATTENTION_REBALANCED = "team_attention_rebalanced"
+    TEAM_PRESSURE_UPDATED = "team_pressure_updated"
+    CROSS_OPERATOR_NOISE_SUPPRESSED = "cross_operator_noise_suppressed"
+    COLLABORATIVE_RECOVERY_REQUESTED = "collaborative_recovery_requested"
+    SHARED_RECOVERY_AUTHORIZED = "shared_recovery_authorized"
+    COLLABORATIVE_ROLLBACK_GENERATED = "collaborative_rollback_generated"
+    SHARED_CONTINUITY_RESTORED = "shared_continuity_restored"
 
 
 class TraceEvent(BaseModel):

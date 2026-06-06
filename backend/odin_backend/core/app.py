@@ -921,6 +921,19 @@ class OdinApplication:
         self.continuity_recovery = ContinuityRecoveryRuntime(self)
         self.stability_loops = StabilityLoopsRuntime(self)
         self.operator_veto = OperatorVetoRuntime(self)
+        from odin_backend.core.collaborative_cognition import CollaborativeCognitionRuntime
+        from odin_backend.core.operator_sessions import OperatorSessionsRuntime
+        from odin_backend.core.shared_mission_control import SharedMissionControlRuntime
+        from odin_backend.core.delegation_engine import DelegationEngineRuntime
+        from odin_backend.core.team_coordination import TeamCoordinationRuntime
+        from odin_backend.core.collaborative_recovery import CollaborativeRecoveryRuntime
+
+        self.collaborative_cognition = CollaborativeCognitionRuntime(self)
+        self.operator_sessions = OperatorSessionsRuntime(self)
+        self.shared_mission_control = SharedMissionControlRuntime(self)
+        self.delegation_engine = DelegationEngineRuntime(self)
+        self.team_coordination = TeamCoordinationRuntime(self)
+        self.collaborative_recovery = CollaborativeRecoveryRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,

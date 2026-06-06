@@ -507,6 +507,17 @@ class Settings(BaseSettings):
     recovery_density: str = "adaptive"
     stability_mode: str = "balanced"
 
+    # Multi-operator collaborative cognition (Prompt 62)
+    collaborative_cognition_enabled: bool = False
+    operator_sessions_enabled: bool = False
+    shared_mission_control_enabled: bool = False
+    delegation_engine_enabled: bool = False
+    team_coordination_enabled: bool = False
+    collaborative_recovery_enabled: bool = False
+    collaboration_profile: str = "balanced"
+    team_sync_mode: str = "adaptive"
+    collaborative_recovery_mode: str = "supervised"
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"
