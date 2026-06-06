@@ -804,6 +804,19 @@ class OdinApplication:
         self.persistent_agents = PersistentAgentsRuntime(self)
         self.runtime_coordination = RuntimeCoordinationRuntime(self)
         self.cognitive_state = CognitiveStateRuntime(self)
+        from odin_backend.core.overnight_cognition import OvernightCognitionRuntime
+        from odin_backend.core.deferred_reasoning import DeferredReasoningRuntime
+        from odin_backend.core.continuity_forecasting import ContinuityForecastingRuntime
+        from odin_backend.core.morning_briefing import MorningBriefingRuntime
+        from odin_backend.core.cognitive_maintenance import CognitiveMaintenanceRuntime
+        from odin_backend.core.idle_engineering import IdleEngineeringRuntime
+
+        self.overnight_cognition = OvernightCognitionRuntime(self)
+        self.deferred_reasoning = DeferredReasoningRuntime(self)
+        self.continuity_forecasting = ContinuityForecastingRuntime(self)
+        self.morning_briefing = MorningBriefingRuntime(self)
+        self.cognitive_maintenance = CognitiveMaintenanceRuntime(self)
+        self.idle_engineering = IdleEngineeringRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,

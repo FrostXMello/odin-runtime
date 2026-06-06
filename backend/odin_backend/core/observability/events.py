@@ -341,6 +341,17 @@ class TraceEventKind(StrEnum):
     RUNTIME_LOAD_REBALANCED = "runtime_load_rebalanced"
     DEFERRED_TASK_RESTORED = "deferred_task_restored"
     GLOBAL_CONTEXT_REBUILT = "global_context_rebuilt"
+    OVERNIGHT_CYCLE_STARTED = "overnight_cycle_started"
+    IDLE_REASONING_EXECUTED = "idle_reasoning_executed"
+    REASONING_CHAIN_DEFERRED = "reasoning_chain_deferred"
+    REASONING_CHAIN_RESTORED = "reasoning_chain_restored"
+    CONTINUITY_FORECAST_GENERATED = "continuity_forecast_generated"
+    ABANDONED_WORK_DETECTED = "abandoned_work_detected"
+    MORNING_BRIEFING_GENERATED = "morning_briefing_generated"
+    MEMORY_THREADS_COMPACTED = "memory_threads_compacted"
+    RUNTIME_STATE_STABILIZED = "runtime_state_stabilized"
+    IDLE_ENGINEERING_ANALYSIS_COMPLETED = "idle_engineering_analysis_completed"
+    REGRESSION_RISK_SIMULATED = "regression_risk_simulated"
 
 
 class TraceEvent(BaseModel):

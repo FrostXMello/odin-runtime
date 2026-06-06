@@ -818,6 +818,34 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         channels.append("runtime-coordination:runtime")
     if event.kind == TraceEventKind.COGNITIVE_STATE_UPDATED:
         channels.append("cognitive-state:runtime")
+    if event.kind in (
+        TraceEventKind.OVERNIGHT_CYCLE_STARTED,
+        TraceEventKind.OVERNIGHT_CYCLE_COMPLETED,
+        TraceEventKind.IDLE_REASONING_EXECUTED,
+    ):
+        channels.append("overnight:runtime")
+    if event.kind in (
+        TraceEventKind.REASONING_CHAIN_DEFERRED,
+        TraceEventKind.REASONING_CHAIN_RESTORED,
+    ):
+        channels.append("deferred-reasoning:runtime")
+    if event.kind in (
+        TraceEventKind.CONTINUITY_FORECAST_GENERATED,
+        TraceEventKind.ABANDONED_WORK_DETECTED,
+    ):
+        channels.append("continuity-forecast:runtime")
+    if event.kind == TraceEventKind.MORNING_BRIEFING_GENERATED:
+        channels.append("morning-briefing:runtime")
+    if event.kind in (
+        TraceEventKind.MEMORY_THREADS_COMPACTED,
+        TraceEventKind.RUNTIME_STATE_STABILIZED,
+    ):
+        channels.append("maintenance:runtime")
+    if event.kind in (
+        TraceEventKind.IDLE_ENGINEERING_ANALYSIS_COMPLETED,
+        TraceEventKind.REGRESSION_RISK_SIMULATED,
+    ):
+        channels.append("idle-engineering:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

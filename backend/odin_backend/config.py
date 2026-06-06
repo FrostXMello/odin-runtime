@@ -409,6 +409,16 @@ class Settings(BaseSettings):
     cognitive_state_enabled: bool = False
     global_cognition_profile: str = "balanced"
 
+    # Autonomous overnight cognition (Prompt 53)
+    deferred_reasoning_enabled: bool = False
+    continuity_forecasting_enabled: bool = False
+    morning_briefing_enabled: bool = False
+    cognitive_maintenance_enabled: bool = False
+    idle_engineering_enabled: bool = False
+    overnight_mode: str = "balanced"
+    overnight_max_cycles: int = 32
+    idle_reasoning_budget: str = "moderate"
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"
