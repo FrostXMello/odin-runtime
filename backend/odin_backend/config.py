@@ -441,6 +441,17 @@ class Settings(BaseSettings):
     reasoning_budget_mode: str = "adaptive"
     continuity_tracking_enabled: bool = True
 
+    # Live cognitive orchestration (Prompt 56)
+    live_orchestration_enabled: bool = False
+    objective_streams_enabled: bool = False
+    mission_graph_enabled: bool = False
+    realtime_coordination_enabled: bool = False
+    operator_situational_awareness_enabled: bool = False
+    cognitive_visual_layers_enabled: bool = False
+    orchestration_profile: str = "balanced"
+    cognitive_render_mode: str = "adaptive"
+    visual_density: str = "balanced"
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

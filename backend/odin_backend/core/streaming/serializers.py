@@ -904,6 +904,34 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         channels.append("cognitive-planning:runtime")
     if event.kind == TraceEventKind.OPERATOR_ALIGNMENT_UPDATED:
         channels.append("operator-alignment:runtime")
+    if event.kind in (
+        TraceEventKind.ORCHESTRATION_STATE_STREAMED,
+        TraceEventKind.RUNTIME_INSTABILITY_DETECTED,
+    ):
+        channels.append("live-orchestration:runtime")
+    if event.kind in (
+        TraceEventKind.OBJECTIVE_STREAM_UPDATED,
+        TraceEventKind.OBJECTIVE_STAGNATION_DETECTED,
+    ):
+        channels.append("objective-streams:runtime")
+    if event.kind == TraceEventKind.MISSION_GRAPH_LINKED:
+        channels.append("mission-graph:runtime")
+    if event.kind in (
+        TraceEventKind.COORDINATION_PRESSURE_UPDATED,
+        TraceEventKind.RUNTIME_STREAM_MULTIPLEXED,
+    ):
+        channels.append("realtime-coordination:runtime")
+    if event.kind in (
+        TraceEventKind.OPERATOR_BRIEF_GENERATED,
+        TraceEventKind.OPERATIONAL_PRESSURE_FORECASTED,
+    ):
+        channels.append("operator-awareness:runtime")
+    if event.kind in (
+        TraceEventKind.RUNTIME_CONSTELLATION_RENDERED,
+        TraceEventKind.OBJECTIVE_RIVER_RENDERED,
+        TraceEventKind.COGNITIVE_VISUAL_DENSITY_COMPRESSED,
+    ):
+        channels.append("visual-layers:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

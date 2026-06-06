@@ -375,6 +375,18 @@ class TraceEventKind(StrEnum):
     COGNITIVE_PLAN_GENERATED = "cognitive_plan_generated"
     REASONING_BUDGET_REBALANCED = "reasoning_budget_rebalanced"
     OPERATOR_ALIGNMENT_UPDATED = "operator_alignment_updated"
+    ORCHESTRATION_STATE_STREAMED = "orchestration_state_streamed"
+    RUNTIME_INSTABILITY_DETECTED = "runtime_instability_detected"
+    OBJECTIVE_STREAM_UPDATED = "objective_stream_updated"
+    OBJECTIVE_STAGNATION_DETECTED = "objective_stagnation_detected"
+    MISSION_GRAPH_LINKED = "mission_graph_linked"
+    COORDINATION_PRESSURE_UPDATED = "coordination_pressure_updated"
+    RUNTIME_STREAM_MULTIPLEXED = "runtime_stream_multiplexed"
+    OPERATOR_BRIEF_GENERATED = "operator_brief_generated"
+    OPERATIONAL_PRESSURE_FORECASTED = "operational_pressure_forecasted"
+    RUNTIME_CONSTELLATION_RENDERED = "runtime_constellation_rendered"
+    OBJECTIVE_RIVER_RENDERED = "objective_river_rendered"
+    COGNITIVE_VISUAL_DENSITY_COMPRESSED = "cognitive_visual_density_compressed"
 
 
 class TraceEvent(BaseModel):

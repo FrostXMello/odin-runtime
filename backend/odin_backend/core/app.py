@@ -843,6 +843,19 @@ class OdinApplication:
         self.mission_continuity = MissionContinuityRuntime(self)
         self.cognitive_planning = CognitivePlanningRuntime(self)
         self.operator_alignment = OperatorAlignmentRuntime(self)
+        from odin_backend.core.live_orchestration import LiveOrchestrationRuntime
+        from odin_backend.core.objective_streams import ObjectiveStreamsRuntime
+        from odin_backend.core.mission_graph import MissionGraphRuntime
+        from odin_backend.core.realtime_coordination import RealtimeCoordinationRuntime
+        from odin_backend.core.operator_situational_awareness import OperatorSituationalAwarenessRuntime
+        from odin_backend.core.cognitive_visual_layers import CognitiveVisualLayersRuntime
+
+        self.live_orchestration = LiveOrchestrationRuntime(self)
+        self.objective_streams = ObjectiveStreamsRuntime(self)
+        self.mission_graph = MissionGraphRuntime(self)
+        self.realtime_coordination = RealtimeCoordinationRuntime(self)
+        self.operator_situational_awareness = OperatorSituationalAwarenessRuntime(self)
+        self.cognitive_visual_layers = CognitiveVisualLayersRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,
