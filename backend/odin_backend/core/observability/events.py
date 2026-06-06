@@ -422,6 +422,19 @@ class TraceEventKind(StrEnum):
     EXECUTION_CONFIDENCE_ESTIMATED = "execution_confidence_estimated"
     WORKFLOW_COMPLETION_FORECASTED = "workflow_completion_forecasted"
     GOVERNANCE_SURFACE_RENDERED = "governance_surface_rendered"
+    COMMAND_CENTER_INITIALIZED = "command_center_initialized"
+    RUNTIME_LAYERS_SYNCHRONIZED = "runtime_layers_synchronized"
+    GLOBAL_OPERATIONAL_HEALTH_UPDATED = "global_operational_health_updated"
+    MISSION_PHASE_TRANSITIONED = "mission_phase_transitioned"
+    OBJECTIVE_GRAPH_SYNCHRONIZED = "objective_graph_synchronized"
+    COGNITION_STREAMS_MULTIPLEXED = "cognition_streams_multiplexed"
+    RUNTIME_STREAMS_COMPRESSED = "runtime_streams_compressed"
+    RUNTIME_CONTEXTS_FUSED = "runtime_contexts_fused"
+    CROSS_RUNTIME_PRESSURE_STABILIZED = "cross_runtime_pressure_stabilized"
+    COMMAND_SURFACE_RENDERED = "command_surface_rendered"
+    OPERATIONAL_OVERLAY_UPDATED = "operational_overlay_updated"
+    COGNITION_TIMELINE_APPENDED = "cognition_timeline_appended"
+    COGNITION_WINDOW_REPLAYED = "cognition_window_replayed"
 
 
 class TraceEvent(BaseModel):

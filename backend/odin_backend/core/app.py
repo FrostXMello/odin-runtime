@@ -895,6 +895,19 @@ class OdinApplication:
         self.trust_surfaces = TrustSurfacesRuntime(self)
         self.execution_confidence = ExecutionConfidenceRuntime(self)
         self.governance_visualization = GovernanceVisualizationRuntime(self)
+        from odin_backend.core.unified_command_center import UnifiedCommandCenterRuntime
+        from odin_backend.core.mission_command import MissionCommandRuntime
+        from odin_backend.core.cognitive_multiplexing import CognitiveMultiplexingRuntime
+        from odin_backend.core.runtime_fusion import RuntimeFusionRuntime
+        from odin_backend.core.operator_command_surfaces import OperatorCommandSurfacesRuntime
+        from odin_backend.core.live_cognition_timeline import LiveCognitionTimelineRuntime
+
+        self.unified_command_center = UnifiedCommandCenterRuntime(self)
+        self.mission_command = MissionCommandRuntime(self)
+        self.cognitive_multiplexing = CognitiveMultiplexingRuntime(self)
+        self.runtime_fusion = RuntimeFusionRuntime(self)
+        self.operator_command_surfaces = OperatorCommandSurfacesRuntime(self)
+        self.live_cognition_timeline = LiveCognitionTimelineRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,

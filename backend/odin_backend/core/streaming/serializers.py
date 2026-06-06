@@ -1016,6 +1016,37 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         channels.append("execution-confidence:runtime")
     if event.kind == TraceEventKind.GOVERNANCE_SURFACE_RENDERED:
         channels.append("governance-visualization:runtime")
+    if event.kind in (
+        TraceEventKind.COMMAND_CENTER_INITIALIZED,
+        TraceEventKind.RUNTIME_LAYERS_SYNCHRONIZED,
+        TraceEventKind.GLOBAL_OPERATIONAL_HEALTH_UPDATED,
+    ):
+        channels.append("unified-command:runtime")
+    if event.kind in (
+        TraceEventKind.MISSION_PHASE_TRANSITIONED,
+        TraceEventKind.OBJECTIVE_GRAPH_SYNCHRONIZED,
+    ):
+        channels.append("mission-command:runtime")
+    if event.kind in (
+        TraceEventKind.COGNITION_STREAMS_MULTIPLEXED,
+        TraceEventKind.RUNTIME_STREAMS_COMPRESSED,
+    ):
+        channels.append("cognitive-multiplexing:runtime")
+    if event.kind in (
+        TraceEventKind.RUNTIME_CONTEXTS_FUSED,
+        TraceEventKind.CROSS_RUNTIME_PRESSURE_STABILIZED,
+    ):
+        channels.append("runtime-fusion:runtime")
+    if event.kind in (
+        TraceEventKind.COMMAND_SURFACE_RENDERED,
+        TraceEventKind.OPERATIONAL_OVERLAY_UPDATED,
+    ):
+        channels.append("operator-command-surfaces:runtime")
+    if event.kind in (
+        TraceEventKind.COGNITION_TIMELINE_APPENDED,
+        TraceEventKind.COGNITION_WINDOW_REPLAYED,
+    ):
+        channels.append("live-cognition-timeline:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

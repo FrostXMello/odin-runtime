@@ -485,6 +485,17 @@ class Settings(BaseSettings):
     risk_forecasting_mode: str = "adaptive"
     runtime_stabilization_mode: str = "balanced"
 
+    # Unified cognitive command center (Prompt 60)
+    unified_command_center_enabled: bool = False
+    mission_command_enabled: bool = False
+    cognitive_multiplexing_enabled: bool = False
+    runtime_fusion_enabled: bool = False
+    operator_command_surfaces_enabled: bool = False
+    live_cognition_timeline_enabled: bool = False
+    command_profile: str = "balanced"
+    cognition_multiplex_mode: str = "adaptive"
+    operational_continuity_mode: str = "balanced"
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"
