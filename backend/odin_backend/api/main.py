@@ -77,6 +77,7 @@ from odin_backend.api.routes import (
     unified_cognitive_command_center_runtime,
     closed_loop_predictive_recovery_runtime,
     multi_operator_collaborative_cognition_runtime,
+    real_time_rollback_dag_animation_runtime,
     traces,
     ws,
     executions,
@@ -176,6 +177,7 @@ def create_api(odin_app: OdinApplication | None = None) -> FastAPI:
     app.include_router(unified_cognitive_command_center_runtime.router, prefix="/api/v1")
     app.include_router(closed_loop_predictive_recovery_runtime.router, prefix="/api/v1")
     app.include_router(multi_operator_collaborative_cognition_runtime.router, prefix="/api/v1")
+    app.include_router(real_time_rollback_dag_animation_runtime.router, prefix="/api/v1")
     app.include_router(traces.router, prefix="/api/v1")
     app.include_router(ws.router, prefix="/api/v1")
     app.include_router(executions.router, prefix="/api/v1")
