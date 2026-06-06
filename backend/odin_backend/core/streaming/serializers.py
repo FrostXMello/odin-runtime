@@ -389,6 +389,27 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         channels.append("workspace:runtime")
     if event.kind == TraceEventKind.RETRIEVAL_OPTIMIZED:
         channels.append("storage:runtime")
+    if event.kind in (
+        TraceEventKind.RUNTIME_PROFILE_CHANGED,
+        TraceEventKind.DEPLOYMENT_VALIDATED,
+        TraceEventKind.SNAPSHOT_RESTORED,
+    ):
+        channels.append("deployment:runtime")
+    if event.kind in (
+        TraceEventKind.STARTUP_OPTIMIZED,
+        TraceEventKind.MEMORY_PRESSURE_DETECTED,
+        TraceEventKind.MODEL_SWAPPED,
+    ):
+        channels.append("performance:runtime")
+    if event.kind in (
+        TraceEventKind.DAEMON_RESTARTED,
+        TraceEventKind.RECOVERY_COMPLETED,
+    ):
+        channels.append("diagnostics:runtime")
+    if event.kind == TraceEventKind.PRIVACY_FILTER_TRIGGERED:
+        channels.append("privacy:runtime")
+    if event.kind == TraceEventKind.COMMAND_EXECUTED:
+        channels.append("activity:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

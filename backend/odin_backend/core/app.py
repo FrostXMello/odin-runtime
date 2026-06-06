@@ -595,6 +595,17 @@ class OdinApplication:
         self.productivity_runtime = ProductivityRuntime(self)
         self.communications_runtime = CommunicationsRuntime(self)
         self.storage_optimization = StorageOptimizationRuntime(self)
+        from odin_backend.deployment import DeploymentRuntime
+        from odin_backend.core.performance import PerformanceRuntime
+        from odin_backend.core.privacy import PrivacyRuntime
+        from odin_backend.core.operator_shell import OperatorShellRuntime
+        from odin_backend.core.daily_workflow.daily_workflow_runtime import DailyWorkflowRuntime
+
+        self.deployment = DeploymentRuntime(self)
+        self.performance = PerformanceRuntime(self)
+        self.privacy = PrivacyRuntime(self)
+        self.operator_shell = OperatorShellRuntime(self)
+        self.daily_workflow = DailyWorkflowRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,
@@ -701,6 +712,8 @@ class OdinApplication:
         await self.agent_execution.connect()
         await self.runtime_guardian.connect()
         await self.project_os.connect()
+        if getattr(self.settings, "deployment_enabled", False):
+            await self.deployment.validate()
         if getattr(self.settings, "action_engine_enabled", False):
             await self.action_scheduler.start()
         if getattr(self.settings, "autonomous_operator_enabled", False):

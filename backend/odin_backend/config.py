@@ -264,6 +264,14 @@ class Settings(BaseSettings):
     communications_enabled: bool = False
     storage_optimization_enabled: bool = False
 
+    # Daily driver runtime (Prompt 37)
+    deployment_enabled: bool = False
+    performance_enabled: bool = False
+    privacy_enabled: bool = False
+    operator_shell_enabled: bool = False
+    daily_driver_enabled: bool = False
+    local_ai_mode: str = "balanced"
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

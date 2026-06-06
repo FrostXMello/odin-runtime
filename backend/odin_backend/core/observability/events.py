@@ -181,6 +181,16 @@ class TraceEventKind(StrEnum):
     CODING_SESSION_RESUMED = "coding_session_resumed"
     KNOWLEDGE_CLUSTER_CREATED = "knowledge_cluster_created"
     RETRIEVAL_OPTIMIZED = "retrieval_optimized"
+    RUNTIME_PROFILE_CHANGED = "runtime_profile_changed"
+    STARTUP_OPTIMIZED = "startup_optimized"
+    DAEMON_RESTARTED = "daemon_restarted"
+    MEMORY_PRESSURE_DETECTED = "memory_pressure_detected"
+    MODEL_SWAPPED = "model_swapped"
+    RECOVERY_COMPLETED = "recovery_completed"
+    SNAPSHOT_RESTORED = "snapshot_restored"
+    DEPLOYMENT_VALIDATED = "deployment_validated"
+    COMMAND_EXECUTED = "command_executed"
+    PRIVACY_FILTER_TRIGGERED = "privacy_filter_triggered"
 
 
 class TraceEvent(BaseModel):
