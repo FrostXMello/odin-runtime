@@ -14,6 +14,12 @@ from odin_backend.core.daemon.tray_runtime import TrayRuntime
 from odin_backend.core.daemon.daemon_supervisor import mode_config as daemon_mode_config
 from odin_backend.core.daemon.daemon_supervisor import MODES as DAEMON_MODES
 from odin_backend.core.daemon.wake_scheduler import WakeScheduler
+from odin_backend.core.daemon.persistent_presence import update as update_presence
+from odin_backend.core.daemon.cognition_scheduler import schedule as cognition_schedule
+from odin_backend.core.daemon.wake_intelligence import wake as wake_intel
+from odin_backend.core.daemon.deferred_reasoning import DeferredQueue
+from odin_backend.core.daemon.realtime_attention import attention as realtime_attention
+from odin_backend.core.daemon.operator_interrupts import interrupt as operator_interrupt
 
 
 class DaemonRuntime:
@@ -29,6 +35,8 @@ class DaemonRuntime:
         self._mode = "desktop_assistant"
         self._restarts = 0
         self._memory_samples: list[int] = []
+        self._deferred = DeferredQueue()
+        self._focus = "daemon"
 
     async def start(self) -> dict[str, Any]:
         if not getattr(self._app.settings, "daemon_mode_enabled", False):
@@ -85,6 +93,44 @@ class DaemonRuntime:
             for m in list(getattr(self._app.local_ai, "_loaded", set())):
                 await self._app.local_ai.evict(m)
         return {"accepted": True, "shutdown": True}
+
+    async def cognitive_tick(self, *, wakeword: str = "", energy: float = 0.0) -> dict[str, Any]:
+        if not getattr(self._app.settings, "cognitive_daemon_enabled", False):
+            return {"accepted": False, "reason": "cognitive_daemon_disabled"}
+        survival = getattr(self._app.settings, "survival_mode", "balanced")
+        sched = cognition_schedule(idle=self._idle, survival_mode=survival)
+        wake = wake_intel(wakeword=wakeword, energy=energy)
+        if wake["triggered"]:
+            self._idle = False
+        pres = update_presence(active=not self._idle)
+        attn = realtime_attention(focus=self._focus, weight=0.8 if wake["triggered"] else 0.4)
+        self._emit("daemon_attention_shifted", attn)
+        self._emit("persistent_presence_updated", pres)
+        if hasattr(self._app, "continuous_cognition") and not self._idle:
+            await self._app.continuous_cognition.tick()
+        return {
+            "accepted": True,
+            "schedule": sched,
+            "wake": wake,
+            "presence": pres,
+            "attention": attn,
+            "deferred_pending": len(self._deferred._items),
+        }
+
+    async def defer_reasoning(self, *, thought: str) -> dict[str, Any]:
+        if not getattr(self._app.settings, "cognitive_daemon_enabled", False):
+            return {"accepted": False, "reason": "cognitive_daemon_disabled"}
+        q = self._deferred.defer(thought)
+        return {"accepted": True, **q}
+
+    async def handle_interrupt(self, *, reason: str = "operator") -> dict[str, Any]:
+        hit = operator_interrupt(reason=reason)
+        self._emit("operator_interrupt_received", hit)
+        return {"accepted": True, **hit}
+
+    async def drain_deferred(self) -> dict[str, Any]:
+        items = self._deferred.drain()
+        return {"accepted": True, "items": items}
 
     def record_memory_sample(self, mb: int) -> dict[str, Any]:
         self._memory_samples.append(mb)
