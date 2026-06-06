@@ -390,6 +390,16 @@ class Settings(BaseSettings):
     context_rehydration_enabled: bool = False
     autonomous_overnight_mode_enabled: bool = False
 
+    # Cognitive infrastructure (Prompt 51)
+    realtime_cognition_enabled: bool = False
+    workspace_coordination_enabled: bool = False
+    engineering_infrastructure_v3_enabled: bool = False
+    memory_intelligence_enabled: bool = False
+    operator_intelligence_v4_enabled: bool = False
+    predictive_focus_enabled: bool = False
+    reliability_forecasting_enabled: bool = False
+    continuous_reasoning_enabled: bool = False
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

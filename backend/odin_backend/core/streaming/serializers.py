@@ -762,6 +762,33 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         TraceEventKind.ADAPTIVE_WORKFLOW_GENERATED,
     ):
         channels.append("productivity-v3:runtime")
+    if event.kind in (
+        TraceEventKind.COGNITIVE_HEARTBEAT_EXECUTED,
+        TraceEventKind.CONTINUOUS_REASONING_UPDATED,
+    ):
+        channels.append("realtime-cognition:runtime")
+        channels.append("desktop-v3:runtime")
+    if event.kind == TraceEventKind.ATTENTION_FLOW_UPDATED:
+        channels.append("realtime-cognition:runtime")
+    if event.kind in (
+        TraceEventKind.WORKSPACE_ATTENTION_SHIFTED,
+        TraceEventKind.MULTI_PROJECT_CONTEXT_LINKED,
+    ):
+        channels.append("workspace-coordination:runtime")
+    if event.kind in (
+        TraceEventKind.ARCHITECTURE_FORECAST_GENERATED,
+        TraceEventKind.RELIABILITY_RISK_DETECTED,
+        TraceEventKind.ENGINEERING_VALIDATION_PLANNED,
+    ):
+        channels.append("engineering-infrastructure:runtime")
+    if event.kind == TraceEventKind.PREDICTIVE_MEMORY_RESURFACED:
+        channels.append("memory-intelligence:runtime")
+    if event.kind in (
+        TraceEventKind.OPERATOR_FOCUS_FORECASTED,
+        TraceEventKind.COGNITIVE_LOAD_FORECASTED,
+        TraceEventKind.WORKFLOW_OPTIMIZATION_GENERATED,
+    ):
+        channels.append("operator-intelligence-v4:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

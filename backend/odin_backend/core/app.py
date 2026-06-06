@@ -779,6 +779,18 @@ class OdinApplication:
         self.engineering_evolution_v2 = AutonomousEngineeringDirector(self)
         self.memory_fabric_v2 = PersistentSemanticMemory(self)
         self.operator_intelligence_v3 = CognitiveProductivityRuntime(self)
+        from odin_backend.core.realtime_cognition import RealtimeCognitionRuntime, AttentionFlowRuntime
+        from odin_backend.core.workspace_coordination import WorkspaceCoordinationRuntime
+        from odin_backend.core.engineering_infrastructure_v3 import EngineeringInfrastructureRuntime
+        from odin_backend.core.memory_intelligence import MemoryIntelligenceRuntime
+        from odin_backend.core.operator_intelligence_v4 import PredictiveOperatorRuntime
+
+        self.realtime_cognition = RealtimeCognitionRuntime(self)
+        self.attention_flow = AttentionFlowRuntime(self)
+        self.workspace_coordination = WorkspaceCoordinationRuntime(self)
+        self.engineering_infrastructure_v3 = EngineeringInfrastructureRuntime(self)
+        self.memory_intelligence = MemoryIntelligenceRuntime(self)
+        self.operator_intelligence_v4 = PredictiveOperatorRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,

@@ -319,6 +319,17 @@ class TraceEventKind(StrEnum):
     ADAPTIVE_WORKFLOW_GENERATED = "adaptive_workflow_generated"
     PERSISTENT_REASONING_RESTORED = "persistent_reasoning_restored"
     AUTONOMOUS_TICK_EXECUTED = "autonomous_tick_executed"
+    COGNITIVE_HEARTBEAT_EXECUTED = "cognitive_heartbeat_executed"
+    MULTI_PROJECT_CONTEXT_LINKED = "multi_project_context_linked"
+    ARCHITECTURE_FORECAST_GENERATED = "architecture_forecast_generated"
+    RELIABILITY_RISK_DETECTED = "reliability_risk_detected"
+    PREDICTIVE_MEMORY_RESURFACED = "predictive_memory_resurfaced"
+    OPERATOR_FOCUS_FORECASTED = "operator_focus_forecasted"
+    COGNITIVE_LOAD_FORECASTED = "cognitive_load_forecasted"
+    WORKFLOW_OPTIMIZATION_GENERATED = "workflow_optimization_generated"
+    CONTINUOUS_REASONING_UPDATED = "continuous_reasoning_updated"
+    ATTENTION_FLOW_UPDATED = "attention_flow_updated"
+    ENGINEERING_VALIDATION_PLANNED = "engineering_validation_planned"
 
 
 class TraceEvent(BaseModel):
