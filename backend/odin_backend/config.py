@@ -311,6 +311,16 @@ class Settings(BaseSettings):
     transparency_enabled: bool = False
     cognitive_interface_mode: str = "balanced"
 
+    # Self-development loop (Prompt 42)
+    self_evolution_enabled: bool = False
+    self_improvement_memory_enabled: bool = False
+    autonomous_patching_loop_enabled: bool = False
+    runtime_benchmarks_enabled: bool = False
+    evolution_governance_enabled: bool = False
+    self_optimizing_routing_enabled: bool = False
+    evolution_approval_level: str = "proposal_only"
+    self_evolution_mode: str = "balanced"
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

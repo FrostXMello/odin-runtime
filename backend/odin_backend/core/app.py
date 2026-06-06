@@ -664,6 +664,17 @@ class OdinApplication:
         self.live_overlay = LiveOverlayRuntime(self)
         self.self_development = SelfDevelopmentRuntime(self)
         self.transparency = TransparencyRuntime(self)
+        from odin_backend.core.self_evolution import SelfEvolutionRuntime
+        from odin_backend.core.self_improvement_memory import SelfImprovementMemoryRuntime
+        from odin_backend.core.autonomous_patching import AutonomousPatchingRuntime
+        from odin_backend.core.runtime_benchmarks import RuntimeBenchmarksRuntime
+        from odin_backend.core.evolution_governance import EvolutionGovernanceRuntime
+
+        self.self_evolution = SelfEvolutionRuntime(self)
+        self.self_improvement_memory = SelfImprovementMemoryRuntime(self)
+        self.autonomous_patching = AutonomousPatchingRuntime(self)
+        self.runtime_benchmarks = RuntimeBenchmarksRuntime(self)
+        self.evolution_governance = EvolutionGovernanceRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,

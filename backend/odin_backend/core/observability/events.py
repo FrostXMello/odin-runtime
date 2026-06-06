@@ -230,6 +230,12 @@ class TraceEventKind(StrEnum):
     ARCHITECTURE_REFLECTION_GENERATED = "architecture_reflection_generated"
     EMOTIONAL_STATE_UPDATED = "emotional_state_updated"
     WORKSPACE_ATTENTION_CHANGED = "workspace_attention_changed"
+    IMPROVEMENT_CYCLE_STARTED = "improvement_cycle_started"
+    BOTTLENECK_DETECTED = "bottleneck_detected"
+    UPGRADE_PROPOSED = "upgrade_proposed"
+    ROLLBACK_TRIGGERED = "rollback_triggered"
+    OPTIMIZATION_APPLIED = "optimization_applied"
+    EVOLUTION_LEARNING_UPDATED = "evolution_learning_updated"
 
 
 class TraceEvent(BaseModel):

@@ -509,6 +509,31 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
     if event.kind == TraceEventKind.WORKSPACE_ATTENTION_CHANGED:
         channels.append("workstation:runtime")
         channels.append("presence:runtime")
+    if event.kind in (
+        TraceEventKind.IMPROVEMENT_CYCLE_STARTED,
+        TraceEventKind.BOTTLENECK_DETECTED,
+        TraceEventKind.UPGRADE_PROPOSED,
+        TraceEventKind.EVOLUTION_LEARNING_UPDATED,
+    ):
+        channels.append("evolution:runtime")
+    if event.kind in (
+        TraceEventKind.BENCHMARK_COMPLETED,
+        TraceEventKind.REGRESSION_DETECTED,
+    ):
+        channels.append("benchmarks:runtime")
+    if event.kind == TraceEventKind.REGRESSION_DETECTED:
+        channels.append("regressions:runtime")
+    if event.kind in (
+        TraceEventKind.PATCH_GENERATED,
+        TraceEventKind.PATCH_VALIDATED,
+        TraceEventKind.ROLLBACK_TRIGGERED,
+    ):
+        channels.append("patches:runtime")
+    if event.kind == TraceEventKind.UPGRADE_PROPOSED:
+        channels.append("upgrades:runtime")
+    if event.kind == TraceEventKind.OPTIMIZATION_APPLIED:
+        channels.append("evolution:runtime")
+        channels.append("upgrades:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels
