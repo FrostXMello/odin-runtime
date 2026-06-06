@@ -352,6 +352,17 @@ class TraceEventKind(StrEnum):
     RUNTIME_STATE_STABILIZED = "runtime_state_stabilized"
     IDLE_ENGINEERING_ANALYSIS_COMPLETED = "idle_engineering_analysis_completed"
     REGRESSION_RISK_SIMULATED = "regression_risk_simulated"
+    DESKTOP_RUNTIME_INITIALIZED = "desktop_runtime_initialized"
+    NATIVE_NOTIFICATION_DISPATCHED = "native_notification_dispatched"
+    WORKSPACE_TRANSITION_DETECTED = "workspace_transition_detected"
+    ACTIVE_WINDOW_CLASSIFIED = "active_window_classified"
+    OVERLAY_CONTEXT_UPDATED = "overlay_context_updated"
+    OVERLAY_SUPPRESSED = "overlay_suppressed"
+    WORKSPACE_SESSION_SAVED = "workspace_session_saved"
+    WORKSPACE_SESSION_RESTORED = "workspace_session_restored"
+    FOCUS_BREAKDOWN_DETECTED = "focus_breakdown_detected"
+    DESKTOP_ATTENTION_REBALANCED = "desktop_attention_rebalanced"
+    WORKSPACE_SALIENCE_UPDATED = "workspace_salience_updated"
 
 
 class TraceEvent(BaseModel):

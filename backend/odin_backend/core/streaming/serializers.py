@@ -846,6 +846,36 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         TraceEventKind.REGRESSION_RISK_SIMULATED,
     ):
         channels.append("idle-engineering:runtime")
+    if event.kind in (
+        TraceEventKind.DESKTOP_RUNTIME_INITIALIZED,
+        TraceEventKind.NATIVE_NOTIFICATION_DISPATCHED,
+    ):
+        channels.append("native-desktop:runtime")
+    if event.kind in (
+        TraceEventKind.WORKSPACE_TRANSITION_DETECTED,
+        TraceEventKind.ACTIVE_WINDOW_CLASSIFIED,
+    ):
+        channels.append("window-awareness:runtime")
+    if event.kind in (
+        TraceEventKind.OVERLAY_CONTEXT_UPDATED,
+        TraceEventKind.OVERLAY_SUPPRESSED,
+    ):
+        channels.append("live-overlays-v2:runtime")
+    if event.kind in (
+        TraceEventKind.WORKSPACE_SESSION_SAVED,
+        TraceEventKind.WORKSPACE_SESSION_RESTORED,
+    ):
+        channels.append("workspace-sessions:runtime")
+    if event.kind in (
+        TraceEventKind.FOCUS_SESSION_STARTED,
+        TraceEventKind.FOCUS_BREAKDOWN_DETECTED,
+    ):
+        channels.append("operator-focus:runtime")
+    if event.kind in (
+        TraceEventKind.DESKTOP_ATTENTION_REBALANCED,
+        TraceEventKind.WORKSPACE_SALIENCE_UPDATED,
+    ):
+        channels.append("desktop-attention:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

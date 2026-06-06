@@ -817,6 +817,19 @@ class OdinApplication:
         self.morning_briefing = MorningBriefingRuntime(self)
         self.cognitive_maintenance = CognitiveMaintenanceRuntime(self)
         self.idle_engineering = IdleEngineeringRuntime(self)
+        from odin_backend.core.native_desktop import NativeDesktopRuntime
+        from odin_backend.core.window_awareness import WindowAwarenessRuntime
+        from odin_backend.core.live_overlays_v2 import LiveOverlaysV2Runtime
+        from odin_backend.core.workspace_sessions import WorkspaceSessionsRuntime
+        from odin_backend.core.operator_focus import OperatorFocusRuntime
+        from odin_backend.core.desktop_attention import DesktopAttentionRuntime
+
+        self.native_desktop = NativeDesktopRuntime(self)
+        self.window_awareness = WindowAwarenessRuntime(self)
+        self.live_overlays_v2 = LiveOverlaysV2Runtime(self)
+        self.workspace_sessions = WorkspaceSessionsRuntime(self)
+        self.operator_focus = OperatorFocusRuntime(self)
+        self.desktop_attention = DesktopAttentionRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,

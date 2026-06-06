@@ -419,6 +419,17 @@ class Settings(BaseSettings):
     overnight_max_cycles: int = 32
     idle_reasoning_budget: str = "moderate"
 
+    # Native autonomous desktop (Prompt 54)
+    native_desktop_enabled: bool = False
+    window_awareness_enabled: bool = False
+    live_overlays_v2_enabled: bool = False
+    workspace_sessions_enabled: bool = False
+    operator_focus_enabled: bool = False
+    desktop_attention_enabled: bool = False
+    desktop_profile: str = "balanced"
+    window_tracking_enabled: bool = True
+    overlay_mode: str = "adaptive"
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"
