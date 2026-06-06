@@ -321,6 +321,15 @@ class Settings(BaseSettings):
     evolution_approval_level: str = "proposal_only"
     self_evolution_mode: str = "balanced"
 
+    # Native cognitive desktop (Prompt 43)
+    native_shell_enabled: bool = False
+    immersive_ui_enabled: bool = False
+    cognitive_daemon_enabled: bool = False
+    live_engineering_enabled: bool = False
+    conversational_os_enabled: bool = False
+    reasoning_streams_enabled: bool = False
+    native_desktop_mode: str = "balanced"
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

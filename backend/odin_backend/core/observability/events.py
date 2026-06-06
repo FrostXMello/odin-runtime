@@ -236,6 +236,15 @@ class TraceEventKind(StrEnum):
     ROLLBACK_TRIGGERED = "rollback_triggered"
     OPTIMIZATION_APPLIED = "optimization_applied"
     EVOLUTION_LEARNING_UPDATED = "evolution_learning_updated"
+    DAEMON_ATTENTION_SHIFTED = "daemon_attention_shifted"
+    LIVE_ENGINEERING_DETECTED = "live_engineering_detected"
+    CONVERSATIONAL_CONTEXT_RESTORED = "conversational_context_restored"
+    IMMERSIVE_MODE_CHANGED = "immersive_mode_changed"
+    WORKSPACE_FOCUS_CHANGED = "workspace_focus_changed"
+    OPERATOR_INTERRUPT_RECEIVED = "operator_interrupt_received"
+    PERSISTENT_PRESENCE_UPDATED = "persistent_presence_updated"
+    LIVE_PATCH_SUGGESTED = "live_patch_suggested"
+    COGNITIVE_SURFACE_RENDERED = "cognitive_surface_rendered"
 
 
 class TraceEvent(BaseModel):

@@ -675,6 +675,17 @@ class OdinApplication:
         self.autonomous_patching = AutonomousPatchingRuntime(self)
         self.runtime_benchmarks = RuntimeBenchmarksRuntime(self)
         self.evolution_governance = EvolutionGovernanceRuntime(self)
+        from odin_backend.core.native_shell import NativeShellRuntime
+        from odin_backend.core.immersive_ui import ImmersiveUiRuntime
+        from odin_backend.core.live_engineering import LiveEngineeringRuntime
+        from odin_backend.core.conversational_os import ConversationalOSRuntime
+        from odin_backend.core.reasoning_streams import ReasoningStreamsRuntime
+
+        self.native_shell = NativeShellRuntime(self)
+        self.immersive_ui = ImmersiveUiRuntime(self)
+        self.live_engineering = LiveEngineeringRuntime(self)
+        self.conversational_os = ConversationalOSRuntime(self)
+        self.reasoning_streams = ReasoningStreamsRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,

@@ -534,6 +534,28 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
     if event.kind == TraceEventKind.OPTIMIZATION_APPLIED:
         channels.append("evolution:runtime")
         channels.append("upgrades:runtime")
+    if event.kind in (
+        TraceEventKind.COGNITIVE_SURFACE_RENDERED,
+        TraceEventKind.WORKSPACE_FOCUS_CHANGED,
+    ):
+        channels.append("shell:runtime")
+    if event.kind == TraceEventKind.IMMERSIVE_MODE_CHANGED:
+        channels.append("immersive:runtime")
+    if event.kind in (
+        TraceEventKind.REASONING_STREAM_UPDATED,
+        TraceEventKind.LIVE_PATCH_SUGGESTED,
+    ):
+        channels.append("reasoning-streams:runtime")
+    if event.kind == TraceEventKind.LIVE_ENGINEERING_DETECTED:
+        channels.append("live-engineering:runtime")
+    if event.kind in (
+        TraceEventKind.DAEMON_ATTENTION_SHIFTED,
+        TraceEventKind.PERSISTENT_PRESENCE_UPDATED,
+        TraceEventKind.OPERATOR_INTERRUPT_RECEIVED,
+    ):
+        channels.append("daemon:runtime")
+    if event.kind == TraceEventKind.CONVERSATIONAL_CONTEXT_RESTORED:
+        channels.append("conversational-os:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels
