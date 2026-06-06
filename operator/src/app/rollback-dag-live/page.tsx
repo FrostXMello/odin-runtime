@@ -4,11 +4,11 @@ import { DesktopExperiencePanel } from "@/components/desktop-experience/runtime-
 export default function Page() {
   return (
     <DesktopExperiencePanel
-      title="Execution Replay"
-      subtitle="Supervised execution chain playback"
-      endpoint="/runtime/execution-replay"
+      title="Rollback DAG Live"
+      subtitle="Real-time DAG renderer"
+      endpoint="/runtime/rollback-dag-live"
       rootKey="rollback_animation_engine"
-      description="Operator-supervised execution chain replay with lazy hydration."
+      description="Live rollback DAG animation with virtualization and convergence visualization."
     />
   );
 }
