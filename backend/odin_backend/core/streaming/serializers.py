@@ -461,6 +461,29 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         TraceEventKind.IMPLEMENTATION_BLOCKED,
     ):
         channels.append("engineering:runtime")
+    if event.kind in (
+        TraceEventKind.ACTIVE_CONTEXT_UPDATED,
+        TraceEventKind.LIVE_CONTEXT_FUSED,
+    ):
+        channels.append("context:runtime")
+        channels.append("workstation:runtime")
+    if event.kind == TraceEventKind.WORKFLOW_PREDICTED:
+        channels.append("workflow:runtime")
+    if event.kind == TraceEventKind.COGNITION_TICK_COMPLETED:
+        channels.append("cognition:runtime")
+    if event.kind == TraceEventKind.EXECUTION_SUPERVISED:
+        channels.append("workstation:runtime")
+    if event.kind == TraceEventKind.INTERRUPTION_DETECTED:
+        channels.append("context:runtime")
+    if event.kind in (
+        TraceEventKind.CONTINUITY_RESTORED_LIVE,
+        TraceEventKind.UNFINISHED_WORK_DETECTED,
+    ):
+        channels.append("continuity:runtime")
+    if event.kind == TraceEventKind.REALTIME_ASSISTANCE_GENERATED:
+        channels.append("live-copilot:runtime")
+    if event.kind == TraceEventKind.WORKSPACE_ATTENTION_SHIFTED:
+        channels.append("workstation:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

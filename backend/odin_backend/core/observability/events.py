@@ -210,6 +210,16 @@ class TraceEventKind(StrEnum):
     REPOSITORY_GRAPH_UPDATED = "repository_graph_updated"
     DEBUGGING_STRATEGY_SELECTED = "debugging_strategy_selected"
     ROLLBACK_PREPARED = "rollback_prepared"
+    ACTIVE_CONTEXT_UPDATED = "active_context_updated"
+    WORKFLOW_PREDICTED = "workflow_predicted"
+    COGNITION_TICK_COMPLETED = "cognition_tick_completed"
+    EXECUTION_SUPERVISED = "execution_supervised"
+    INTERRUPTION_DETECTED = "interruption_detected"
+    CONTINUITY_RESTORED_LIVE = "continuity_restored_live"
+    REALTIME_ASSISTANCE_GENERATED = "realtime_assistance_generated"
+    WORKSPACE_ATTENTION_SHIFTED = "workspace_attention_shifted"
+    UNFINISHED_WORK_DETECTED = "unfinished_work_detected"
+    LIVE_CONTEXT_FUSED = "live_context_fused"
 
 
 class TraceEvent(BaseModel):

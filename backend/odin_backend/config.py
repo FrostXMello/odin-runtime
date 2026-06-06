@@ -290,6 +290,17 @@ class Settings(BaseSettings):
     engineering_agents_enabled: bool = False
     engineering_workspace_enabled: bool = False
 
+    # Cognitive workstation (Prompt 40)
+    context_fusion_enabled: bool = False
+    workstation_awareness_enabled: bool = False
+    continuous_cognition_enabled: bool = False
+    execution_coordination_enabled: bool = False
+    workflow_intelligence_enabled: bool = False
+    live_copilot_enabled: bool = False
+    cognitive_pipeline_enabled: bool = False
+    cognitive_continuity_enabled: bool = False
+    heavy_load: bool = False
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

@@ -632,6 +632,23 @@ class OdinApplication:
         self.validation_fabric = ValidationFabricRuntime(self)
         self.repository_graph = RepositoryGraphRuntime(self)
         self.engineering_agents = EngineeringAgentsRuntime(self)
+        from odin_backend.core.context_fusion import ContextFusionRuntime
+        from odin_backend.core.workstation import WorkstationAwarenessRuntime
+        from odin_backend.core.continuous_cognition import ContinuousCognitionRuntime
+        from odin_backend.core.execution_coordination import ExecutionCoordinationRuntime
+        from odin_backend.core.workflow_intelligence import WorkflowIntelligenceRuntime
+        from odin_backend.core.copilot.live_assistance_runtime import LiveCopilotRuntime
+        from odin_backend.core.cognitive_continuity import CognitiveContinuityRuntime
+        from odin_backend.core.local_ai.cognitive_pipeline_runtime import CognitivePipelineRuntime
+
+        self.context_fusion = ContextFusionRuntime(self)
+        self.workstation_awareness = WorkstationAwarenessRuntime(self)
+        self.continuous_cognition = ContinuousCognitionRuntime(self)
+        self.execution_coordination = ExecutionCoordinationRuntime(self)
+        self.workflow_intelligence = WorkflowIntelligenceRuntime(self)
+        self.live_copilot = LiveCopilotRuntime(self)
+        self.cognitive_continuity = CognitiveContinuityRuntime(self)
+        self.cognitive_pipeline = CognitivePipelineRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,
