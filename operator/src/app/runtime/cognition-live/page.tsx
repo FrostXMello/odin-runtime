@@ -19,6 +19,7 @@ export default function CognitionLivePage() {
         <CardHeader title="UI Mode" subtitle={String(ui.mode ?? "balanced")} />
         <CardBody>
           <p className="text-xs text-slate-400">FPS target: {String(ui.fps_target ?? 30)}</p>
+          <p className="text-xs text-slate-500">Native desktop layer · unified with immersive UI</p>
         </CardBody>
       </Card>
     </div>
