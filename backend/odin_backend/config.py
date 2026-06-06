@@ -338,6 +338,14 @@ class Settings(BaseSettings):
     live_environment_enabled: bool = False
     cognitive_surface_enabled: bool = False
 
+    # Cognitive desktop experience (Prompt 45)
+    desktop_client_enabled: bool = False
+    conversation_workspace_enabled: bool = False
+    live_visualization_enabled: bool = False
+    voice_desktop_enabled: bool = False
+    daily_operator_experience_enabled: bool = False
+    desktop_overlay_enabled: bool = False
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"
