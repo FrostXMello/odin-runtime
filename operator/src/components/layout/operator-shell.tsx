@@ -21,6 +21,26 @@ import { useRuntimeStream } from "@/hooks/useRuntimeStream";
 import { LiveIndicator, ConnectionHealthBadge } from "@/components/stream/live-indicator";
 import { ActivityTicker } from "@/components/stream/activity-ticker";
 
+/** Focus mode — three surfaces only during real work sessions. */
+const FOCUS_NAV = [
+  { href: "/missions", label: "Missions", icon: Route },
+  { href: "/runtime-health", label: "Health", icon: Activity },
+  { href: "/session-persistence", label: "Sessions", icon: GitBranch },
+] as const;
+
+const FOCUS_HREFS = new Set(FOCUS_NAV.map((item) => item.href));
+
+/** Five surfaces for daily engineering work — everything else is debug/legacy. */
+const DAILY_NAV = [
+  { href: "/missions", label: "Missions", icon: Route },
+  { href: "/runtime-health", label: "Health", icon: Activity },
+  { href: "/runtime-diagnostics", label: "Diagnostics", icon: Radar },
+  { href: "/session-persistence", label: "Sessions", icon: GitBranch },
+  { href: "/production-observability", label: "Observability", icon: Terminal },
+] as const;
+
+const DAILY_HREFS = new Set(DAILY_NAV.map((item) => item.href));
+
 const NAV = [
   { href: "/runtime", label: "Runtime", icon: Activity },
   { href: "/runtime/queues", label: "Queues", icon: Layers },
@@ -379,11 +399,53 @@ const NAV = [
   { href: "/graph", label: "Signal Graph", icon: GitBranch },
   { href: "/diagnostics", label: "Diagnostics", icon: Radar },
   { href: "/memory", label: "Memory Audit", icon: MemoryStick },
-];
+].filter((item) => !DAILY_HREFS.has(item.href));
+
+function NavLink({
+  href,
+  label,
+  icon: Icon,
+  pathname,
+  daily = false,
+}: {
+  href: string;
+  label: string;
+  icon: typeof Activity;
+  pathname: string;
+  daily?: boolean;
+}) {
+  const active = pathname === href || pathname.startsWith(`${href}/`);
+  return (
+    <Link
+      href={href}
+      className={cn(
+        "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-colors",
+        daily && "font-medium",
+        active
+          ? "bg-odin-accent/15 text-odin-cyan"
+          : "text-slate-400 hover:bg-odin-border/40 hover:text-slate-200"
+      )}
+    >
+      <Icon className="h-4 w-4 shrink-0" />
+      {label}
+    </Link>
+  );
+}
+
+function resolveNavLabel(pathname: string): string {
+  const focus = FOCUS_NAV.find((n) => pathname === n.href || pathname.startsWith(`${n.href}/`));
+  if (focus) return focus.label;
+  if (pathname.startsWith("/missions/")) return "Mission";
+  const daily = DAILY_NAV.find((n) => pathname === n.href || pathname.startsWith(`${n.href}/`));
+  if (daily) return daily.label;
+  const item = NAV.find((n) => pathname === n.href || pathname.startsWith(`${n.href}/`));
+  return item?.label ?? "Trace Explorer";
+}
 
 export function OperatorShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { pollIntervalMs, liveRefresh, setPollInterval, setLiveRefresh } = useOperatorStore();
+  const { pollIntervalMs, liveRefresh, focusMode, setPollInterval, setLiveRefresh, setFocusMode } =
+    useOperatorStore();
   useRuntimeStream(liveRefresh);
 
   return (
@@ -397,42 +459,70 @@ export function OperatorShell({ children }: { children: React.ReactNode }) {
             <div>
               <p className="text-xs font-bold tracking-[0.2em] text-odin-cyan">ODIN</p>
               <p className="text-[10px] text-odin-muted">Operator Console</p>
+              <p className="text-[9px] leading-tight text-odin-muted/80">
+                {focusMode ? "Focus: missions · health · sessions" : "Daily: missions · health · sessions"}
+              </p>
             </div>
           </div>
         </div>
-        <nav className="flex-1 space-y-0.5 p-2">
-          {NAV.map(({ href, label, icon: Icon }) => {
-            const active = pathname === href || pathname.startsWith(`${href}/`);
-            return (
+        <nav className="flex-1 space-y-0.5 overflow-y-auto p-2">
+          {focusMode ? (
+            <>
+              <p className="px-3 pb-1 pt-1 text-[10px] font-semibold uppercase tracking-wider text-odin-cyan/80">
+                Focus mode
+              </p>
+              {FOCUS_NAV.map(({ href, label, icon }) => (
+                <NavLink key={href} href={href} label={label} icon={icon} pathname={pathname} daily />
+              ))}
+              {pathname.startsWith("/missions/") && !FOCUS_HREFS.has(pathname) && (
+                <NavLink
+                  href={pathname}
+                  label="Current mission"
+                  icon={Route}
+                  pathname={pathname}
+                  daily
+                />
+              )}
+            </>
+          ) : (
+            <>
+              <p className="px-3 pb-1 pt-1 text-[10px] font-semibold uppercase tracking-wider text-odin-cyan/80">
+                Daily
+              </p>
+              {DAILY_NAV.map(({ href, label, icon }) => (
+                <NavLink key={href} href={href} label={label} icon={icon} pathname={pathname} daily />
+              ))}
+              <p className="px-3 pb-1 pt-3 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+                Debug & legacy
+              </p>
+              {NAV.map(({ href, label, icon }) => (
+                <NavLink key={href} href={href} label={label} icon={icon} pathname={pathname} />
+              ))}
               <Link
-                key={href}
-                href={href}
+                href="/traces"
                 className={cn(
                   "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-colors",
-                  active
+                  pathname.startsWith("/traces")
                     ? "bg-odin-accent/15 text-odin-cyan"
                     : "text-slate-400 hover:bg-odin-border/40 hover:text-slate-200"
                 )}
               >
-                <Icon className="h-4 w-4 shrink-0" />
-                {label}
+                <Search className="h-4 w-4" />
+                Traces
               </Link>
-            );
-          })}
-          <Link
-            href="/traces"
-            className={cn(
-              "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-colors",
-              pathname.startsWith("/traces")
-                ? "bg-odin-accent/15 text-odin-cyan"
-                : "text-slate-400 hover:bg-odin-border/40 hover:text-slate-200"
-            )}
-          >
-            <Search className="h-4 w-4" />
-            Traces
-          </Link>
+            </>
+          )}
         </nav>
         <div className="border-t border-odin-border p-3 space-y-2">
+          <label className="flex items-center justify-between text-[10px] text-odin-muted">
+            <span>Focus mode</span>
+            <input
+              type="checkbox"
+              checked={focusMode}
+              onChange={(e) => setFocusMode(e.target.checked)}
+              className="accent-odin-accent"
+            />
+          </label>
           <label className="flex items-center justify-between text-[10px] text-odin-muted">
             <span>Live refresh</span>
             <input
@@ -469,7 +559,7 @@ export function OperatorShell({ children }: { children: React.ReactNode }) {
             animate={{ opacity: 1, x: 0 }}
             className="text-sm font-medium text-slate-300"
           >
-            {NAV.find((n) => pathname.startsWith(n.href))?.label ?? "Trace Explorer"}
+            {resolveNavLabel(pathname)}
           </motion.h1>
           <div className="flex items-center gap-3">
             <LiveIndicator channel="runtime" />
