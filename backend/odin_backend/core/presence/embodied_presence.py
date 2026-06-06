@@ -43,6 +43,20 @@ class PresenceRuntime:
         self._events += 1
         return {"accepted": True, "events": self._events}
 
+    async def refine_style(self, *, familiarity: float = 0.5) -> dict[str, Any]:
+        if not getattr(self._app.settings, "presence_enabled", False):
+            return {"accepted": False, "reason": "presence_disabled"}
+        pace = "steady" if familiarity < 0.7 else "familiar"
+        self._personality = project(mode="engineering" if familiarity > 0.5 else "general")
+        return {
+            "accepted": True,
+            "familiarity": round(familiarity, 3),
+            "pacing": pace,
+            "personality": self._personality,
+            "disclosure": "simulated_continuity_not_consciousness",
+            "coherence": "session",
+        }
+
     def snapshot(self) -> dict[str, Any]:
         return {"emotion": self._emotion, "personality": self._personality, "events": self._events}
 
