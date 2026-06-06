@@ -145,37 +145,38 @@ async def app(settings):
 
 
 @pytest.mark.asyncio
-async def test_app_has_adaptive_runtime(app):
-    assert hasattr(app, "adaptive_runtime")
-    assert hasattr(app, "cognitive_load_balancer")
-
-
-@pytest.mark.asyncio
-async def test_adaptive_scale(app):
-    r = await app.adaptive_runtime.scale(load=0.6)
+async def test_daemon_v2_overnight(app):
+    r = await app.cognitive_daemon_v2.overnight()
     assert r["accepted"] is True
 
 
 @pytest.mark.asyncio
-async def test_adaptive_profile(app):
-    r = await app.adaptive_runtime.set_profile("balanced")
+async def test_defer_restore(app):
+    await app.cognitive_daemon_v2.defer_thought(thought="resume refactor plan")
+    r = await app.cognitive_daemon_v2.restore_deferred()
     assert r["accepted"] is True
 
 
-def test_adaptive_scaling_channel():
-    ev = TraceEvent(kind=TraceEventKind.ADAPTIVE_SCALING_APPLIED, trace_id="t", span_id="s", causal_chain_id="c")
-    assert "adaptive-runtime:runtime" in resolve_channels_for_trace(ev)
+@pytest.mark.asyncio
+async def test_low_power(app):
+    r = await app.cognitive_daemon_v2.set_low_power(enabled=True)
+    assert r["accepted"] is True
 
 
-def test_priority_shift_channel():
-    ev = TraceEvent(kind=TraceEventKind.RUNTIME_PRIORITY_SHIFTED, trace_id="t", span_id="s", causal_chain_id="c")
-    assert "adaptive-runtime:runtime" in resolve_channels_for_trace(ev)
+def test_deferred_reasoning_channel():
+    ev = TraceEvent(kind=TraceEventKind.DEFERRED_REASONING_RESTORED, trace_id="t", span_id="s", causal_chain_id="c")
+    assert "daemon-v2:runtime" in resolve_channels_for_trace(ev)
+
+
+def test_overnight_cycle_channel():
+    ev = TraceEvent(kind=TraceEventKind.OVERNIGHT_CYCLE_COMPLETED, trace_id="t", span_id="s", causal_chain_id="c")
+    assert "daemon-v2:runtime" in resolve_channels_for_trace(ev)
 
 
 @pytest.mark.parametrize("i", range(55))
 @pytest.mark.asyncio
 async def test_bulk(app, i):
-    r = await app.adaptive_runtime.scale(load=0.3 + i * 0.01)
+    r = await app.cognitive_daemon_v2.defer_thought(thought=f"t-{i}")
     assert r["accepted"] is True
 
 
@@ -183,5 +184,5 @@ async def test_bulk(app, i):
 @pytest.mark.parametrize("i", range(55))
 @pytest.mark.asyncio
 async def test_bulk_matrix(app, i, j):
-    r = await app.adaptive_runtime.scale(load=0.3 + i * 0.01)
+    r = await app.cognitive_daemon_v2.defer_thought(thought=f"t-{i}")
     assert r["accepted"] is True

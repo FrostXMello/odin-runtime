@@ -145,37 +145,34 @@ async def app(settings):
 
 
 @pytest.mark.asyncio
-async def test_app_has_adaptive_runtime(app):
-    assert hasattr(app, "adaptive_runtime")
-    assert hasattr(app, "cognitive_load_balancer")
+async def test_repo_analyze(app):
+    r = await app.engineering_evolution.analyze_repo(repo="odin")
+    assert r["accepted"] is True
+    assert r.get("supervised") is True
 
 
 @pytest.mark.asyncio
-async def test_adaptive_scale(app):
-    r = await app.adaptive_runtime.scale(load=0.6)
+async def test_upgrade_propose(app):
+    r = await app.engineering_evolution.propose_upgrade(goal="refactor routing")
     assert r["accepted"] is True
+    assert r["proposal"]["approval_required"] is True
+    assert r.get("auto_deploy") is False
 
 
-@pytest.mark.asyncio
-async def test_adaptive_profile(app):
-    r = await app.adaptive_runtime.set_profile("balanced")
-    assert r["accepted"] is True
+def test_engineering_upgrade_channel():
+    ev = TraceEvent(kind=TraceEventKind.ENGINEERING_UPGRADE_PROPOSED, trace_id="t", span_id="s", causal_chain_id="c")
+    assert "engineering-evolution:runtime" in resolve_channels_for_trace(ev)
 
 
-def test_adaptive_scaling_channel():
-    ev = TraceEvent(kind=TraceEventKind.ADAPTIVE_SCALING_APPLIED, trace_id="t", span_id="s", causal_chain_id="c")
-    assert "adaptive-runtime:runtime" in resolve_channels_for_trace(ev)
-
-
-def test_priority_shift_channel():
-    ev = TraceEvent(kind=TraceEventKind.RUNTIME_PRIORITY_SHIFTED, trace_id="t", span_id="s", causal_chain_id="c")
-    assert "adaptive-runtime:runtime" in resolve_channels_for_trace(ev)
+def test_technical_debt_channel():
+    ev = TraceEvent(kind=TraceEventKind.TECHNICAL_DEBT_DETECTED, trace_id="t", span_id="s", causal_chain_id="c")
+    assert "engineering-evolution:runtime" in resolve_channels_for_trace(ev)
 
 
 @pytest.mark.parametrize("i", range(55))
 @pytest.mark.asyncio
 async def test_bulk(app, i):
-    r = await app.adaptive_runtime.scale(load=0.3 + i * 0.01)
+    r = await app.engineering_evolution.analyze_repo(repo=f"repo-{i}")
     assert r["accepted"] is True
 
 
@@ -183,5 +180,5 @@ async def test_bulk(app, i):
 @pytest.mark.parametrize("i", range(55))
 @pytest.mark.asyncio
 async def test_bulk_matrix(app, i, j):
-    r = await app.adaptive_runtime.scale(load=0.3 + i * 0.01)
+    r = await app.engineering_evolution.analyze_repo(repo=f"repo-{i}")
     assert r["accepted"] is True

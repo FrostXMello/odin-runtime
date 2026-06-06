@@ -145,37 +145,37 @@ async def app(settings):
 
 
 @pytest.mark.asyncio
-async def test_app_has_adaptive_runtime(app):
-    assert hasattr(app, "adaptive_runtime")
-    assert hasattr(app, "cognitive_load_balancer")
-
-
-@pytest.mark.asyncio
-async def test_adaptive_scale(app):
-    r = await app.adaptive_runtime.scale(load=0.6)
+async def test_workspace_open(app):
+    r = await app.autonomous_workspace.open(project="odin")
     assert r["accepted"] is True
 
 
 @pytest.mark.asyncio
-async def test_adaptive_profile(app):
-    r = await app.adaptive_runtime.set_profile("balanced")
+async def test_workspace_predict(app):
+    r = await app.autonomous_workspace.predict_next()
     assert r["accepted"] is True
 
 
-def test_adaptive_scaling_channel():
-    ev = TraceEvent(kind=TraceEventKind.ADAPTIVE_SCALING_APPLIED, trace_id="t", span_id="s", causal_chain_id="c")
-    assert "adaptive-runtime:runtime" in resolve_channels_for_trace(ev)
+@pytest.mark.asyncio
+async def test_workflow_recover(app):
+    r = await app.autonomous_workspace.recover_workflow()
+    assert r["accepted"] is True
 
 
-def test_priority_shift_channel():
-    ev = TraceEvent(kind=TraceEventKind.RUNTIME_PRIORITY_SHIFTED, trace_id="t", span_id="s", causal_chain_id="c")
-    assert "adaptive-runtime:runtime" in resolve_channels_for_trace(ev)
+def test_workspace_prediction_channel():
+    ev = TraceEvent(kind=TraceEventKind.WORKSPACE_PREDICTION_GENERATED, trace_id="t", span_id="s", causal_chain_id="c")
+    assert "workspace-autonomy:runtime" in resolve_channels_for_trace(ev)
+
+
+def test_workflow_resumed_channel():
+    ev = TraceEvent(kind=TraceEventKind.WORKFLOW_RESUMED, trace_id="t", span_id="s", causal_chain_id="c")
+    assert "workspace-autonomy:runtime" in resolve_channels_for_trace(ev)
 
 
 @pytest.mark.parametrize("i", range(55))
 @pytest.mark.asyncio
 async def test_bulk(app, i):
-    r = await app.adaptive_runtime.scale(load=0.3 + i * 0.01)
+    r = await app.autonomous_workspace.open(project=f"proj-{i}")
     assert r["accepted"] is True
 
 
@@ -183,5 +183,5 @@ async def test_bulk(app, i):
 @pytest.mark.parametrize("i", range(55))
 @pytest.mark.asyncio
 async def test_bulk_matrix(app, i, j):
-    r = await app.adaptive_runtime.scale(load=0.3 + i * 0.01)
+    r = await app.autonomous_workspace.open(project=f"proj-{i}")
     assert r["accepted"] is True

@@ -145,37 +145,32 @@ async def app(settings):
 
 
 @pytest.mark.asyncio
-async def test_app_has_adaptive_runtime(app):
-    assert hasattr(app, "adaptive_runtime")
-    assert hasattr(app, "cognitive_load_balancer")
-
-
-@pytest.mark.asyncio
-async def test_adaptive_scale(app):
-    r = await app.adaptive_runtime.scale(load=0.6)
+async def test_operator_analyze(app):
+    r = await app.operator_intelligence_v2.analyze(hours=3.5, switches=5)
     assert r["accepted"] is True
+    assert r.get("local_only") is True
+    assert r.get("operator_controlled") is True
 
 
-@pytest.mark.asyncio
-async def test_adaptive_profile(app):
-    r = await app.adaptive_runtime.set_profile("balanced")
-    assert r["accepted"] is True
+def test_fatigue_channel():
+    ev = TraceEvent(kind=TraceEventKind.COGNITIVE_FATIGUE_DETECTED, trace_id="t", span_id="s", causal_chain_id="c")
+    assert "operator-intelligence:runtime" in resolve_channels_for_trace(ev)
 
 
-def test_adaptive_scaling_channel():
-    ev = TraceEvent(kind=TraceEventKind.ADAPTIVE_SCALING_APPLIED, trace_id="t", span_id="s", causal_chain_id="c")
-    assert "adaptive-runtime:runtime" in resolve_channels_for_trace(ev)
+def test_attention_heatmap_channel():
+    ev = TraceEvent(kind=TraceEventKind.ATTENTION_HEATMAP_UPDATED, trace_id="t", span_id="s", causal_chain_id="c")
+    assert "operator-intelligence:runtime" in resolve_channels_for_trace(ev)
 
 
-def test_priority_shift_channel():
-    ev = TraceEvent(kind=TraceEventKind.RUNTIME_PRIORITY_SHIFTED, trace_id="t", span_id="s", causal_chain_id="c")
-    assert "adaptive-runtime:runtime" in resolve_channels_for_trace(ev)
+def test_adaptive_assistance_channel():
+    ev = TraceEvent(kind=TraceEventKind.ADAPTIVE_ASSISTANCE_ADJUSTED, trace_id="t", span_id="s", causal_chain_id="c")
+    assert "operator-intelligence:runtime" in resolve_channels_for_trace(ev)
 
 
 @pytest.mark.parametrize("i", range(55))
 @pytest.mark.asyncio
 async def test_bulk(app, i):
-    r = await app.adaptive_runtime.scale(load=0.3 + i * 0.01)
+    r = await app.operator_intelligence_v2.analyze(hours=1.0 + i * 0.1, switches=i % 7)
     assert r["accepted"] is True
 
 
@@ -183,5 +178,5 @@ async def test_bulk(app, i):
 @pytest.mark.parametrize("i", range(55))
 @pytest.mark.asyncio
 async def test_bulk_matrix(app, i, j):
-    r = await app.adaptive_runtime.scale(load=0.3 + i * 0.01)
+    r = await app.operator_intelligence_v2.analyze(hours=1.0 + i * 0.1, switches=i % 7)
     assert r["accepted"] is True

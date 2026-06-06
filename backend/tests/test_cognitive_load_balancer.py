@@ -145,37 +145,25 @@ async def app(settings):
 
 
 @pytest.mark.asyncio
-async def test_app_has_adaptive_runtime(app):
-    assert hasattr(app, "adaptive_runtime")
-    assert hasattr(app, "cognitive_load_balancer")
-
-
-@pytest.mark.asyncio
-async def test_adaptive_scale(app):
-    r = await app.adaptive_runtime.scale(load=0.6)
+async def test_load_balance(app):
+    r = await app.cognitive_load_balancer.balance(load=0.55)
     assert r["accepted"] is True
 
 
-@pytest.mark.asyncio
-async def test_adaptive_profile(app):
-    r = await app.adaptive_runtime.set_profile("balanced")
-    assert r["accepted"] is True
+def test_load_balancer_channel():
+    ev = TraceEvent(kind=TraceEventKind.COGNITION_LOAD_BALANCED, trace_id="t", span_id="s", causal_chain_id="c")
+    assert "load-balancer:runtime" in resolve_channels_for_trace(ev)
 
 
-def test_adaptive_scaling_channel():
-    ev = TraceEvent(kind=TraceEventKind.ADAPTIVE_SCALING_APPLIED, trace_id="t", span_id="s", causal_chain_id="c")
-    assert "adaptive-runtime:runtime" in resolve_channels_for_trace(ev)
-
-
-def test_priority_shift_channel():
-    ev = TraceEvent(kind=TraceEventKind.RUNTIME_PRIORITY_SHIFTED, trace_id="t", span_id="s", causal_chain_id="c")
+def test_background_optimization_channel():
+    ev = TraceEvent(kind=TraceEventKind.BACKGROUND_OPTIMIZATION_COMPLETED, trace_id="t", span_id="s", causal_chain_id="c")
     assert "adaptive-runtime:runtime" in resolve_channels_for_trace(ev)
 
 
 @pytest.mark.parametrize("i", range(55))
 @pytest.mark.asyncio
 async def test_bulk(app, i):
-    r = await app.adaptive_runtime.scale(load=0.3 + i * 0.01)
+    r = await app.cognitive_load_balancer.balance(load=0.2 + i * 0.01)
     assert r["accepted"] is True
 
 
@@ -183,5 +171,5 @@ async def test_bulk(app, i):
 @pytest.mark.parametrize("i", range(55))
 @pytest.mark.asyncio
 async def test_bulk_matrix(app, i, j):
-    r = await app.adaptive_runtime.scale(load=0.3 + i * 0.01)
+    r = await app.cognitive_load_balancer.balance(load=0.2 + i * 0.01)
     assert r["accepted"] is True
