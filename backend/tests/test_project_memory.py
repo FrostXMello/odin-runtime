@@ -130,21 +130,26 @@ async def app(settings):
 
 
 @pytest.mark.asyncio
-async def test_debug_pipeline(app):
-    r = await app.autonomous_debugging_pipeline.analyze(stacktrace="Error: boom\n  at test.py:1")
+async def test_project_remember(app):
+    r = await app.project_memory.remember(repo="odin", decision="use sqlite", issue="migration")
     assert r["accepted"] is True
-    assert r["auto_patch"] is False
 
 
-def test_debug_cluster_channel():
-    ev = TraceEvent(kind=TraceEventKind.PATCH_HYPOTHESIS_GENERATED, trace_id="t", span_id="s", causal_chain_id="c")
-    assert "debugging-live:runtime" in resolve_channels_for_trace(ev)
+@pytest.mark.asyncio
+async def test_project_resume(app):
+    r = await app.project_memory.resume(repo="odin")
+    assert r["accepted"] is True
+
+
+def test_session_restored_channel():
+    ev = TraceEvent(kind=TraceEventKind.ENGINEERING_SESSION_RESTORED, trace_id="t", span_id="s", causal_chain_id="c")
+    assert "project-memory:runtime" in resolve_channels_for_trace(ev)
 
 
 @pytest.mark.parametrize("i", range(52))
 @pytest.mark.asyncio
 async def test_bulk(app, i):
-    r = await app.autonomous_debugging_pipeline.map_tests(tests=[f"t-{i}"])
+    r = await app.project_memory.remember(repo=f"repo-{i}")
     assert r["accepted"] is True
 
 
@@ -152,5 +157,5 @@ async def test_bulk(app, i):
 @pytest.mark.parametrize("i", range(52))
 @pytest.mark.asyncio
 async def test_bulk_matrix(app, i, j):
-    r = await app.autonomous_debugging_pipeline.map_tests(tests=[f"t-{i}"])
+    r = await app.project_memory.remember(repo=f"repo-{i}")
     assert r["accepted"] is True

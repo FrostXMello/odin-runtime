@@ -130,21 +130,21 @@ async def app(settings):
 
 
 @pytest.mark.asyncio
-async def test_debug_pipeline(app):
-    r = await app.autonomous_debugging_pipeline.analyze(stacktrace="Error: boom\n  at test.py:1")
+async def test_council(app):
+    r = await app.engineering_society.convene(topic="architecture modularization", patch="diff")
     assert r["accepted"] is True
-    assert r["auto_patch"] is False
+    assert r["supervised"] is True
 
 
-def test_debug_cluster_channel():
-    ev = TraceEvent(kind=TraceEventKind.PATCH_HYPOTHESIS_GENERATED, trace_id="t", span_id="s", causal_chain_id="c")
-    assert "debugging-live:runtime" in resolve_channels_for_trace(ev)
+def test_debate_channel():
+    ev = TraceEvent(kind=TraceEventKind.ARCHITECTURE_DEBATE_STARTED, trace_id="t", span_id="s", causal_chain_id="c")
+    assert "engineering-society:runtime" in resolve_channels_for_trace(ev)
 
 
 @pytest.mark.parametrize("i", range(52))
 @pytest.mark.asyncio
 async def test_bulk(app, i):
-    r = await app.autonomous_debugging_pipeline.map_tests(tests=[f"t-{i}"])
+    r = await app.engineering_society.convene(topic=f"topic-{i}")
     assert r["accepted"] is True
 
 
@@ -152,5 +152,5 @@ async def test_bulk(app, i):
 @pytest.mark.parametrize("i", range(52))
 @pytest.mark.asyncio
 async def test_bulk_matrix(app, i, j):
-    r = await app.autonomous_debugging_pipeline.map_tests(tests=[f"t-{i}"])
+    r = await app.engineering_society.convene(topic=f"topic-{i}")
     assert r["accepted"] is True

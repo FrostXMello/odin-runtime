@@ -130,21 +130,29 @@ async def app(settings):
 
 
 @pytest.mark.asyncio
-async def test_debug_pipeline(app):
-    r = await app.autonomous_debugging_pipeline.analyze(stacktrace="Error: boom\n  at test.py:1")
+async def test_app_has_orchestrator(app):
+    assert hasattr(app, "live_engineering_orchestrator")
+    assert hasattr(app, "autonomous_debugging_pipeline")
+
+
+@pytest.mark.asyncio
+async def test_observe_and_restore(app):
+    r = await app.live_engineering_orchestrator.observe(repo="odin", file="app.py", error="TypeError")
     assert r["accepted"] is True
-    assert r["auto_patch"] is False
+    await app.live_engineering_orchestrator.checkpoint()
+    restored = await app.live_engineering_orchestrator.restore()
+    assert restored["accepted"] is True
 
 
-def test_debug_cluster_channel():
-    ev = TraceEvent(kind=TraceEventKind.PATCH_HYPOTHESIS_GENERATED, trace_id="t", span_id="s", causal_chain_id="c")
-    assert "debugging-live:runtime" in resolve_channels_for_trace(ev)
+def test_engineering_goal_channel():
+    ev = TraceEvent(kind=TraceEventKind.ENGINEERING_GOAL_DETECTED, trace_id="t", span_id="s", causal_chain_id="c")
+    assert "engineering-live:runtime" in resolve_channels_for_trace(ev)
 
 
 @pytest.mark.parametrize("i", range(52))
 @pytest.mark.asyncio
 async def test_bulk(app, i):
-    r = await app.autonomous_debugging_pipeline.map_tests(tests=[f"t-{i}"])
+    r = await app.live_engineering_orchestrator.set_profile("balanced_engineering")
     assert r["accepted"] is True
 
 
@@ -152,5 +160,5 @@ async def test_bulk(app, i):
 @pytest.mark.parametrize("i", range(52))
 @pytest.mark.asyncio
 async def test_bulk_matrix(app, i, j):
-    r = await app.autonomous_debugging_pipeline.map_tests(tests=[f"t-{i}"])
+    r = await app.live_engineering_orchestrator.set_profile("balanced_engineering")
     assert r["accepted"] is True
