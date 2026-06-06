@@ -124,21 +124,27 @@ async def app(settings):
 
 
 @pytest.mark.asyncio
-async def test_daemon_tick(app):
-    r = await app.cognitive_daemon.tick(idle_s=30)
+async def test_evolution_review_open(app):
+    r = await app.evolution_review.open_review()
     assert r["accepted"] is True
-    assert r["resource_aware"] is True
+    assert r["approval_required"] is True
 
 
-def test_daemon_channel():
-    ev = TraceEvent(kind=TraceEventKind.DAEMON_ATTENTION_SHIFTED, trace_id="t", span_id="s", causal_chain_id="c")
-    assert "daemon-cognition:runtime" in resolve_channels_for_trace(ev)
+@pytest.mark.asyncio
+async def test_rollback_simulate(app):
+    r = await app.evolution_review.simulate_rollback(target="last_stable")
+    assert r["accepted"] is True
+
+
+def test_upgrade_review_channel():
+    ev = TraceEvent(kind=TraceEventKind.UPGRADE_REVIEW_OPENED, trace_id="t", span_id="s", causal_chain_id="c")
+    assert "evolution-review:runtime" in resolve_channels_for_trace(ev)
 
 
 @pytest.mark.parametrize("i", range(48))
 @pytest.mark.asyncio
 async def test_bulk(app, i):
-    r = await app.cognitive_daemon.set_profile("balanced")
+    r = await app.evolution_review.compare_benchmarks()
     assert r["accepted"] is True
 
 
@@ -146,5 +152,5 @@ async def test_bulk(app, i):
 @pytest.mark.parametrize("i", range(48))
 @pytest.mark.asyncio
 async def test_bulk_matrix(app, i, j):
-    r = await app.cognitive_daemon.set_profile("balanced")
+    r = await app.evolution_review.compare_benchmarks()
     assert r["accepted"] is True

@@ -124,21 +124,21 @@ async def app(settings):
 
 
 @pytest.mark.asyncio
-async def test_daemon_tick(app):
-    r = await app.cognitive_daemon.tick(idle_s=30)
+async def test_reasoning_render(app):
+    r = await app.live_reasoning.render(thought="analyze federation retry")
     assert r["accepted"] is True
-    assert r["resource_aware"] is True
+    assert r["lazy_render"] is True
 
 
-def test_daemon_channel():
-    ev = TraceEvent(kind=TraceEventKind.DAEMON_ATTENTION_SHIFTED, trace_id="t", span_id="s", causal_chain_id="c")
-    assert "daemon-cognition:runtime" in resolve_channels_for_trace(ev)
+def test_reasoning_branch_channel():
+    ev = TraceEvent(kind=TraceEventKind.REASONING_BRANCH_RENDERED, trace_id="t", span_id="s", causal_chain_id="c")
+    assert "reasoning-live:runtime" in resolve_channels_for_trace(ev)
 
 
 @pytest.mark.parametrize("i", range(48))
 @pytest.mark.asyncio
 async def test_bulk(app, i):
-    r = await app.cognitive_daemon.set_profile("balanced")
+    r = await app.live_reasoning.render(thought=f"thought-{i}")
     assert r["accepted"] is True
 
 
@@ -146,5 +146,5 @@ async def test_bulk(app, i):
 @pytest.mark.parametrize("i", range(48))
 @pytest.mark.asyncio
 async def test_bulk_matrix(app, i, j):
-    r = await app.cognitive_daemon.set_profile("balanced")
+    r = await app.live_reasoning.render(thought=f"thought-{i}")
     assert r["accepted"] is True

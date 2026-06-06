@@ -124,21 +124,26 @@ async def app(settings):
 
 
 @pytest.mark.asyncio
-async def test_daemon_tick(app):
-    r = await app.cognitive_daemon.tick(idle_s=30)
+async def test_focus_cycle(app):
+    r = await app.operator_productivity.start_focus(minutes=25)
     assert r["accepted"] is True
-    assert r["resource_aware"] is True
 
 
-def test_daemon_channel():
-    ev = TraceEvent(kind=TraceEventKind.DAEMON_ATTENTION_SHIFTED, trace_id="t", span_id="s", causal_chain_id="c")
-    assert "daemon-cognition:runtime" in resolve_channels_for_trace(ev)
+@pytest.mark.asyncio
+async def test_productivity_summary(app):
+    r = await app.operator_productivity.summary()
+    assert r["accepted"] is True
+
+
+def test_focus_degraded_channel():
+    ev = TraceEvent(kind=TraceEventKind.OPERATOR_FOCUS_DEGRADED, trace_id="t", span_id="s", causal_chain_id="c")
+    assert "productivity:runtime" in resolve_channels_for_trace(ev)
 
 
 @pytest.mark.parametrize("i", range(48))
 @pytest.mark.asyncio
 async def test_bulk(app, i):
-    r = await app.cognitive_daemon.set_profile("balanced")
+    r = await app.operator_productivity.record_distraction(context_switches=1 + i % 3)
     assert r["accepted"] is True
 
 
@@ -146,5 +151,5 @@ async def test_bulk(app, i):
 @pytest.mark.parametrize("i", range(48))
 @pytest.mark.asyncio
 async def test_bulk_matrix(app, i, j):
-    r = await app.cognitive_daemon.set_profile("balanced")
+    r = await app.operator_productivity.record_distraction(context_switches=1 + i % 3)
     assert r["accepted"] is True

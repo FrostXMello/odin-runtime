@@ -124,21 +124,28 @@ async def app(settings):
 
 
 @pytest.mark.asyncio
-async def test_daemon_tick(app):
-    r = await app.cognitive_daemon.tick(idle_s=30)
+async def test_app_has_cognitive_workspace(app):
+    assert hasattr(app, "cognitive_workspace")
+    assert hasattr(app, "live_reasoning")
+
+
+@pytest.mark.asyncio
+async def test_workspace_open_and_mode(app):
+    r = await app.cognitive_workspace.open(mode="engineering")
     assert r["accepted"] is True
-    assert r["resource_aware"] is True
+    m = await app.cognitive_workspace.set_mode("immersive")
+    assert m["accepted"] is True
 
 
-def test_daemon_channel():
-    ev = TraceEvent(kind=TraceEventKind.DAEMON_ATTENTION_SHIFTED, trace_id="t", span_id="s", causal_chain_id="c")
-    assert "daemon-cognition:runtime" in resolve_channels_for_trace(ev)
+def test_workspace_focus_channel():
+    ev = TraceEvent(kind=TraceEventKind.WORKSPACE_FOCUS_CHANGED, trace_id="t", span_id="s", causal_chain_id="c")
+    assert "workspace:runtime" in resolve_channels_for_trace(ev)
 
 
 @pytest.mark.parametrize("i", range(48))
 @pytest.mark.asyncio
 async def test_bulk(app, i):
-    r = await app.cognitive_daemon.set_profile("balanced")
+    r = await app.cognitive_workspace.set_profile("balanced")
     assert r["accepted"] is True
 
 
@@ -146,5 +153,5 @@ async def test_bulk(app, i):
 @pytest.mark.parametrize("i", range(48))
 @pytest.mark.asyncio
 async def test_bulk_matrix(app, i, j):
-    r = await app.cognitive_daemon.set_profile("balanced")
+    r = await app.cognitive_workspace.set_profile("balanced")
     assert r["accepted"] is True

@@ -124,21 +124,27 @@ async def app(settings):
 
 
 @pytest.mark.asyncio
-async def test_daemon_tick(app):
-    r = await app.cognitive_daemon.tick(idle_s=30)
+async def test_presence_connect(app):
+    r = await app.conversational_presence.connect()
     assert r["accepted"] is True
-    assert r["resource_aware"] is True
+    assert r["local_first"] is True
 
 
-def test_daemon_channel():
-    ev = TraceEvent(kind=TraceEventKind.DAEMON_ATTENTION_SHIFTED, trace_id="t", span_id="s", causal_chain_id="c")
-    assert "daemon-cognition:runtime" in resolve_channels_for_trace(ev)
+@pytest.mark.asyncio
+async def test_presence_turn(app):
+    r = await app.conversational_presence.turn(text="continue yesterday thread")
+    assert r["accepted"] is True
+
+
+def test_presence_channel():
+    ev = TraceEvent(kind=TraceEventKind.LIVE_PRESENCE_UPDATED, trace_id="t", span_id="s", causal_chain_id="c")
+    assert "presence-live:runtime" in resolve_channels_for_trace(ev)
 
 
 @pytest.mark.parametrize("i", range(48))
 @pytest.mark.asyncio
 async def test_bulk(app, i):
-    r = await app.cognitive_daemon.set_profile("balanced")
+    r = await app.conversational_presence.turn(text=f"turn-{i}")
     assert r["accepted"] is True
 
 
@@ -146,5 +152,5 @@ async def test_bulk(app, i):
 @pytest.mark.parametrize("i", range(48))
 @pytest.mark.asyncio
 async def test_bulk_matrix(app, i, j):
-    r = await app.cognitive_daemon.set_profile("balanced")
+    r = await app.conversational_presence.turn(text=f"turn-{i}")
     assert r["accepted"] is True
