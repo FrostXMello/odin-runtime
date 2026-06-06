@@ -934,6 +934,19 @@ class OdinApplication:
         self.delegation_engine = DelegationEngineRuntime(self)
         self.team_coordination = TeamCoordinationRuntime(self)
         self.collaborative_recovery = CollaborativeRecoveryRuntime(self)
+        from odin_backend.core.rollback_animation_engine import RollbackAnimationEngineRuntime
+        from odin_backend.core.causality_mapping import CausalityMappingRuntime
+        from odin_backend.core.replay_orchestration import ReplayOrchestrationRuntime
+        from odin_backend.core.pressure_propagation import PressurePropagationRuntime
+        from odin_backend.core.timeline_visualization import TimelineVisualizationRuntime
+        from odin_backend.core.execution_reconstruction import ExecutionReconstructionRuntime
+
+        self.rollback_animation_engine = RollbackAnimationEngineRuntime(self)
+        self.causality_mapping = CausalityMappingRuntime(self)
+        self.replay_orchestration = ReplayOrchestrationRuntime(self)
+        self.pressure_propagation = PressurePropagationRuntime(self)
+        self.timeline_visualization = TimelineVisualizationRuntime(self)
+        self.execution_reconstruction = ExecutionReconstructionRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,

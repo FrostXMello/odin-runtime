@@ -1111,6 +1111,48 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         TraceEventKind.SHARED_CONTINUITY_RESTORED,
     ):
         channels.append("collaborative-recovery:runtime")
+    if event.kind in (
+        TraceEventKind.ROLLBACK_ANIMATION_INITIALIZED,
+        TraceEventKind.ROLLBACK_DAG_ANIMATED,
+        TraceEventKind.EXECUTION_CHAIN_REPLAYED,
+        TraceEventKind.ROLLBACK_RENDER_STABILIZED,
+    ):
+        channels.append("rollback-animation:runtime")
+    if event.kind in (
+        TraceEventKind.CAUSALITY_GRAPH_GENERATED,
+        TraceEventKind.FAILURE_CHAIN_TRACED,
+        TraceEventKind.RUNTIME_DEPENDENCY_MAPPED,
+        TraceEventKind.REASONING_PATH_RECONSTRUCTED,
+    ):
+        channels.append("causality-mapping:runtime")
+    if event.kind in (
+        TraceEventKind.REPLAY_WINDOW_INITIALIZED,
+        TraceEventKind.COGNITION_TIMELINE_REPLAYED,
+        TraceEventKind.REPLAY_STATE_CHECKPOINTED,
+        TraceEventKind.REPLAY_DENSITY_THROTTLED,
+    ):
+        channels.append("replay-orchestration:runtime")
+    if event.kind in (
+        TraceEventKind.RUNTIME_PRESSURE_PROPAGATED,
+        TraceEventKind.PRESSURE_DIFFUSION_SIMULATED,
+        TraceEventKind.EXECUTION_CONGESTION_DETECTED,
+        TraceEventKind.PRESSURE_SURFACES_REBALANCED,
+    ):
+        channels.append("pressure-propagation:runtime")
+    if event.kind in (
+        TraceEventKind.OPERATIONAL_TIMELINE_RENDERED,
+        TraceEventKind.TIMELINE_WINDOW_COMPRESSED,
+        TraceEventKind.TIMELINE_LAYERS_SYNCHRONIZED,
+        TraceEventKind.TIMELINE_OVERLAY_GENERATED,
+    ):
+        channels.append("timeline-visualization:runtime")
+    if event.kind in (
+        TraceEventKind.EXECUTION_STATE_RECONSTRUCTED,
+        TraceEventKind.WORKSPACE_SEQUENCE_REBUILT,
+        TraceEventKind.COGNITION_WINDOW_RESTORED,
+        TraceEventKind.EXECUTION_RESTORE_SIMULATED,
+    ):
+        channels.append("execution-reconstruction:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

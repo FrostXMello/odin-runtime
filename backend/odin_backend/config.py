@@ -518,6 +518,17 @@ class Settings(BaseSettings):
     team_sync_mode: str = "adaptive"
     collaborative_recovery_mode: str = "supervised"
 
+    # Real-time rollback DAG animation engine (Prompt 63)
+    rollback_animation_engine_enabled: bool = False
+    causality_mapping_enabled: bool = False
+    replay_orchestration_enabled: bool = False
+    pressure_propagation_enabled: bool = False
+    timeline_visualization_enabled: bool = False
+    execution_reconstruction_enabled: bool = False
+    replay_profile: str = "balanced"
+    replay_density: str = "adaptive"
+    timeline_render_mode: str = "adaptive"
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"
