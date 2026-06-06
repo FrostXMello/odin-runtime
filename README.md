@@ -1,16 +1,16 @@
 # Odin Runtime
 
-**A supervised cognitive operating infrastructure for autonomous engineering, execution orchestration, and persistent desktop cognition.**
+**A supervised cognitive command infrastructure for autonomous engineering, orchestration, governance, and persistent desktop cognition.**
 
-Odin Runtime is a local-first cognitive operating platform — an orchestrated stack of 130+ runtime modules that coordinate reasoning, execution, governance, memory, missions, and desktop awareness on your own hardware.
+Odin Runtime is a local-first cognitive command platform — a unified stack of 136+ runtime modules that converge orchestration, execution, governance, memory, missions, and desktop awareness into one continuously operating mission control system on your own hardware.
 
 ---
 
 ## Vision
 
-Odin gives a single developer a continuously operating cognitive layer: one that remembers context across sessions, coordinates long-horizon work across multiple workspaces, executes supervised engineering pipelines, and governs cognition — without cloud dependency or unsupervised autonomy.
+Odin gives a single developer a continuously operating cognitive command layer: one that remembers context across sessions, coordinates long-horizon work across multiple workspaces, executes supervised engineering pipelines, governs cognition, and renders a unified operational cockpit — without cloud dependency or unsupervised autonomy.
 
-The system is designed to feel alive: live orchestration, execution DAGs, governance HUDs, and cinematic operator surfaces — while remaining bounded, reversible, approval-gated, and operator-supervised.
+The system is designed to feel like mission control: live orchestration, execution DAGs, governance HUDs, cognition rivers, and cinematic command surfaces — while remaining bounded, reversible, approval-gated, and operator-supervised.
 
 ---
 
@@ -18,9 +18,10 @@ The system is designed to feel alive: live orchestration, execution DAGs, govern
 
 Most AI tooling is ephemeral: chat sessions vanish, context resets, execution is opaque, and autonomy is either absent or unrestricted. Odin bridges that gap with:
 
-- **Persistent cognition** — sessions, objectives, mission graphs, execution memory
+- **Persistent cognition** — sessions, objectives, mission graphs, execution memory, cognition timelines
 - **Supervised execution** — reversible pipelines, checkpoints, rollback graphs
 - **Governed autonomy** — predictive stabilization, risk forecasting, trust surfaces
+- **Unified command center** — orchestration + execution + governance convergence
 - **Desktop integration** — window awareness, overlays, workspace sessions
 - **Operator sovereignty** — every action is visible, approval-gated, and reversible
 
@@ -40,42 +41,200 @@ Most AI tooling is ephemeral: chat sessions vanish, context resets, execution is
 
 ---
 
-## Safety & Governance Model
+## Unified Command Center Architecture (v0.60)
 
 ```mermaid
 flowchart TB
+    subgraph Command["Unified Command Center"]
+        UCC[unified_command_center]
+        MC[mission_command]
+        CM[cognitive_multiplexing]
+        RF[runtime_fusion]
+        OCS[operator_command_surfaces]
+        LCT[live_cognition_timeline]
+    end
+
     subgraph Operator["Operator Supervision"]
         APPROVE[Approval Gate]
         VETO[Operator Veto]
-        TRUST[Trust Surfaces]
+        HUD[Command HUD]
     end
 
-    subgraph Governance["Cognitive Governance (v0.59)"]
-        PG[Predictive Governance]
-        RS[Runtime Stabilization]
-        CR[Cognitive Risk]
-        EC[Execution Confidence]
+    subgraph Governance["Cognitive Governance"]
+        PG[predictive_governance]
+        RS[runtime_stabilization]
+        GV[governance_visualization]
     end
 
-    subgraph Execution["Distributed Execution (v0.58)"]
-        DE[Distributed Execution]
-        EG[Execution Graph]
-        AW[Autonomous Workflows]
+    subgraph Execution["Distributed Execution"]
+        ES[execution_system]
+        DE[distributed_execution]
+        EG[execution_graph]
     end
 
-    subgraph Orchestration["Live Orchestration (v0.56)"]
-        LO[Live Orchestration]
-        MG[Mission Graph]
+    subgraph Orchestration["Live Orchestration"]
+        LO[live_orchestration]
+        MG[mission_graph]
+        RC[realtime_coordination]
     end
 
-    Operator --> Governance
-    Governance --> Execution
-    Execution --> Orchestration
-    CR -->|forecast| APPROVE
-    TRUST -->|surface| Operator
+    Operator --> Command
+    Command --> Governance
+    Command --> Execution
+    Command --> Orchestration
+    UCC -->|synchronize| PG
+    MC -->|phase| MG
+    CM -->|multiplex| RC
+    RF -->|fuse| ES
+    OCS -->|render| HUD
+    LCT -->|replay| Operator
 ```
 
 No unrestricted autonomy. No hidden execution. No self-authoritative governance. No autonomous deployment.
+
+---
+
+## Command Center Modules
+
+| Module | App Handle | Role |
+|--------|-----------|------|
+| `unified_command_center` | `app.unified_command_center` | Global coordination, health tracking, pressure balancing |
+| `mission_command` | `app.mission_command` | Mission-centric cognition, phase transitions, objective federation |
+| `cognitive_multiplexing` | `app.cognitive_multiplexing` | Unified cognition streams, compression, prioritization |
+| `runtime_fusion` | `app.runtime_fusion` | Cross-runtime state fusion, checkpoint convergence |
+| `operator_command_surfaces` | `app.operator_command_surfaces` | Command HUD, cinematic overlays, visual density |
+| `live_cognition_timeline` | `app.live_cognition_timeline` | Cognition playback, mission timeline, replay chains |
+
+---
+
+## Runtime Fusion Topology
+
+```mermaid
+flowchart LR
+    subgraph Fusion["Runtime Fusion"]
+        RF[runtime_fusion]
+        CP[Checkpoint Layers]
+        SP[Pressure Stabilization]
+    end
+
+    CS[context_synchronization] --> RF
+    ES[execution_system] --> RF
+    RS[runtime_stabilization] --> SP
+    RF --> CP
+    CP -->|restore| ES
+```
+
+Cross-runtime state fusion converges orchestration, execution, and governance contexts into synchronized checkpoint layers. Reversible restoration preserves operator control.
+
+---
+
+## Cognition Multiplexing Flow
+
+```mermaid
+flowchart TB
+    subgraph Streams["Cognition Streams"]
+        UC[unified-command:runtime]
+        MC[mission-command:runtime]
+        LO[live-orchestration:runtime]
+        PG[predictive-governance:runtime]
+    end
+
+    CM[cognitive_multiplexing] --> Streams
+    CM -->|compress| LP[Low-Power Mode]
+    CM -->|prioritize| OV[Operator Visibility]
+    RC[realtime_coordination] --> CM
+```
+
+Adaptive cognition density scaling with stream prioritization under load. Bounded multiplex loops (max 64).
+
+---
+
+## Mission DAG Example
+
+```mermaid
+flowchart TD
+    P[planning] --> E[execution]
+    E --> R[recovery]
+    R --> S[stabilization]
+    S --> O[overnight]
+    O --> SR[supervision_review]
+    SR --> P
+```
+
+Mission command manages phase transitions with DAG virtualization (500 node cap). All transitions are operator-controlled.
+
+---
+
+## Governance + Execution Convergence
+
+```mermaid
+flowchart TB
+    PG[predictive_governance] --> UCC[unified_command_center]
+    ES[execution_system] --> RF[runtime_fusion]
+    LO[live_orchestration] --> UCC
+    UCC --> OCS[operator_command_surfaces]
+    RF --> LCT[live_cognition_timeline]
+    CR[cognitive_risk] -->|forecast| APPROVE[Approval Gate]
+    TS[trust_surfaces] -->|surface| Operator[Operator]
+```
+
+Governance and execution layers converge through the unified command center without bypassing approval gates or supervision.
+
+---
+
+## Operational Continuity Replay Chain
+
+```mermaid
+flowchart LR
+    A[append_cognition_event] --> B[build_operational_timeline]
+    B --> C[replay_cognition_window]
+    C --> D[compress_timeline_density]
+    D -->|overnight| B
+```
+
+SQLite-backed cognition timeline (max 500 events). Bounded replay loops (max 40). Overnight timeline compression.
+
+---
+
+## Unified Stream Topology
+
+```
+runtime (global)
+├── unified-command:runtime
+├── mission-command:runtime
+├── cognitive-multiplexing:runtime
+├── runtime-fusion:runtime
+├── operator-command-surfaces:runtime
+├── live-cognition-timeline:runtime
+├── predictive-governance:runtime
+├── distributed-execution:runtime
+├── live-orchestration:runtime
+└── ... (56+ domain channels)
+```
+
+Events flow through `resolve_channels_for_trace()` without breaking dispatcher semantics.
+
+---
+
+## Synchronization Lifecycle
+
+```mermaid
+sequenceDiagram
+    participant Op as Operator
+    participant UCC as unified_command_center
+    participant RF as runtime_fusion
+    participant CM as cognitive_multiplexing
+
+    Op->>UCC: initialize_command_center()
+    UCC->>UCC: synchronize_runtime_layers()
+    UCC->>RF: fuse_runtime_contexts()
+    RF->>RF: synchronize_checkpoint_layers()
+    UCC->>CM: multiplex_cognition_streams()
+    CM->>Op: prioritize_cognitive_visibility()
+    UCC->>Op: compute_global_operational_health()
+```
+
+Adaptive synchronization throttling with runtime fusion cooldowns (max 48 loops).
 
 ---
 
@@ -106,7 +265,8 @@ No unrestricted autonomy. No hidden execution. No self-authoritative governance.
 | v0.56 | Live Cognitive Orchestration | Live streams, mission graph |
 | v0.57 | Operational Execution System | Supervised pipelines, agent collaboration |
 | v0.58 | Distributed Cognitive Execution | Multi-workspace DAG federation |
-| **v0.59** | **Predictive Cognitive Governance** | Risk forecasting, trust surfaces, stabilization |
+| v0.59 | Predictive Cognitive Governance | Risk forecasting, trust surfaces, stabilization |
+| **v0.60** | **Unified Cognitive Command Center** | Mission control, runtime fusion, cognition multiplexing |
 
 ---
 
@@ -118,6 +278,16 @@ flowchart TB
         OC[Operator Console]
         CW[Cognitive Workspace]
         ND[Native Desktop]
+        CC[Command Center HUD]
+    end
+
+    subgraph Command["Command Center (v0.60)"]
+        UCC[unified_command_center]
+        MC[mission_command]
+        CM[cognitive_multiplexing]
+        RF[runtime_fusion]
+        OCS[operator_command_surfaces]
+        LCT[live_cognition_timeline]
     end
 
     subgraph Gov["Governance Layer"]
@@ -143,12 +313,14 @@ flowchart TB
     end
 
     subgraph Core["Cognitive Core"]
-        UCC[unified_cognitive_core]
+        UCCore[unified_cognitive_core]
         SCH[cognitive_scheduler]
         AE[attention_engine]
     end
 
-    UI --> Gov
+    UI --> Command
+    Command --> Gov
+    Command --> Exec
     Gov --> Exec
     Exec --> Orch
     Orch --> Core
@@ -179,13 +351,14 @@ flowchart TB
 
 ---
 
-## Desktop Cognition Layer
+## Desktop Cognition Surfaces
 
 - Window awareness (local, exclusion-aware)
 - Live overlays v2 (adaptive throttling)
 - Workspace sessions (SQLite restore chains)
 - Operator focus (distraction pressure)
 - Desktop attention (salience scoring)
+- Command center HUD (cinematic operational rendering)
 
 ---
 
@@ -197,20 +370,14 @@ Bounded overnight cycles with deferred reasoning, continuity forecasting, mornin
 
 ## Mission Orchestration
 
-Objective trees, mission graphs, resume chains, and continuity scoring across sessions. All mission state is supervised and locally persisted.
-
----
-
-## Autonomous Workflows
-
-Bounded automation loops with checkpointing and stabilization. `no_auto_deploy: true` on all workflow continuation. Operator override required for escalation.
+Objective trees, mission graphs, mission command phases, resume chains, and continuity scoring across sessions. All mission state is supervised and locally persisted.
 
 ---
 
 ## Operator Supervision Model
 
 ```
-Cognition → Governance Check → Risk Forecast → Trust Surface
+Cognition → Command Center → Governance Check → Risk Forecast → Trust Surface
                                     │
                                     ▼
                             Approval Gate
@@ -225,34 +392,6 @@ Cognition → Governance Check → Risk Forecast → Trust Surface
 
 ---
 
-## Streaming Architecture
-
-### Stream Topology
-
-```
-runtime (global)
-├── predictive-governance:runtime
-├── runtime-stabilization:runtime
-├── cognitive-risk:runtime
-├── trust-surfaces:runtime
-├── execution-confidence:runtime
-├── governance-visualization:runtime
-├── distributed-execution:runtime
-├── execution-graph:runtime
-├── live-orchestration:runtime
-└── ... (50+ domain channels)
-```
-
-Events flow through `resolve_channels_for_trace()` without breaking dispatcher semantics.
-
----
-
-## Native Desktop Integration
-
-Tray coordination, native notifications, low-power mode, window classification, and workspace session restore. See `docs/NATIVE_DESKTOP_RUNTIME.md`.
-
----
-
 ## Performance Profiles
 
 | Profile | Cognition | Rendering | Use Case |
@@ -262,7 +401,7 @@ Tray coordination, native notifications, low-power mode, window classification, 
 | `engineering_operations` | High | Standard | Active coding |
 | `immersive` | High | Full | Deep work |
 | `cinematic` | High | Maximum | Visual surfaces |
-| `overnight_governance` | Bounded | Low-power | Idle governance cycles |
+| `overnight_command` | Bounded | Low-power | Idle command center cycles |
 
 ---
 
@@ -274,7 +413,7 @@ Tray coordination, native notifications, low-power mode, window classification, 
 | Recommended | RTX 3060+ | 32 GB | `balanced` / `immersive` |
 | Apple Silicon | M-series | 16 GB | `balanced` |
 
-Adaptive governance throttling, lazy visualization hydration, and bounded simulation loops ensure operation within constraints.
+Adaptive synchronization throttling, lazy HUD hydration, bounded replay loops, and low-power cinematic mode ensure operation within constraints.
 
 ---
 
@@ -314,32 +453,39 @@ npm run dev
 ## Quick Start
 
 ```env
-# Enable governance + execution core
+# Enable command center + governance + execution core
+ODIN_UNIFIED_COMMAND_CENTER_ENABLED=1
+ODIN_MISSION_COMMAND_ENABLED=1
+ODIN_COGNITIVE_MULTIPLEXING_ENABLED=1
+ODIN_RUNTIME_FUSION_ENABLED=1
+ODIN_OPERATOR_COMMAND_SURFACES_ENABLED=1
+ODIN_LIVE_COGNITION_TIMELINE_ENABLED=1
 ODIN_PREDICTIVE_GOVERNANCE_ENABLED=1
-ODIN_RUNTIME_STABILIZATION_ENABLED=1
-ODIN_DISTRIBUTED_EXECUTION_ENABLED=1
 ODIN_EXECUTION_SYSTEM_ENABLED=1
 ODIN_LIVE_ORCHESTRATION_ENABLED=1
 ```
 
 1. Start backend and operator console
-2. Open `/predictive-governance` for governance health
-3. Open `/execution-system` for supervised pipelines
-4. Stream governance events on `predictive-governance:runtime`
+2. Open `/unified-command` for mission control dashboard
+3. Open `/mission-command` for mission phase tracking
+4. Stream command events on `unified-command:runtime`
 
 ---
 
 ## Environment Configuration
 
-See `backend/.env.example` for all flags. Key governance flags:
+See `backend/.env.example` for all flags. Key command center flags:
 
 ```env
-ODIN_PREDICTIVE_GOVERNANCE_ENABLED=1
-ODIN_COGNITIVE_RISK_ENABLED=1
-ODIN_TRUST_SURFACES_ENABLED=1
-ODIN_GOVERNANCE_PROFILE=balanced
-ODIN_RISK_FORECASTING_MODE=adaptive
-ODIN_RUNTIME_STABILIZATION_MODE=balanced
+ODIN_UNIFIED_COMMAND_CENTER_ENABLED=1
+ODIN_MISSION_COMMAND_ENABLED=1
+ODIN_COGNITIVE_MULTIPLEXING_ENABLED=1
+ODIN_RUNTIME_FUSION_ENABLED=1
+ODIN_OPERATOR_COMMAND_SURFACES_ENABLED=1
+ODIN_LIVE_COGNITION_TIMELINE_ENABLED=1
+ODIN_COMMAND_PROFILE=balanced
+ODIN_COGNITION_MULTIPLEX_MODE=adaptive
+ODIN_OPERATIONAL_CONTINUITY_MODE=balanced
 ```
 
 ---
@@ -348,33 +494,38 @@ ODIN_RUNTIME_STABILIZATION_MODE=balanced
 
 ```
 /api/v1/runtime/
+├── unified-command/           # Command center coordination
+├── mission-command/           # Mission-centric cognition
+├── cognitive-multiplexing/    # Cognition stream multiplexing
+├── runtime-fusion/            # Cross-runtime state fusion
+├── operator-command-surfaces/ # Command HUD rendering
+├── live-cognition-timeline/   # Cognition playback
+├── operational-health/        # Global health tracking
+├── global-pressure/           # Pressure balancing
 ├── predictive-governance/     # Governance cycles
-├── runtime-stabilization/     # Instability suppression
-├── cognitive-risk/            # Risk forecasting
-├── trust-surfaces/            # Trust scoring
-├── execution-confidence/      # Confidence estimation
-├── governance-visualization/  # HUD rendering
-├── distributed-execution/     # Cross-workspace federation
-├── execution-graph/           # DAG management
 ├── execution-system/          # Supervised pipelines
 ├── live-orchestration/        # Live orchestration
-└── ... (100+ route groups)
+└── ... (110+ route groups)
 ```
 
 ---
 
 ## Operator Console
 
-250+ pages for runtime visibility. Key governance surfaces:
+260+ pages for runtime visibility. Key command center surfaces:
 
 | Page | Purpose |
 |------|---------|
-| `/predictive-governance` | Governance cycle health |
-| `/runtime-stabilization` | Instability suppression |
-| `/cognitive-risk` | Risk forecasting |
-| `/trust-surfaces` | Operator trust scoring |
-| `/execution-confidence` | Workflow probability |
-| `/governance-visualization` | Governance HUD |
+| `/unified-command` | Unified mission control dashboard |
+| `/mission-command` | Mission-centric cognition |
+| `/mission-phases` | Operational phase transitions |
+| `/cognitive-multiplexing` | Cognition stream multiplexing |
+| `/runtime-fusion` | Cross-runtime state fusion |
+| `/command-surfaces` | Unified command HUD |
+| `/operational-health` | Global operational health |
+| `/global-pressure` | Command pressure balancing |
+| `/live-cognition-timeline` | Cognition timeline playback |
+| `/cognition-replay` | Bounded cognition replay |
 
 ---
 
@@ -394,40 +545,44 @@ ODIN_RUNTIME_STABILIZATION_MODE=balanced
 
 ## Scaling Constraints
 
-- Adaptive governance throttling
-- Runtime cooldowns (stabilization, federation, workflows)
-- Lazy visualization hydration
-- Low-power governance mode
-- Bounded risk simulation loops (max 36)
-- Governance stream compression
-- DAG virtualization (400 node cap)
+- Adaptive cognition density scaling
+- Stream prioritization under load
+- Mission DAG virtualization (500 node cap)
+- Replay compression for overnight timelines
+- Low-power operational rendering
+- Bounded synchronization loops (max 48)
+- Visual density throttling (max 56 renders)
+- Lazy HUD hydration
+- Runtime fusion cooldowns
+- Cognition stream compression
 - SQLite retention limits per subsystem
 
 ---
 
 ## Runtime Feature Matrix
 
-| Feature | v0.56 | v0.57 | v0.58 | v0.59 |
+| Feature | v0.57 | v0.58 | v0.59 | v0.60 |
 |---------|-------|-------|-------|-------|
-| Live orchestration | ✅ | ✅ | ✅ | ✅ |
-| Supervised execution | — | ✅ | ✅ | ✅ |
-| Distributed DAG | — | — | ✅ | ✅ |
-| Predictive governance | — | — | — | ✅ |
-| Risk forecasting | — | — | — | ✅ |
-| Trust surfaces | — | — | — | ✅ |
-| Runtime stabilization | — | — | — | ✅ |
+| Supervised execution | ✅ | ✅ | ✅ | ✅ |
+| Distributed DAG | — | ✅ | ✅ | ✅ |
+| Predictive governance | — | — | ✅ | ✅ |
+| Unified command center | — | — | — | ✅ |
+| Mission command | — | — | — | ✅ |
+| Runtime fusion | — | — | — | ✅ |
+| Cognition multiplexing | — | — | — | ✅ |
+| Live cognition timeline | — | — | — | ✅ |
 
 ---
 
-## Roadmap (v0.60+)
+## Roadmap (v0.61+)
 
 | Version | Focus |
 |---------|-------|
-| v0.60 | Unified governance + execution + orchestration dashboard |
 | v0.61 | Closed-loop predictive recovery with operator veto gates |
-| v0.62 | Multi-operator team governance (shared trust surfaces) |
-| v0.63 | Real-time DAG visualization with live rollback animation |
-| v0.64 | Federated governance across opt-in workspace boundaries |
+| v0.62 | Multi-operator collaborative cognition |
+| v0.63 | Real-time rollback DAG animation engine |
+| v0.64 | Federated cognition across opt-in workspaces |
+| v0.65 | Unified cinematic operational desktop |
 
 ---
 
@@ -449,6 +604,6 @@ See [LICENSE](LICENSE) in the repository root.
 ---
 
 <p align="center">
-  <strong>Odin Runtime v0.59</strong> — Predictive Cognitive Governance<br>
-  Local-first · Approval-gated · Operator-supervised · Governed
+  <strong>Odin Runtime v0.60</strong> — Unified Cognitive Command Center<br>
+  Local-first · Approval-gated · Operator-supervised · Mission Control
 </p>
