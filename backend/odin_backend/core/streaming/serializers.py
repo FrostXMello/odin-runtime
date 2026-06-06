@@ -1153,6 +1153,39 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         TraceEventKind.EXECUTION_RESTORE_SIMULATED,
     ):
         channels.append("execution-reconstruction:runtime")
+    if event.kind in (
+        TraceEventKind.RUNTIME_HEALTH_INSPECTED,
+        TraceEventKind.STREAM_ANOMALY_DETECTED,
+        TraceEventKind.RUNTIME_SYNC_VALIDATED,
+        TraceEventKind.CHECKPOINT_INTEGRITY_VERIFIED,
+    ):
+        channels.append("runtime-diagnostics:runtime")
+    if event.kind in (
+        TraceEventKind.RUNTIME_SURFACES_COMPRESSED,
+        TraceEventKind.MEMORY_PRESSURE_OPTIMIZED,
+    ):
+        channels.append("resource-optimization:runtime")
+    if event.kind in (
+        TraceEventKind.STREAM_CHANNELS_COMPRESSED,
+        TraceEventKind.STALE_STREAMS_PRUNED,
+    ):
+        channels.append("stream-management:runtime")
+    if event.kind in (
+        TraceEventKind.SESSION_REGISTRY_COMPACTED,
+        TraceEventKind.RUNTIME_RECOVERY_COMPLETED,
+    ):
+        channels.append("session-persistence-v2:runtime")
+    if event.kind in (
+        TraceEventKind.ORPHAN_RUNTIME_STATE_CLEANED,
+        TraceEventKind.REPLAY_WINDOWS_CLEANED,
+    ):
+        channels.append("runtime-cleanup:runtime")
+    if event.kind in (
+        TraceEventKind.RUNTIME_METRICS_GENERATED,
+        TraceEventKind.OPERATIONAL_PROFILE_GENERATED,
+        TraceEventKind.STARTUP_PERFORMANCE_MEASURED,
+    ):
+        channels.append("production-observability:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

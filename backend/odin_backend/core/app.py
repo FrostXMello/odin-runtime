@@ -947,6 +947,17 @@ class OdinApplication:
         self.pressure_propagation = PressurePropagationRuntime(self)
         self.timeline_visualization = TimelineVisualizationRuntime(self)
         self.execution_reconstruction = ExecutionReconstructionRuntime(self)
+        from odin_backend.core.runtime_diagnostics import RuntimeDiagnosticsRuntime
+        from odin_backend.core.stream_management import StreamManagementRuntime
+        from odin_backend.core.session_persistence_v2 import SessionPersistenceV2Runtime
+        from odin_backend.core.runtime_cleanup import RuntimeCleanupRuntime
+        from odin_backend.core.production_observability import ProductionObservabilityRuntime
+
+        self.runtime_diagnostics = RuntimeDiagnosticsRuntime(self)
+        self.stream_management = StreamManagementRuntime(self)
+        self.session_persistence_v2 = SessionPersistenceV2Runtime(self)
+        self.runtime_cleanup = RuntimeCleanupRuntime(self)
+        self.production_observability = ProductionObservabilityRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,

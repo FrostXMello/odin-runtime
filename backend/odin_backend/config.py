@@ -529,6 +529,18 @@ class Settings(BaseSettings):
     replay_density: str = "adaptive"
     timeline_render_mode: str = "adaptive"
 
+    # Production hardening (Prompt 64)
+    runtime_diagnostics_enabled: bool = False
+    stream_management_enabled: bool = False
+    session_persistence_v2_enabled: bool = False
+    runtime_cleanup_enabled: bool = False
+    production_observability_enabled: bool = False
+    resource_profile: str = "balanced"
+    stream_compression_mode: str = "adaptive"
+    low_power_coordination: bool = False
+    startup_optimization_enabled: bool = False
+    sqlite_compaction_enabled: bool = False
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

@@ -488,6 +488,21 @@ class TraceEventKind(StrEnum):
     WORKSPACE_SEQUENCE_REBUILT = "workspace_sequence_rebuilt"
     COGNITION_WINDOW_RESTORED = "cognition_window_restored"
     EXECUTION_RESTORE_SIMULATED = "execution_restore_simulated"
+    RUNTIME_HEALTH_INSPECTED = "runtime_health_inspected"
+    STREAM_ANOMALY_DETECTED = "stream_anomaly_detected"
+    RUNTIME_SYNC_VALIDATED = "runtime_sync_validated"
+    CHECKPOINT_INTEGRITY_VERIFIED = "checkpoint_integrity_verified"
+    RUNTIME_SURFACES_COMPRESSED = "runtime_surfaces_compressed"
+    MEMORY_PRESSURE_OPTIMIZED = "memory_pressure_optimized"
+    STREAM_CHANNELS_COMPRESSED = "stream_channels_compressed"
+    STALE_STREAMS_PRUNED = "stale_streams_pruned"
+    SESSION_REGISTRY_COMPACTED = "session_registry_compacted"
+    RUNTIME_RECOVERY_COMPLETED = "runtime_recovery_completed"
+    ORPHAN_RUNTIME_STATE_CLEANED = "orphan_runtime_state_cleaned"
+    REPLAY_WINDOWS_CLEANED = "replay_windows_cleaned"
+    RUNTIME_METRICS_GENERATED = "runtime_metrics_generated"
+    OPERATIONAL_PROFILE_GENERATED = "operational_profile_generated"
+    STARTUP_PERFORMANCE_MEASURED = "startup_performance_measured"
 
 
 class TraceEvent(BaseModel):
