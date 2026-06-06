@@ -330,6 +330,17 @@ class TraceEventKind(StrEnum):
     CONTINUOUS_REASONING_UPDATED = "continuous_reasoning_updated"
     ATTENTION_FLOW_UPDATED = "attention_flow_updated"
     ENGINEERING_VALIDATION_PLANNED = "engineering_validation_planned"
+    COGNITION_TICK_STARTED = "cognition_tick_started"
+    ATTENTION_SHIFT_DETECTED = "attention_shift_detected"
+    FOCUS_HEATMAP_UPDATED = "focus_heatmap_updated"
+    RUNTIME_OVERLAP_DETECTED = "runtime_overlap_detected"
+    RUNTIME_CONFLICT_RESOLVED = "runtime_conflict_resolved"
+    PERSISTENT_AGENT_RESTORED = "persistent_agent_restored"
+    PERSISTENT_AGENT_ASSIGNED = "persistent_agent_assigned"
+    COGNITIVE_STATE_UPDATED = "cognitive_state_updated"
+    RUNTIME_LOAD_REBALANCED = "runtime_load_rebalanced"
+    DEFERRED_TASK_RESTORED = "deferred_task_restored"
+    GLOBAL_CONTEXT_REBUILT = "global_context_rebuilt"
 
 
 class TraceEvent(BaseModel):

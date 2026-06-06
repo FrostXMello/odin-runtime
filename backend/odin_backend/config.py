@@ -400,6 +400,15 @@ class Settings(BaseSettings):
     reliability_forecasting_enabled: bool = False
     continuous_reasoning_enabled: bool = False
 
+    # Unified cognitive core (Prompt 52)
+    unified_cognitive_core_enabled: bool = False
+    attention_engine_enabled: bool = False
+    cognitive_scheduler_enabled: bool = False
+    persistent_agents_enabled: bool = False
+    runtime_coordination_enabled: bool = False
+    cognitive_state_enabled: bool = False
+    global_cognition_profile: str = "balanced"
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

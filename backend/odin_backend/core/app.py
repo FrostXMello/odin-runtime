@@ -791,6 +791,19 @@ class OdinApplication:
         self.engineering_infrastructure_v3 = EngineeringInfrastructureRuntime(self)
         self.memory_intelligence = MemoryIntelligenceRuntime(self)
         self.operator_intelligence_v4 = PredictiveOperatorRuntime(self)
+        from odin_backend.core.unified_cognitive_core import UnifiedCognitiveCoreRuntime
+        from odin_backend.core.attention_engine import AttentionEngineRuntime
+        from odin_backend.core.cognitive_scheduler import CognitiveSchedulerRuntime
+        from odin_backend.core.persistent_agents import PersistentAgentsRuntime
+        from odin_backend.core.runtime_coordination import RuntimeCoordinationRuntime
+        from odin_backend.core.cognitive_state import CognitiveStateRuntime
+
+        self.unified_cognitive_core = UnifiedCognitiveCoreRuntime(self)
+        self.attention_engine = AttentionEngineRuntime(self)
+        self.cognitive_scheduler = CognitiveSchedulerRuntime(self)
+        self.persistent_agents = PersistentAgentsRuntime(self)
+        self.runtime_coordination = RuntimeCoordinationRuntime(self)
+        self.cognitive_state = CognitiveStateRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,

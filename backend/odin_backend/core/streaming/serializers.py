@@ -789,6 +789,35 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         TraceEventKind.WORKFLOW_OPTIMIZATION_GENERATED,
     ):
         channels.append("operator-intelligence-v4:runtime")
+    if event.kind in (
+        TraceEventKind.COGNITION_TICK_STARTED,
+        TraceEventKind.COGNITION_TICK_COMPLETED,
+        TraceEventKind.GLOBAL_CONTEXT_REBUILT,
+    ):
+        channels.append("unified-core:runtime")
+        channels.append("desktop-v3:runtime")
+    if event.kind in (
+        TraceEventKind.ATTENTION_SHIFT_DETECTED,
+        TraceEventKind.FOCUS_HEATMAP_UPDATED,
+    ):
+        channels.append("attention:runtime")
+    if event.kind in (
+        TraceEventKind.RUNTIME_LOAD_REBALANCED,
+        TraceEventKind.DEFERRED_TASK_RESTORED,
+    ):
+        channels.append("scheduler:runtime")
+    if event.kind in (
+        TraceEventKind.PERSISTENT_AGENT_RESTORED,
+        TraceEventKind.PERSISTENT_AGENT_ASSIGNED,
+    ):
+        channels.append("persistent-agents:runtime")
+    if event.kind in (
+        TraceEventKind.RUNTIME_OVERLAP_DETECTED,
+        TraceEventKind.RUNTIME_CONFLICT_RESOLVED,
+    ):
+        channels.append("runtime-coordination:runtime")
+    if event.kind == TraceEventKind.COGNITIVE_STATE_UPDATED:
+        channels.append("cognitive-state:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels
