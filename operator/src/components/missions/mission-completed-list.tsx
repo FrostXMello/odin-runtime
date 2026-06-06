@@ -1,16 +1,23 @@
 "use client";
 
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronUp } from "lucide-react";
 import { runtimeApi } from "@/lib/api/runtime";
 import type { MissionSummary } from "@/lib/api/types";
 import { outcomeLabel, missionUiPhase } from "@/components/missions/mission-state";
 import { OdinCoreMini } from "@/components/odin-core/odin-core-orb";
 import type { OdinCorePhase } from "@/components/odin-core/odin-core-state";
+import { GlassPanel } from "@/components/ui/design-system";
+import { microPress, transitionFast } from "@/components/ui/design-system/motion";
+import { cn } from "@/lib/utils/cn";
 
 type Props = {
   missions: MissionSummary[];
   onReplay: (missionId: string) => void;
   showMiniCore?: boolean;
+  collapsed?: boolean;
 };
 
 function missionCorePhase(state: string): OdinCorePhase {
@@ -42,52 +49,81 @@ function CompletedRow({
   const outcome = outcomeLabel(mission.current_state);
 
   return (
-    <div className="flex items-center justify-between gap-3 rounded-lg border border-odin-border/30 bg-odin-panel/30 px-3 py-2 opacity-80">
-      {showMiniCore && (
-        <OdinCoreMini phase={missionCorePhase(mission.current_state)} />
-      )}
+    <div className="flex items-center justify-between gap-3 rounded-xl px-3 py-2 transition hover:bg-white/[0.02]">
+      {showMiniCore && <OdinCoreMini phase={missionCorePhase(mission.current_state)} />}
       <div className="min-w-0 flex-1">
-        <p className="truncate text-xs text-slate-400">{mission.objective}</p>
-        <p className="mt-0.5 truncate font-mono text-[10px] text-slate-600">{lastEvent}</p>
+        <p className="truncate text-xs text-slate-500">{mission.objective}</p>
+        <p className="mt-0.5 truncate font-mono text-[10px] text-slate-700">{lastEvent}</p>
       </div>
       <div className="flex shrink-0 items-center gap-2">
         <span
-          className={`text-[10px] uppercase ${
-            outcome === "success" ? "text-emerald-500/80" : "text-rose-400/80"
-          }`}
+          className={cn(
+            "text-[10px] uppercase tracking-wide",
+            outcome === "success" ? "text-odin-emerald/70" : "text-odin-rose/70"
+          )}
         >
           {outcome}
         </span>
-        <button
+        <motion.button
           type="button"
           onClick={() => onReplay(mission.mission_id)}
-          className="rounded border border-odin-border/40 px-2 py-0.5 text-[10px] text-odin-cyan hover:border-odin-cyan/40"
+          {...microPress}
+          className="rounded-lg px-2 py-0.5 text-[10px] text-odin-cyan/80 ring-1 ring-white/[0.06] hover:ring-odin-cyan/25 hover:text-odin-cyan"
         >
           Replay
-        </button>
+        </motion.button>
       </div>
     </div>
   );
 }
 
-export function MissionCompletedList({ missions, onReplay, showMiniCore }: Props) {
+export function MissionCompletedList({ missions, onReplay, showMiniCore, collapsed: defaultCollapsed }: Props) {
+  const [open, setOpen] = useState(!defaultCollapsed);
+
   if (!missions.length) return null;
 
   return (
-    <div className="mt-8 border-t border-odin-border/40 pt-4">
-      <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
-        Completed · {missions.length}
-      </p>
-      <div className="space-y-1.5">
-        {missions.map((m) => (
-          <CompletedRow
-            key={m.mission_id}
-            mission={m}
-            onReplay={onReplay}
-            showMiniCore={showMiniCore}
-          />
-        ))}
-      </div>
+    <div className="mt-auto pt-8">
+      <GlassPanel depth="ambient" className="overflow-hidden">
+        <motion.button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          {...microPress}
+          className="flex w-full items-center justify-between px-4 py-3 text-left hover:bg-white/[0.02]"
+        >
+          <span className="text-[10px] font-medium uppercase tracking-[0.15em] text-slate-600">
+            Archive · {missions.length} completed
+          </span>
+          <motion.span
+            animate={{ rotate: open ? 0 : 180 }}
+            transition={transitionFast}
+          >
+            <ChevronUp className="h-3.5 w-3.5 text-slate-600" />
+          </motion.span>
+        </motion.button>
+        <AnimatePresence initial={false}>
+          {open && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={transitionFast}
+              className="overflow-hidden border-t border-white/[0.04]"
+            >
+              <div className="max-h-48 space-y-0.5 overflow-y-auto px-2 py-2">
+                {missions.map((m) => (
+                  <CompletedRow
+                    key={m.mission_id}
+                    mission={m}
+                    onReplay={onReplay}
+                    showMiniCore={showMiniCore}
+                  />
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </GlassPanel>
     </div>
   );
 }

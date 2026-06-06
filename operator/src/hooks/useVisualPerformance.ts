@@ -6,6 +6,9 @@ import { useOperatorStore } from "@/store/operator-store";
 const FPS_SAMPLE_FRAMES = 48;
 const LOW_FPS_THRESHOLD = 30;
 
+/** full = physics + glow; reduced = breath only; minimal = opacity/blend only (never dead). */
+export type MotionTier = "full" | "reduced" | "minimal";
+
 function detectLowPowerProfile(): boolean {
   if (typeof window === "undefined") return false;
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return true;
@@ -67,7 +70,23 @@ export function useEffectiveVisualMode() {
   }, [setLowFpsDetected]);
 
   const autoFallback = lowFpsDetected || (focusMode && lowPower);
-  const animationsEnabled = visualMode && !autoFallback;
 
-  return { animationsEnabled, autoFallback, lowFpsDetected, lowPower };
+  const motionTier: MotionTier = lowFpsDetected || !visualMode
+    ? "minimal"
+    : focusMode
+      ? "reduced"
+      : "full";
+
+  /** Legacy compat — never fully kills motion. */
+  const animationsEnabled = motionTier !== "minimal" || visualMode;
+
+  return {
+    animationsEnabled: true,
+    motionTier,
+    autoFallback,
+    lowFpsDetected,
+    lowPower,
+    focusMode,
+    visualMode,
+  };
 }

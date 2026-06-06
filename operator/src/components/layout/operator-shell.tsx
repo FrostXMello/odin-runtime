@@ -22,6 +22,7 @@ import { Badge } from "@/components/ui/badge";
 import { useRuntimeStream } from "@/hooks/useRuntimeStream";
 import { LiveIndicator, ConnectionHealthBadge } from "@/components/stream/live-indicator";
 import { ActivityTicker } from "@/components/stream/activity-ticker";
+import { FocusModeControls } from "@/components/layout/focus-mode-controls";
 
 /** Five surfaces for daily product mode — primary workflow only. */
 const DAILY_NAV = [
@@ -530,6 +531,7 @@ export function OperatorShell({ children }: { children: React.ReactNode }) {
   const missionCommandSurface =
     pathname === "/missions" || pathname.startsWith("/missions/") || pathname.startsWith("/missions?");
   const effectiveFocus = focusMode || missionCommandSurface;
+  const immersiveFocus = focusMode && missionCommandSurface;
   useRuntimeStream(liveRefresh);
 
   useEffect(() => {
@@ -540,7 +542,8 @@ export function OperatorShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex min-h-screen bg-odin-bg text-slate-200">
-      <aside className="flex w-56 shrink-0 flex-col border-r border-odin-border bg-odin-panel/90">
+      {!immersiveFocus && (
+      <aside className="flex w-56 shrink-0 flex-col border-r border-odin-border/80 bg-odin-panel/90 backdrop-blur-sm">
         <div className="border-b border-odin-border px-4 py-5">
           <div className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-odin-accent to-odin-violet shadow-glow">
@@ -632,8 +635,10 @@ export function OperatorShell({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </aside>
+      )}
       <main className="flex flex-1 flex-col overflow-hidden">
-        <header className="flex h-12 items-center justify-between border-b border-odin-border bg-odin-panel/50 px-6 backdrop-blur-md">
+        {!immersiveFocus && (
+        <header className="flex h-12 items-center justify-between border-b border-odin-border/60 bg-odin-panel/40 px-6 backdrop-blur-md">
           <motion.h1
             key={pathname}
             initial={{ opacity: 0, x: -8 }}
@@ -647,9 +652,11 @@ export function OperatorShell({ children }: { children: React.ReactNode }) {
             <p className="font-mono text-[10px] text-odin-muted">REST fallback · WS stream</p>
           </div>
         </header>
-        <ActivityTicker />
-        <div className="flex-1 overflow-auto p-6">{children}</div>
+        )}
+        {!immersiveFocus && <ActivityTicker />}
+        <div className={cn("flex-1 overflow-auto", immersiveFocus ? "p-4 md:p-8" : "p-6")}>{children}</div>
       </main>
+      {immersiveFocus && <FocusModeControls />}
     </div>
   );
 }

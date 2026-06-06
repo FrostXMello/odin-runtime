@@ -2,17 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --odin-bg-deep: #050608;
+  --odin-bg-base: #07090f;
+  --odin-primary: #22d3ee;
+  --odin-primary-glow: rgba(34, 211, 238, 0.35);
+  --odin-glass: rgba(13, 17, 28, 0.72);
+  --odin-border-soft: rgba(255, 255, 255, 0.06);
+  --odin-motion-fast: 150ms;
+  --odin-motion-normal: 280ms;
+  --odin-motion-slow: 650ms;
+  --odin-ease-intelligence: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 html {
   color-scheme: dark;
 }
 
 body {
-  background-color: #07090f;
+  background-color: var(--odin-bg-base);
   color: #e2e8f0;
   -webkit-font-smoothing: antialiased;
   background-image:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59, 130, 246, 0.12), transparent),
-    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(139, 92, 246, 0.08), transparent);
+    radial-gradient(ellipse 90% 60% at 50% -30%, rgba(34, 211, 238, 0.06), transparent),
+    radial-gradient(ellipse 50% 40% at 100% 100%, rgba(56, 189, 248, 0.04), transparent),
+    radial-gradient(ellipse 40% 30% at 0% 80%, rgba(139, 92, 246, 0.03), transparent);
+}
+
+/* Cinematic control surface — missions immersion */
+.odin-control-surface {
+  position: relative;
+  isolation: isolate;
+}
+
+.odin-control-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  top: -2rem;
+  height: 280px;
+  background: radial-gradient(ellipse 50% 80% at 50% 0%, var(--odin-primary-glow), transparent 70%);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.odin-orb-projection {
+  background: radial-gradient(ellipse 60% 40% at 50% 100%, rgba(34, 211, 238, 0.08), transparent 70%);
 }
 
 .react-flow__node.odin-node-flash {
