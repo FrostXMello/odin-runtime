@@ -556,6 +556,27 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         channels.append("daemon:runtime")
     if event.kind == TraceEventKind.CONVERSATIONAL_CONTEXT_RESTORED:
         channels.append("conversational-os:runtime")
+    if event.kind in (
+        TraceEventKind.COGNITION_CHECKPOINT_CREATED,
+        TraceEventKind.SESSION_REHYDRATED,
+    ):
+        channels.append("cognition:continuity")
+    if event.kind == TraceEventKind.WORKSPACE_CONTEXT_RESTORED:
+        channels.append("workspace:presence")
+    if event.kind == TraceEventKind.MEMORY_THREAD_ACTIVATED:
+        channels.append("memory-threads:runtime")
+    if event.kind == TraceEventKind.COGNITIVE_SURFACE_UPDATED:
+        channels.append("cognitive-surface:runtime")
+    if event.kind in (
+        TraceEventKind.FOCUS_STATE_CHANGED,
+        TraceEventKind.INTERRUPTION_CLASSIFIED,
+        TraceEventKind.ADAPTIVE_PRESENCE_UPDATED,
+    ):
+        channels.append("live-environment:runtime")
+    if event.kind == TraceEventKind.WORKFLOW_PREDICTION_GENERATED:
+        channels.append("cognition:continuity")
+    if event.kind == TraceEventKind.UNFINISHED_WORK_DETECTED:
+        channels.append("cognition:continuity")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

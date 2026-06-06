@@ -110,6 +110,19 @@ class SelfEvolutionRuntime:
         self._emit("evolution_learning_updated", fb)
         return {"accepted": True, **fb}
 
+    async def analyze_friction(self, *, workflow_metrics: dict | None = None) -> dict[str, Any]:
+        if not getattr(self._app.settings, "self_evolution_enabled", False):
+            return {"accepted": False, "reason": "self_evolution_disabled"}
+        m = workflow_metrics or {"context_switches": 12, "idle_ratio": 0.3}
+        friction = []
+        if m.get("context_switches", 0) > 8:
+            friction.append({"area": "workflow_inefficiency", "severity": "medium"})
+        if m.get("idle_ratio", 0) > 0.5:
+            friction.append({"area": "operator_friction", "severity": "low"})
+        for f in friction:
+            self._backlog.add(title=f"Reduce {f['area']}", impact=f["severity"], confidence=0.65)
+        return {"accepted": True, "friction": friction, "approval_required": True, "direct_modification": False}
+
     def snapshot(self) -> dict[str, Any]:
         return {
             "backlog": self._backlog.snapshot(),

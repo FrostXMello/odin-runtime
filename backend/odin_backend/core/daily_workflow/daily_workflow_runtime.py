@@ -36,6 +36,15 @@ class DailyWorkflowRuntime:
             suggestions.append("Cognitive shell active — conversation continuity ready.")
         if getattr(self._app.settings, "conversation_runtime_enabled", False) and hasattr(self._app, "conversation"):
             suggestions.append("Live conversation runtime available in /runtime/conversation.")
+        if getattr(self._app.settings, "persistent_cognition_enabled", False) and hasattr(self._app, "persistent_cognition"):
+            rehydrated = await self._app.persistent_cognition.rehydrate_session()
+            if rehydrated.get("rehydrated"):
+                suggestions.append("Persistent cognition restored — resume interrupted reasoning.")
+        if getattr(self._app.settings, "daily_continuity_enabled", False) and hasattr(self._app, "daily_continuity"):
+            summary = await self._app.daily_continuity.resume_summary()
+            unfinished = summary.get("unfinished", [])
+            if unfinished:
+                suggestions.append(f"{len(unfinished)} unfinished items from daily continuity.")
         return {"accepted": True, "suggestions": suggestions, "briefing": briefing}
 
     async def engineering_briefing(self) -> dict[str, Any]:

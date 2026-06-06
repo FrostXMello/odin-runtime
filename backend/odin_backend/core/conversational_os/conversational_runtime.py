@@ -44,6 +44,19 @@ class ConversationalOSRuntime:
             self._emit("conversational_context_restored", {"thread_id": thread_id})
         return {"accepted": True, **restored}
 
+    async def long_horizon(self, *, familiarity: float = 0.5) -> dict[str, Any]:
+        if not getattr(self._app.settings, "conversational_os_enabled", False):
+            return {"accepted": False, "reason": "conversational_os_disabled"}
+        if hasattr(self._app, "presence"):
+            await self._app.presence.refine_style(familiarity=familiarity)
+        return {
+            "accepted": True,
+            "turns": len(self._memory.context()),
+            "familiarity": familiarity,
+            "disclosure": "simulated_continuity_not_consciousness",
+            "grounded": True,
+        }
+
     def snapshot(self) -> dict[str, Any]:
         return {"turns": len(self._memory._turns)}
 

@@ -330,6 +330,14 @@ class Settings(BaseSettings):
     reasoning_streams_enabled: bool = False
     native_desktop_mode: str = "balanced"
 
+    # Persistent cognitive environment (Prompt 44)
+    persistent_cognition_enabled: bool = False
+    daily_continuity_enabled: bool = False
+    workspace_presence_enabled: bool = False
+    memory_threads_enabled: bool = False
+    live_environment_enabled: bool = False
+    cognitive_surface_enabled: bool = False
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

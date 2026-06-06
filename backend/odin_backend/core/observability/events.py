@@ -245,6 +245,15 @@ class TraceEventKind(StrEnum):
     PERSISTENT_PRESENCE_UPDATED = "persistent_presence_updated"
     LIVE_PATCH_SUGGESTED = "live_patch_suggested"
     COGNITIVE_SURFACE_RENDERED = "cognitive_surface_rendered"
+    COGNITION_CHECKPOINT_CREATED = "cognition_checkpoint_created"
+    SESSION_REHYDRATED = "session_rehydrated"
+    WORKSPACE_CONTEXT_RESTORED = "workspace_context_restored"
+    MEMORY_THREAD_ACTIVATED = "memory_thread_activated"
+    FOCUS_STATE_CHANGED = "focus_state_changed"
+    INTERRUPTION_CLASSIFIED = "interruption_classified"
+    ADAPTIVE_PRESENCE_UPDATED = "adaptive_presence_updated"
+    COGNITIVE_SURFACE_UPDATED = "cognitive_surface_updated"
+    WORKFLOW_PREDICTION_GENERATED = "workflow_prediction_generated"
 
 
 class TraceEvent(BaseModel):

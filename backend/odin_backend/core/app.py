@@ -686,6 +686,19 @@ class OdinApplication:
         self.live_engineering = LiveEngineeringRuntime(self)
         self.conversational_os = ConversationalOSRuntime(self)
         self.reasoning_streams = ReasoningStreamsRuntime(self)
+        from odin_backend.core.persistent_cognition import PersistentCognitionRuntime
+        from odin_backend.core.daily_continuity import DailyContinuityRuntime
+        from odin_backend.core.workspace_presence import WorkspacePresenceRuntime
+        from odin_backend.core.memory_threads import MemoryThreadsRuntime
+        from odin_backend.core.live_environment import LiveEnvironmentRuntime
+        from odin_backend.core.cognitive_surface import CognitiveSurfaceRuntime
+
+        self.persistent_cognition = PersistentCognitionRuntime(self)
+        self.daily_continuity = DailyContinuityRuntime(self)
+        self.workspace_presence = WorkspacePresenceRuntime(self)
+        self.memory_threads = MemoryThreadsRuntime(self)
+        self.live_environment = LiveEnvironmentRuntime(self)
+        self.cognitive_surface = CognitiveSurfaceRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,
