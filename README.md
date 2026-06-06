@@ -1,29 +1,29 @@
 # Odin Runtime
 
-**A supervised cognitive command infrastructure for autonomous engineering, orchestration, governance, and persistent desktop cognition.**
+**A supervised cognitive recovery and operational resilience infrastructure.**
 
-Odin Runtime is a local-first cognitive command platform — a unified stack of 136+ runtime modules that converge orchestration, execution, governance, memory, missions, and desktop awareness into one continuously operating mission control system on your own hardware.
+Odin Runtime is a local-first cognitive platform — a unified stack of 142+ runtime modules that converge orchestration, execution, governance, recovery, and persistent desktop cognition into one self-stabilizing supervised mission control system on your own hardware.
 
 ---
 
 ## Vision
 
-Odin gives a single developer a continuously operating cognitive command layer: one that remembers context across sessions, coordinates long-horizon work across multiple workspaces, executes supervised engineering pipelines, governs cognition, and renders a unified operational cockpit — without cloud dependency or unsupervised autonomy.
+Odin gives a single developer a continuously operating cognitive layer that detects instability early, simulates recovery paths, preserves mission continuity, and stabilizes runtime pressure — while every recovery action remains approval-gated, reversible, and operator-supervised.
 
-The system is designed to feel like mission control: live orchestration, execution DAGs, governance HUDs, cognition rivers, and cinematic command surfaces — while remaining bounded, reversible, approval-gated, and operator-supervised.
+The system is designed to feel resilient: predictive failure forecasting, rollback DAGs, recovery orchestration dashboards, and trust-preserving veto gates — without hidden rollback execution or unrestricted self-modification.
 
 ---
 
 ## Why Odin Exists
 
-Most AI tooling is ephemeral: chat sessions vanish, context resets, execution is opaque, and autonomy is either absent or unrestricted. Odin bridges that gap with:
+Most AI tooling fails silently: context is lost, execution is opaque, recovery is manual, and autonomy is either absent or unrestricted. Odin bridges that gap with:
 
-- **Persistent cognition** — sessions, objectives, mission graphs, execution memory, cognition timelines
-- **Supervised execution** — reversible pipelines, checkpoints, rollback graphs
-- **Governed autonomy** — predictive stabilization, risk forecasting, trust surfaces
+- **Predictive recovery** — failure forecasting, recovery path simulation, probability estimation
+- **Supervised rollback** — rollback intelligence, checkpoint selection, operator veto gates
+- **Mission continuity** — interrupted workflow recovery, cognition restoration, overnight replay
+- **Stability loops** — bounded stabilization, cascade suppression, recovery throttling
 - **Unified command center** — orchestration + execution + governance convergence
-- **Desktop integration** — window awareness, overlays, workspace sessions
-- **Operator sovereignty** — every action is visible, approval-gated, and reversible
+- **Operator sovereignty** — every recovery action is visible, approval-gated, and reversible
 
 ---
 
@@ -31,168 +31,192 @@ Most AI tooling is ephemeral: chat sessions vanish, context resets, execution is
 
 | Principle | Implementation |
 |-----------|----------------|
-| Local-first | All cognition, memory, governance, and monitoring stay on-device |
-| Approval-gated | Destructive actions require explicit operator approval |
-| Bounded cognition | Reasoning budgets, cycle limits, throttling, cooldowns |
-| Transparent governance | All risk, trust, and confidence scoring is operator-visible |
-| Reversible execution | Checkpoints, rollback graphs, execution replay chains |
+| Local-first | All cognition, recovery, and monitoring stay on-device |
+| Approval-gated rollback | All recovery execution routes through `operator_veto` |
+| Bounded stabilization | Recovery cycles, replay loops, and simulation limits |
+| Transparent intervention | All risk, trust, and recovery scoring is operator-visible |
+| Reversible recovery | Checkpoints, rollback graphs, continuity replay chains |
 | Incremental architecture | New releases extend; they do not rewrite |
 | Backward compatible | Dispatcher semantics and streaming contracts preserved |
 
 ---
 
-## Unified Command Center Architecture (v0.60)
+## Recovery Orchestration Architecture (v0.61)
 
 ```mermaid
 flowchart TB
-    subgraph Command["Unified Command Center"]
-        UCC[unified_command_center]
-        MC[mission_command]
-        CM[cognitive_multiplexing]
-        RF[runtime_fusion]
-        OCS[operator_command_surfaces]
-        LCT[live_cognition_timeline]
+    subgraph Recovery["Closed-Loop Predictive Recovery"]
+        PR[predictive_recovery_v2]
+        RO[recovery_orchestration]
+        RI[rollback_intelligence]
+        CR[continuity_recovery]
+        SL[stability_loops]
+        OV[operator_veto]
     end
 
     subgraph Operator["Operator Supervision"]
         APPROVE[Approval Gate]
         VETO[Operator Veto]
-        HUD[Command HUD]
+        TRUST[Trust Surfaces]
+    end
+
+    subgraph Command["Command Center (v0.60)"]
+        UCC[unified_command_center]
+        MC[mission_command]
     end
 
     subgraph Governance["Cognitive Governance"]
         PG[predictive_governance]
         RS[runtime_stabilization]
-        GV[governance_visualization]
+        CRisk[cognitive_risk]
     end
 
-    subgraph Execution["Distributed Execution"]
-        ES[execution_system]
-        DE[distributed_execution]
-        EG[execution_graph]
-    end
-
-    subgraph Orchestration["Live Orchestration"]
-        LO[live_orchestration]
-        MG[mission_graph]
-        RC[realtime_coordination]
-    end
-
-    Operator --> Command
-    Command --> Governance
-    Command --> Execution
-    Command --> Orchestration
-    UCC -->|synchronize| PG
-    MC -->|phase| MG
-    CM -->|multiplex| RC
-    RF -->|fuse| ES
-    OCS -->|render| HUD
-    LCT -->|replay| Operator
+    PR -->|forecast| RO
+    RO -->|orchestrate| RI
+    RI -->|rollback| OV
+    OV -->|authorize| APPROVE
+    CR -->|restore| MC
+    SL -->|stabilize| RS
+    Operator --> OV
+    UCC --> Recovery
+    Governance --> PR
 ```
 
-No unrestricted autonomy. No hidden execution. No self-authoritative governance. No autonomous deployment.
+No autonomous destructive recovery. No hidden rollback execution. No unsupervised intervention.
 
 ---
 
-## Command Center Modules
+## Recovery Modules
 
 | Module | App Handle | Role |
 |--------|-----------|------|
-| `unified_command_center` | `app.unified_command_center` | Global coordination, health tracking, pressure balancing |
-| `mission_command` | `app.mission_command` | Mission-centric cognition, phase transitions, objective federation |
-| `cognitive_multiplexing` | `app.cognitive_multiplexing` | Unified cognition streams, compression, prioritization |
-| `runtime_fusion` | `app.runtime_fusion` | Cross-runtime state fusion, checkpoint convergence |
-| `operator_command_surfaces` | `app.operator_command_surfaces` | Command HUD, cinematic overlays, visual density |
-| `live_cognition_timeline` | `app.live_cognition_timeline` | Cognition playback, mission timeline, replay chains |
+| `predictive_recovery_v2` | `app.predictive_recovery_v2` | Failure forecasting, recovery simulation, probability estimation |
+| `recovery_orchestration` | `app.recovery_orchestration` | Supervised recovery coordination, phase transitions |
+| `rollback_intelligence` | `app.rollback_intelligence` | Rollback graph generation, replay analysis, confidence scoring |
+| `continuity_recovery` | `app.continuity_recovery` | Mission continuity, workspace rebuild, cognition restoration |
+| `stability_loops` | `app.stability_loops` | Bounded stabilization, cascade suppression, recovery throttling |
+| `operator_veto` | `app.operator_veto` | Recovery approval routing, veto chain management |
 
 ---
 
-## Runtime Fusion Topology
-
-```mermaid
-flowchart LR
-    subgraph Fusion["Runtime Fusion"]
-        RF[runtime_fusion]
-        CP[Checkpoint Layers]
-        SP[Pressure Stabilization]
-    end
-
-    CS[context_synchronization] --> RF
-    ES[execution_system] --> RF
-    RS[runtime_stabilization] --> SP
-    RF --> CP
-    CP -->|restore| ES
-```
-
-Cross-runtime state fusion converges orchestration, execution, and governance contexts into synchronized checkpoint layers. Reversible restoration preserves operator control.
-
----
-
-## Cognition Multiplexing Flow
-
-```mermaid
-flowchart TB
-    subgraph Streams["Cognition Streams"]
-        UC[unified-command:runtime]
-        MC[mission-command:runtime]
-        LO[live-orchestration:runtime]
-        PG[predictive-governance:runtime]
-    end
-
-    CM[cognitive_multiplexing] --> Streams
-    CM -->|compress| LP[Low-Power Mode]
-    CM -->|prioritize| OV[Operator Visibility]
-    RC[realtime_coordination] --> CM
-```
-
-Adaptive cognition density scaling with stream prioritization under load. Bounded multiplex loops (max 64).
-
----
-
-## Mission DAG Example
+## Rollback DAG Example
 
 ```mermaid
 flowchart TD
-    P[planning] --> E[execution]
-    E --> R[recovery]
-    R --> S[stabilization]
-    S --> O[overnight]
-    O --> SR[supervision_review]
-    SR --> P
+    CP1[checkpoint_a] --> CP2[checkpoint_b]
+    CP2 --> RT[rollback_target]
+    RT -->|authorize| EXEC[recovery_execution]
+    EXEC --> VAL[validation]
+    VAL --> CONT[continuity_restore]
 ```
 
-Mission command manages phase transitions with DAG virtualization (500 node cap). All transitions are operator-controlled.
+Rollback intelligence generates virtualized DAGs (600 node cap). All rollback execution requires operator authorization.
 
 ---
 
-## Governance + Execution Convergence
+## Recovery Replay Lifecycle
 
 ```mermaid
-flowchart TB
-    PG[predictive_governance] --> UCC[unified_command_center]
-    ES[execution_system] --> RF[runtime_fusion]
-    LO[live_orchestration] --> UCC
-    UCC --> OCS[operator_command_surfaces]
-    RF --> LCT[live_cognition_timeline]
-    CR[cognitive_risk] -->|forecast| APPROVE[Approval Gate]
-    TS[trust_surfaces] -->|surface| Operator[Operator]
+sequenceDiagram
+    participant Op as Operator
+    participant PR as predictive_recovery_v2
+    participant RI as rollback_intelligence
+    participant OV as operator_veto
+    participant RO as recovery_orchestration
+
+    PR->>PR: forecast_operational_failure()
+    PR->>PR: simulate_recovery_paths()
+    RI->>RI: generate_rollback_graph()
+    RI->>RI: replay_execution_window()
+    OV->>Op: request_recovery_approval()
+    Op->>OV: authorize_recovery_chain()
+    RO->>RO: validate_recovery_integrity()
 ```
 
-Governance and execution layers converge through the unified command center without bypassing approval gates or supervision.
+Bounded replay loops (max 40). Lazy replay hydration. Adaptive replay compression.
 
 ---
 
-## Operational Continuity Replay Chain
+## Continuity Restoration Flow
 
 ```mermaid
 flowchart LR
-    A[append_cognition_event] --> B[build_operational_timeline]
-    B --> C[replay_cognition_window]
-    C --> D[compress_timeline_density]
-    D -->|overnight| B
+    DET[detection] --> STAB[stabilization]
+    STAB --> RB[rollback_review]
+    RB --> REC[recovery_execution]
+    REC --> VAL[validation]
+    VAL --> CONT[continuity_restore]
+    CONT -->|replay| TIMELINE[live_cognition_timeline]
 ```
 
-SQLite-backed cognition timeline (max 500 events). Bounded replay loops (max 40). Overnight timeline compression.
+Continuity recovery integrates with `mission_command`, `mission_continuity`, `deferred_reasoning`, and `live_cognition_timeline`.
+
+---
+
+## Instability Suppression Graph
+
+```mermaid
+flowchart TB
+    INST[Instability Detected] --> SL[stability_loops]
+    SL --> SUP[suppress_instability_cascades]
+    SUP --> RF[runtime_fusion]
+    RF --> RS[runtime_stabilization]
+    RS --> THR[throttle_recovery_density]
+    THR --> LP[Low-Power Mode]
+```
+
+Bounded stabilization loops (max 48). Recovery cooldown scheduling.
+
+---
+
+## Operator Veto Routing
+
+```mermaid
+flowchart TB
+    REC[Recovery Recommendation] --> REQ[request_recovery_approval]
+    REQ --> OP{Operator Decision}
+    OP -->|authorize| AUTH[authorize_recovery_chain]
+    OP -->|veto| VETO[veto_recovery_path]
+    OP -->|escalate| ESC[escalate_recovery_risk]
+    AUTH --> EXEC[Supervised Recovery Execution]
+    VETO --> LOG[Transparent Log + Notify]
+```
+
+All recovery execution must route through `operator_veto`. Trust-preserving escalation.
+
+---
+
+## Checkpoint Recovery Chain
+
+```
+Failure Forecast → Recovery Simulation → Rollback Graph → Operator Approval
+        │                    │                  │                │
+        ▼                    ▼                  ▼                ▼
+   Risk Surface      Recovery Paths      Checkpoint Select    Veto Gate
+        │                    │                  │                │
+        └────────────────────┴──────────────────┴────────────────┘
+                                    │
+                                    ▼
+                          Supervised Recovery Execution
+                                    │
+                                    ▼
+                          Continuity Restoration
+```
+
+---
+
+## Stabilization Loop Topology
+
+```
+stability-loops:runtime
+├── initialize_stability_loop()
+├── rebalance_runtime_pressure()
+├── throttle_recovery_density()
+└── suppress_instability_cascades()
+    ├── runtime_stabilization
+    ├── unified_command_center
+    └── runtime_fusion
+```
 
 ---
 
@@ -200,54 +224,16 @@ SQLite-backed cognition timeline (max 500 events). Bounded replay loops (max 40)
 
 ```
 runtime (global)
+├── predictive-recovery-v2:runtime
+├── recovery-orchestration:runtime
+├── rollback-intelligence:runtime
+├── continuity-recovery:runtime
+├── stability-loops:runtime
+├── operator-veto:runtime
 ├── unified-command:runtime
-├── mission-command:runtime
-├── cognitive-multiplexing:runtime
-├── runtime-fusion:runtime
-├── operator-command-surfaces:runtime
-├── live-cognition-timeline:runtime
 ├── predictive-governance:runtime
-├── distributed-execution:runtime
-├── live-orchestration:runtime
-└── ... (56+ domain channels)
+└── ... (62+ domain channels)
 ```
-
-Events flow through `resolve_channels_for_trace()` without breaking dispatcher semantics.
-
----
-
-## Synchronization Lifecycle
-
-```mermaid
-sequenceDiagram
-    participant Op as Operator
-    participant UCC as unified_command_center
-    participant RF as runtime_fusion
-    participant CM as cognitive_multiplexing
-
-    Op->>UCC: initialize_command_center()
-    UCC->>UCC: synchronize_runtime_layers()
-    UCC->>RF: fuse_runtime_contexts()
-    RF->>RF: synchronize_checkpoint_layers()
-    UCC->>CM: multiplex_cognition_streams()
-    CM->>Op: prioritize_cognitive_visibility()
-    UCC->>Op: compute_global_operational_health()
-```
-
-Adaptive synchronization throttling with runtime fusion cooldowns (max 48 loops).
-
----
-
-## Local-First Architecture
-
-| Guarantee | Detail |
-|-----------|--------|
-| On-device processing | Cognition, memory, governance, window tracking |
-| No cloud requirement | Mock provider works fully offline |
-| Transparent monitoring | All awareness runtimes expose `operator_visible: true` |
-| Configurable exclusions | Window and workspace exclusion lists |
-| Bounded retention | SQLite stores capped per subsystem |
-| Reversible state | Checkpoints across execution, governance, and workflows |
 
 ---
 
@@ -255,18 +241,12 @@ Adaptive synchronization throttling with runtime fusion cooldowns (max 48 loops)
 
 | Version | Era | Focus |
 |---------|-----|-------|
-| v0.49 | Adaptive Autonomous OS | Adaptive runtime, autonomous workspace |
-| v0.50 | Real Autonomous Cognitive OS | Native OS, memory fabric v2 |
-| v0.51 | Cognitive Infrastructure | Realtime cognition, engineering infra |
-| v0.52 | Unified Cognitive Core | Attention engine, cognitive scheduler |
-| v0.53 | Autonomous Overnight Cognition | Deferred reasoning, morning briefing |
-| v0.54 | Native Autonomous Desktop | Window awareness, live overlays |
-| v0.55 | Autonomous Cognitive Coordination | Objectives, context sync |
 | v0.56 | Live Cognitive Orchestration | Live streams, mission graph |
-| v0.57 | Operational Execution System | Supervised pipelines, agent collaboration |
+| v0.57 | Operational Execution System | Supervised pipelines |
 | v0.58 | Distributed Cognitive Execution | Multi-workspace DAG federation |
-| v0.59 | Predictive Cognitive Governance | Risk forecasting, trust surfaces, stabilization |
-| **v0.60** | **Unified Cognitive Command Center** | Mission control, runtime fusion, cognition multiplexing |
+| v0.59 | Predictive Cognitive Governance | Risk forecasting, trust surfaces |
+| v0.60 | Unified Cognitive Command Center | Mission control, runtime fusion |
+| **v0.61** | **Closed-Loop Predictive Recovery** | Recovery orchestration, operator veto |
 
 ---
 
@@ -277,131 +257,63 @@ flowchart TB
     subgraph UI["Operator & Desktop"]
         OC[Operator Console]
         CW[Cognitive Workspace]
-        ND[Native Desktop]
-        CC[Command Center HUD]
+        RS_UI[Recovery System HUD]
+    end
+
+    subgraph Recovery["Recovery Layer (v0.61)"]
+        PR[predictive_recovery_v2]
+        RO[recovery_orchestration]
+        RI[rollback_intelligence]
+        CR[continuity_recovery]
+        SL[stability_loops]
+        OV[operator_veto]
     end
 
     subgraph Command["Command Center (v0.60)"]
         UCC[unified_command_center]
         MC[mission_command]
-        CM[cognitive_multiplexing]
-        RF[runtime_fusion]
-        OCS[operator_command_surfaces]
-        LCT[live_cognition_timeline]
     end
 
     subgraph Gov["Governance Layer"]
         PG[predictive_governance]
         RS[runtime_stabilization]
-        CR[cognitive_risk]
-        TS[trust_surfaces]
-        EC[execution_confidence]
-        GV[governance_visualization]
     end
 
     subgraph Exec["Execution Layer"]
         ES[execution_system]
         DE[distributed_execution]
-        EG[execution_graph]
-        AW[autonomous_workflows]
     end
 
-    subgraph Orch["Orchestration Layer"]
-        LO[live_orchestration]
-        AC[autonomous_coordination]
-        MG[mission_graph]
-    end
-
-    subgraph Core["Cognitive Core"]
-        UCCore[unified_cognitive_core]
-        SCH[cognitive_scheduler]
-        AE[attention_engine]
-    end
-
-    UI --> Command
-    Command --> Gov
-    Command --> Exec
+    UI --> Recovery
+    Recovery --> Command
+    Recovery --> Gov
     Gov --> Exec
-    Exec --> Orch
-    Orch --> Core
+    OV --> UI
 ```
 
 ---
 
-## Cognitive Governance Layer
+## Local-First Architecture
 
-| Module | App Handle | Role |
-|--------|-----------|------|
-| `predictive_governance` | `app.predictive_governance` | Governance cycles, pressure balancing |
-| `runtime_stabilization` | `app.runtime_stabilization` | Instability suppression, cooldowns |
-| `cognitive_risk` | `app.cognitive_risk` | Risk forecasting, failure simulation |
-| `trust_surfaces` | `app.trust_surfaces` | Operator trust, supervision integrity |
-| `execution_confidence` | `app.execution_confidence` | Confidence scoring, workflow probability |
-| `governance_visualization` | `app.governance_visualization` | Governance HUD, risk heatmaps |
-
----
-
-## Distributed Execution Layer
-
-- **Execution system** — supervised pipelines with reversible checkpoints
-- **Execution graph** — SQLite DAG registry with rollback graphs
-- **Distributed execution** — cross-workspace pipeline federation
-- **Predictive recovery** — blocker forecasting and recovery simulation
-- **Autonomous workflows** — bounded supervised automation loops (max 48 cycles)
-
----
-
-## Desktop Cognition Surfaces
-
-- Window awareness (local, exclusion-aware)
-- Live overlays v2 (adaptive throttling)
-- Workspace sessions (SQLite restore chains)
-- Operator focus (distraction pressure)
-- Desktop attention (salience scoring)
-- Command center HUD (cinematic operational rendering)
-
----
-
-## Overnight Cognition
-
-Bounded overnight cycles with deferred reasoning, continuity forecasting, morning briefing, and cognitive maintenance. Limits: `ODIN_OVERNIGHT_MAX_CYCLES=32`. No autonomous deployment.
-
----
-
-## Mission Orchestration
-
-Objective trees, mission graphs, mission command phases, resume chains, and continuity scoring across sessions. All mission state is supervised and locally persisted.
-
----
-
-## Operator Supervision Model
-
-```
-Cognition → Command Center → Governance Check → Risk Forecast → Trust Surface
-                                    │
-                                    ▼
-                            Approval Gate
-                                    │
-                    ┌───────────────┼───────────────┐
-                    ▼               ▼               ▼
-                Execute         Defer           Reject
-                    │               │               │
-                    ▼               ▼               ▼
-              Checkpoint      Queue           Log + Notify
-```
+| Guarantee | Detail |
+|-----------|--------|
+| On-device processing | Cognition, recovery, governance, window tracking |
+| No cloud requirement | Mock provider works fully offline |
+| Transparent monitoring | All recovery runtimes expose `operator_visible: true` |
+| Bounded retention | SQLite rollback registry (600 nodes), timeline (500 events) |
+| Reversible state | Checkpoints across execution, recovery, and workflows |
 
 ---
 
 ## Performance Profiles
 
-| Profile | Cognition | Rendering | Use Case |
-|---------|-----------|-----------|----------|
+| Profile | Recovery | Rendering | Use Case |
+|---------|----------|-----------|----------|
 | `compact` | Low | Minimal | Background, low-power |
 | `balanced` | Medium | Adaptive | Daily development |
-| `engineering_operations` | High | Standard | Active coding |
 | `immersive` | High | Full | Deep work |
 | `cinematic` | High | Maximum | Visual surfaces |
-| `overnight_command` | Bounded | Low-power | Idle command center cycles |
+| `overnight_recovery` | Bounded | Low-power | Idle recovery cycles |
 
 ---
 
@@ -413,18 +325,11 @@ Cognition → Command Center → Governance Check → Risk Forecast → Trust Su
 | Recommended | RTX 3060+ | 32 GB | `balanced` / `immersive` |
 | Apple Silicon | M-series | 16 GB | `balanced` |
 
-Adaptive synchronization throttling, lazy HUD hydration, bounded replay loops, and low-power cinematic mode ensure operation within constraints.
+Adaptive recovery throttling, lazy replay hydration, and bounded stabilization loops ensure operation within constraints.
 
 ---
 
 ## Installation
-
-### Prerequisites
-
-- Python 3.11+
-- Node.js 18+
-- Redis (optional)
-- 16 GB RAM recommended
 
 ```bash
 git clone https://github.com/FrostXMello/odin-runtime.git
@@ -437,8 +342,6 @@ cp backend/.env.example backend/.env
 ```powershell
 .\scripts\start-backend.ps1
 ```
-
-API docs: http://127.0.0.1:8000/docs
 
 ### Operator Console
 
@@ -453,39 +356,36 @@ npm run dev
 ## Quick Start
 
 ```env
-# Enable command center + governance + execution core
+# Enable recovery + command center core
+ODIN_PREDICTIVE_RECOVERY_V2_ENABLED=1
+ODIN_RECOVERY_ORCHESTRATION_ENABLED=1
+ODIN_ROLLBACK_INTELLIGENCE_ENABLED=1
+ODIN_CONTINUITY_RECOVERY_ENABLED=1
+ODIN_STABILITY_LOOPS_ENABLED=1
+ODIN_OPERATOR_VETO_ENABLED=1
 ODIN_UNIFIED_COMMAND_CENTER_ENABLED=1
-ODIN_MISSION_COMMAND_ENABLED=1
-ODIN_COGNITIVE_MULTIPLEXING_ENABLED=1
-ODIN_RUNTIME_FUSION_ENABLED=1
-ODIN_OPERATOR_COMMAND_SURFACES_ENABLED=1
-ODIN_LIVE_COGNITION_TIMELINE_ENABLED=1
-ODIN_PREDICTIVE_GOVERNANCE_ENABLED=1
-ODIN_EXECUTION_SYSTEM_ENABLED=1
-ODIN_LIVE_ORCHESTRATION_ENABLED=1
 ```
 
 1. Start backend and operator console
-2. Open `/unified-command` for mission control dashboard
-3. Open `/mission-command` for mission phase tracking
-4. Stream command events on `unified-command:runtime`
+2. Open `/predictive-recovery-v2` for failure forecasting
+3. Open `/recovery-orchestration` for supervised recovery coordination
+4. Open `/operator-veto` for recovery approval routing
+5. Stream recovery events on `predictive-recovery-v2:runtime`
 
 ---
 
 ## Environment Configuration
 
-See `backend/.env.example` for all flags. Key command center flags:
-
 ```env
-ODIN_UNIFIED_COMMAND_CENTER_ENABLED=1
-ODIN_MISSION_COMMAND_ENABLED=1
-ODIN_COGNITIVE_MULTIPLEXING_ENABLED=1
-ODIN_RUNTIME_FUSION_ENABLED=1
-ODIN_OPERATOR_COMMAND_SURFACES_ENABLED=1
-ODIN_LIVE_COGNITION_TIMELINE_ENABLED=1
-ODIN_COMMAND_PROFILE=balanced
-ODIN_COGNITION_MULTIPLEX_MODE=adaptive
-ODIN_OPERATIONAL_CONTINUITY_MODE=balanced
+ODIN_PREDICTIVE_RECOVERY_V2_ENABLED=1
+ODIN_RECOVERY_ORCHESTRATION_ENABLED=1
+ODIN_ROLLBACK_INTELLIGENCE_ENABLED=1
+ODIN_CONTINUITY_RECOVERY_ENABLED=1
+ODIN_STABILITY_LOOPS_ENABLED=1
+ODIN_OPERATOR_VETO_ENABLED=1
+ODIN_RECOVERY_PROFILE=balanced
+ODIN_RECOVERY_DENSITY=adaptive
+ODIN_STABILITY_MODE=balanced
 ```
 
 ---
@@ -494,38 +394,34 @@ ODIN_OPERATIONAL_CONTINUITY_MODE=balanced
 
 ```
 /api/v1/runtime/
-├── unified-command/           # Command center coordination
-├── mission-command/           # Mission-centric cognition
-├── cognitive-multiplexing/    # Cognition stream multiplexing
-├── runtime-fusion/            # Cross-runtime state fusion
-├── operator-command-surfaces/ # Command HUD rendering
-├── live-cognition-timeline/   # Cognition playback
-├── operational-health/        # Global health tracking
-├── global-pressure/           # Pressure balancing
-├── predictive-governance/     # Governance cycles
-├── execution-system/          # Supervised pipelines
-├── live-orchestration/        # Live orchestration
-└── ... (110+ route groups)
+├── predictive-recovery-v2/    # Failure forecasting
+├── recovery-orchestration/    # Recovery coordination
+├── rollback-intelligence/   # Rollback graphs
+├── continuity-recovery/     # Mission continuity
+├── stability-loops/         # Stabilization loops
+├── operator-veto/           # Recovery approval
+├── unified-command/         # Command center
+└── ... (120+ route groups)
 ```
 
 ---
 
 ## Operator Console
 
-260+ pages for runtime visibility. Key command center surfaces:
+270+ pages for runtime visibility. Key recovery surfaces:
 
 | Page | Purpose |
 |------|---------|
-| `/unified-command` | Unified mission control dashboard |
-| `/mission-command` | Mission-centric cognition |
-| `/mission-phases` | Operational phase transitions |
-| `/cognitive-multiplexing` | Cognition stream multiplexing |
-| `/runtime-fusion` | Cross-runtime state fusion |
-| `/command-surfaces` | Unified command HUD |
-| `/operational-health` | Global operational health |
-| `/global-pressure` | Command pressure balancing |
-| `/live-cognition-timeline` | Cognition timeline playback |
-| `/cognition-replay` | Bounded cognition replay |
+| `/predictive-recovery-v2` | Failure forecasting and simulation |
+| `/recovery-orchestration` | Supervised recovery coordination |
+| `/recovery-phases` | Recovery phase transitions |
+| `/rollback-intelligence` | Rollback graph generation |
+| `/rollback-replay` | Execution window replay |
+| `/continuity-recovery` | Mission continuity restoration |
+| `/stability-loops` | Bounded stabilization loops |
+| `/runtime-stability` | Instability cascade suppression |
+| `/operator-veto` | Recovery approval routing |
+| `/recovery-authorization` | Supervised rollback authorization |
 
 ---
 
@@ -533,56 +429,51 @@ ODIN_OPERATIONAL_CONTINUITY_MODE=balanced
 
 | Guarantee | Enforcement |
 |-----------|-------------|
-| No hidden execution | All runtimes return `transparent: true` |
-| No auto-deploy | `no_auto_deploy: true` on workflows |
-| Approval-gated | `approval_gated: true` on execution and simulation |
+| No hidden rollback | All recovery returns `transparent: true` |
+| Approval-gated | `approval_gated: true` on all recovery paths |
+| Operator veto | All execution routes through `operator_veto` |
 | Reversible | Checkpoints, rollback graphs, replay chains |
-| Bounded cycles | Max limits on loops, streams, simulations |
-| Operator override | `operator_override: true` on alignment and intervention |
-| Local-only | `local_first: true` on awareness and federation |
+| Bounded cycles | Max limits on recovery, replay, stabilization loops |
+| Local-only | `local_first: true` on all recovery subsystems |
 
 ---
 
 ## Scaling Constraints
 
-- Adaptive cognition density scaling
-- Stream prioritization under load
-- Mission DAG virtualization (500 node cap)
-- Replay compression for overnight timelines
-- Low-power operational rendering
-- Bounded synchronization loops (max 48)
-- Visual density throttling (max 56 renders)
-- Lazy HUD hydration
-- Runtime fusion cooldowns
-- Cognition stream compression
-- SQLite retention limits per subsystem
+- Rollback DAG virtualization (600 node cap)
+- Adaptive replay compression
+- Bounded recovery cycles (max 48)
+- Recovery cooldown scheduling
+- Stabilization density throttling
+- Low-power replay rendering
+- Stream prioritization under instability
+- Lazy continuity hydration
 
 ---
 
 ## Runtime Feature Matrix
 
-| Feature | v0.57 | v0.58 | v0.59 | v0.60 |
-|---------|-------|-------|-------|-------|
-| Supervised execution | ✅ | ✅ | ✅ | ✅ |
-| Distributed DAG | — | ✅ | ✅ | ✅ |
-| Predictive governance | — | — | ✅ | ✅ |
-| Unified command center | — | — | — | ✅ |
-| Mission command | — | — | — | ✅ |
-| Runtime fusion | — | — | — | ✅ |
-| Cognition multiplexing | — | — | — | ✅ |
-| Live cognition timeline | — | — | — | ✅ |
+| Feature | v0.59 | v0.60 | v0.61 |
+|---------|-------|-------|-------|
+| Predictive governance | ✅ | ✅ | ✅ |
+| Unified command center | — | ✅ | ✅ |
+| Predictive recovery v2 | — | — | ✅ |
+| Recovery orchestration | — | — | ✅ |
+| Rollback intelligence | — | — | ✅ |
+| Operator veto gates | — | — | ✅ |
+| Stability loops | — | — | ✅ |
 
 ---
 
-## Roadmap (v0.61+)
+## Roadmap (v0.62+)
 
 | Version | Focus |
 |---------|-------|
-| v0.61 | Closed-loop predictive recovery with operator veto gates |
 | v0.62 | Multi-operator collaborative cognition |
 | v0.63 | Real-time rollback DAG animation engine |
 | v0.64 | Federated cognition across opt-in workspaces |
 | v0.65 | Unified cinematic operational desktop |
+| v0.66 | Predictive mission continuity forecasting |
 
 ---
 
@@ -604,6 +495,6 @@ See [LICENSE](LICENSE) in the repository root.
 ---
 
 <p align="center">
-  <strong>Odin Runtime v0.60</strong> — Unified Cognitive Command Center<br>
-  Local-first · Approval-gated · Operator-supervised · Mission Control
+  <strong>Odin Runtime v0.61</strong> — Closed-Loop Predictive Recovery<br>
+  Local-first · Approval-gated · Operator-supervised · Resilient
 </p>
