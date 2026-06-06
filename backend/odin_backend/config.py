@@ -346,6 +346,13 @@ class Settings(BaseSettings):
     daily_operator_experience_enabled: bool = False
     desktop_overlay_enabled: bool = False
 
+    # Unified cognitive operating environment (Prompt 46)
+    cognitive_workspace_enabled: bool = False
+    live_reasoning_enabled: bool = False
+    conversational_presence_enabled: bool = False
+    evolution_review_enabled: bool = False
+    operator_productivity_enabled: bool = False
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

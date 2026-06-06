@@ -264,6 +264,14 @@ class TraceEventKind(StrEnum):
     VISUALIZATION_SYNCED = "visualization_synced"
     EVOLUTION_REVIEW_OPENED = "evolution_review_opened"
     MEMORY_SURFACE_RENDERED = "memory_surface_rendered"
+    REASONING_BRANCH_RENDERED = "reasoning_branch_rendered"
+    CONVERSATION_MEMORY_RECALLED = "conversation_memory_recalled"
+    UPGRADE_REVIEW_OPENED = "upgrade_review_opened"
+    ROLLBACK_SIMULATED = "rollback_simulated"
+    UNFINISHED_TASK_RESURFACED = "unfinished_task_resurfaced"
+    OPERATOR_FOCUS_DEGRADED = "operator_focus_degraded"
+    COGNITIVE_TRANSITION_RENDERED = "cognitive_transition_rendered"
+    LIVE_PRESENCE_UPDATED = "live_presence_updated"
 
 
 class TraceEvent(BaseModel):

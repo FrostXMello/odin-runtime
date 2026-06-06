@@ -610,6 +610,39 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
     if event.kind == TraceEventKind.EVOLUTION_REVIEW_OPENED:
         channels.append("evolution:runtime")
         channels.append("self-development:runtime")
+    if event.kind == TraceEventKind.WORKSPACE_FOCUS_CHANGED:
+        channels.append("workspace:runtime")
+        channels.append("workspace-ui:runtime")
+    if event.kind == TraceEventKind.COGNITIVE_TRANSITION_RENDERED:
+        channels.append("workspace:runtime")
+        channels.append("visualization:runtime")
+    if event.kind in (
+        TraceEventKind.REASONING_BRANCH_RENDERED,
+        TraceEventKind.LIVE_REASONING_RENDERED,
+    ):
+        channels.append("reasoning-live:runtime")
+        channels.append("reasoning-streams:runtime")
+    if event.kind in (
+        TraceEventKind.CONVERSATION_MEMORY_RECALLED,
+        TraceEventKind.LIVE_PRESENCE_UPDATED,
+    ):
+        channels.append("presence-live:runtime")
+        channels.append("conversational-os:runtime")
+    if event.kind in (
+        TraceEventKind.UPGRADE_REVIEW_OPENED,
+        TraceEventKind.ROLLBACK_SIMULATED,
+    ):
+        channels.append("evolution-review:runtime")
+        channels.append("evolution:runtime")
+    if event.kind in (
+        TraceEventKind.DAEMON_ATTENTION_SHIFTED,
+        TraceEventKind.UNFINISHED_TASK_RESURFACED,
+    ):
+        channels.append("daemon-cognition:runtime")
+        channels.append("daemon:runtime")
+    if event.kind == TraceEventKind.OPERATOR_FOCUS_DEGRADED:
+        channels.append("productivity:runtime")
+        channels.append("live-environment:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

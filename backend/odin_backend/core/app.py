@@ -712,6 +712,19 @@ class OdinApplication:
         self.voice_desktop = VoiceDesktopCoordinator(self)
         self.daily_operator_experience = DailyOperatorExperienceRuntime(self)
         self.desktop_overlay = DesktopOverlayRuntime(self)
+        from odin_backend.core.cognitive_workspace import CognitiveWorkspaceRuntime
+        from odin_backend.core.live_reasoning import LiveReasoningRuntime
+        from odin_backend.core.conversational_presence import ConversationalPresenceRuntime
+        from odin_backend.core.evolution_review import EvolutionReviewRuntime
+        from odin_backend.core.cognitive_daemon import CognitiveDaemonOrchestrator
+        from odin_backend.core.operator_productivity import OperatorProductivityRuntime
+
+        self.cognitive_workspace = CognitiveWorkspaceRuntime(self)
+        self.live_reasoning = LiveReasoningRuntime(self)
+        self.conversational_presence = ConversationalPresenceRuntime(self)
+        self.evolution_review = EvolutionReviewRuntime(self)
+        self.cognitive_daemon = CognitiveDaemonOrchestrator(self)
+        self.operator_productivity = OperatorProductivityRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,
