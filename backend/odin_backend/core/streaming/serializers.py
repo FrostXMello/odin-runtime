@@ -702,6 +702,40 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
     if event.kind == TraceEventKind.OVERNIGHT_REFLECTION_COMPLETED:
         channels.append("cognitive-orchestration:runtime")
         channels.append("daemon-cognition:runtime")
+    if event.kind in (
+        TraceEventKind.RUNTIME_PRIORITY_SHIFTED,
+        TraceEventKind.ADAPTIVE_SCALING_APPLIED,
+        TraceEventKind.BACKGROUND_OPTIMIZATION_COMPLETED,
+    ):
+        channels.append("adaptive-runtime:runtime")
+    if event.kind == TraceEventKind.COGNITION_LOAD_BALANCED:
+        channels.append("load-balancer:runtime")
+        channels.append("adaptive-runtime:runtime")
+    if event.kind in (
+        TraceEventKind.WORKSPACE_PREDICTION_GENERATED,
+        TraceEventKind.WORKFLOW_RESUMED,
+    ):
+        channels.append("workspace-autonomy:runtime")
+    if event.kind in (
+        TraceEventKind.ENGINEERING_UPGRADE_PROPOSED,
+        TraceEventKind.TECHNICAL_DEBT_DETECTED,
+    ):
+        channels.append("engineering-evolution:runtime")
+    if event.kind in (
+        TraceEventKind.COGNITIVE_FATIGUE_DETECTED,
+        TraceEventKind.ADAPTIVE_ASSISTANCE_ADJUSTED,
+        TraceEventKind.ATTENTION_HEATMAP_UPDATED,
+    ):
+        channels.append("operator-intelligence:runtime")
+    if event.kind in (
+        TraceEventKind.DEFERRED_REASONING_RESTORED,
+        TraceEventKind.OVERNIGHT_CYCLE_COMPLETED,
+        TraceEventKind.LOW_POWER_TRANSITION,
+        TraceEventKind.COGNITIVE_RESUME_COMPLETED,
+        TraceEventKind.OVERNIGHT_OPTIMIZATION_COMPLETED,
+    ):
+        channels.append("daemon-v2:runtime")
+        channels.append("daemon-cognition:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

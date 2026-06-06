@@ -755,6 +755,18 @@ class OdinApplication:
         self.personal_presence = PersonalPresenceRuntime(self)
         self.proactive_assistance_runtime = ProactiveAssistanceRuntime(self)
         self.cognitive_orchestration = CognitiveOrchestrationRuntime(self)
+        from odin_backend.core.adaptive_runtime import AdaptiveRuntimeManager, CognitiveLoadBalancer
+        from odin_backend.core.autonomous_workspace import AutonomousWorkspaceRuntime
+        from odin_backend.core.autonomous_engineering_evolution import EngineeringEvolutionRuntime
+        from odin_backend.core.cognitive_daemon.daemon_v2_runtime import CognitiveDaemonV2Runtime
+        from odin_backend.core.operator_intelligence_v2 import OperatorIntelligenceV2Runtime
+
+        self.adaptive_runtime = AdaptiveRuntimeManager(self)
+        self.cognitive_load_balancer = CognitiveLoadBalancer(self)
+        self.autonomous_workspace = AutonomousWorkspaceRuntime(self)
+        self.engineering_evolution = EngineeringEvolutionRuntime(self)
+        self.cognitive_daemon_v2 = CognitiveDaemonV2Runtime(self)
+        self.operator_intelligence_v2 = OperatorIntelligenceV2Runtime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,

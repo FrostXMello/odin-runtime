@@ -291,6 +291,22 @@ class TraceEventKind(StrEnum):
     COGNITIVE_TICK_EXECUTED = "cognitive_tick_executed"
     OVERNIGHT_REFLECTION_COMPLETED = "overnight_reflection_completed"
     CROSS_RUNTIME_SYNC_COMPLETED = "cross_runtime_sync_completed"
+    RUNTIME_PRIORITY_SHIFTED = "runtime_priority_shifted"
+    ADAPTIVE_SCALING_APPLIED = "adaptive_scaling_applied"
+    COGNITION_LOAD_BALANCED = "cognition_load_balanced"
+    BACKGROUND_OPTIMIZATION_COMPLETED = "background_optimization_completed"
+    WORKSPACE_PREDICTION_GENERATED = "workspace_prediction_generated"
+    ENGINEERING_UPGRADE_PROPOSED = "engineering_upgrade_proposed"
+    TECHNICAL_DEBT_DETECTED = "technical_debt_detected"
+    ATTENTION_HEATMAP_UPDATED = "attention_heatmap_updated"
+    COGNITIVE_FATIGUE_DETECTED = "cognitive_fatigue_detected"
+    WORKFLOW_RESUMED = "workflow_resumed"
+    ADAPTIVE_ASSISTANCE_ADJUSTED = "adaptive_assistance_adjusted"
+    OVERNIGHT_OPTIMIZATION_COMPLETED = "overnight_optimization_completed"
+    DEFERRED_REASONING_RESTORED = "deferred_reasoning_restored"
+    OVERNIGHT_CYCLE_COMPLETED = "overnight_cycle_completed"
+    LOW_POWER_TRANSITION = "low_power_transition"
+    COGNITIVE_RESUME_COMPLETED = "cognitive_resume_completed"
 
 
 class TraceEvent(BaseModel):

@@ -370,6 +370,16 @@ class Settings(BaseSettings):
     proactive_assistance_runtime_enabled: bool = False
     cognitive_orchestration_enabled: bool = False
 
+    # Adaptive autonomous cognitive OS (Prompt 49)
+    adaptive_runtime_enabled: bool = False
+    autonomous_workspace_enabled: bool = False
+    engineering_evolution_enabled: bool = False
+    operator_intelligence_v2_enabled: bool = False
+    cognitive_daemon_v2_enabled: bool = False
+    autonomous_session_restore_enabled: bool = False
+    cognitive_load_balancing_enabled: bool = False
+    overnight_cognition_enabled: bool = False
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"
