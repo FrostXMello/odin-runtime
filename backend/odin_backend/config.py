@@ -452,6 +452,17 @@ class Settings(BaseSettings):
     cognitive_render_mode: str = "adaptive"
     visual_density: str = "balanced"
 
+    # Operational execution system (Prompt 57)
+    execution_system_enabled: bool = False
+    task_orchestration_enabled: bool = False
+    agent_collaboration_enabled: bool = False
+    workspace_operations_enabled: bool = False
+    execution_memory_enabled: bool = False
+    runtime_execution_visibility_enabled: bool = False
+    execution_profile: str = "balanced"
+    execution_queue_mode: str = "adaptive"
+    execution_stream_density: str = "balanced"
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

@@ -932,6 +932,32 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         TraceEventKind.COGNITIVE_VISUAL_DENSITY_COMPRESSED,
     ):
         channels.append("visual-layers:runtime")
+    if event.kind in (
+        TraceEventKind.EXECUTION_PIPELINE_INITIALIZED,
+        TraceEventKind.EXECUTION_STAGE_CHECKPOINTED,
+        TraceEventKind.EXECUTION_STAGE_ROLLED_BACK,
+        TraceEventKind.EXECUTION_HEALTH_UPDATED,
+    ):
+        channels.append("execution-system:runtime")
+    if event.kind in (
+        TraceEventKind.EXECUTION_QUEUE_REBALANCED,
+        TraceEventKind.EXECUTION_BLOCKER_DETECTED,
+    ):
+        channels.append("task-orchestration:runtime")
+    if event.kind in (
+        TraceEventKind.AGENT_COLLABORATION_STARTED,
+        TraceEventKind.CONSENSUS_SCORE_UPDATED,
+    ):
+        channels.append("agent-collaboration:runtime")
+    if event.kind == TraceEventKind.WORKSPACE_OPERATION_RECOVERED:
+        channels.append("workspace-operations:runtime")
+    if event.kind == TraceEventKind.EXECUTION_CHAIN_PERSISTED:
+        channels.append("execution-memory:runtime")
+    if event.kind in (
+        TraceEventKind.EXECUTION_VISIBILITY_STREAMED,
+        TraceEventKind.EXECUTION_PRESSURE_UPDATED,
+    ):
+        channels.append("execution-visibility:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

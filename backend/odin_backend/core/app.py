@@ -856,6 +856,19 @@ class OdinApplication:
         self.realtime_coordination = RealtimeCoordinationRuntime(self)
         self.operator_situational_awareness = OperatorSituationalAwarenessRuntime(self)
         self.cognitive_visual_layers = CognitiveVisualLayersRuntime(self)
+        from odin_backend.core.execution_system import ExecutionSystemRuntime
+        from odin_backend.core.task_orchestration import TaskOrchestrationRuntime
+        from odin_backend.core.agent_collaboration import AgentCollaborationRuntime
+        from odin_backend.core.workspace_operations import WorkspaceOperationsRuntime
+        from odin_backend.core.execution_memory import ExecutionMemoryRuntime
+        from odin_backend.core.runtime_execution_visibility import RuntimeExecutionVisibilityRuntime
+
+        self.execution_system = ExecutionSystemRuntime(self)
+        self.task_orchestration = TaskOrchestrationRuntime(self)
+        self.agent_collaboration = AgentCollaborationRuntime(self)
+        self.workspace_operations = WorkspaceOperationsRuntime(self)
+        self.execution_memory = ExecutionMemoryRuntime(self)
+        self.runtime_execution_visibility = RuntimeExecutionVisibilityRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,

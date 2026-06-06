@@ -387,6 +387,18 @@ class TraceEventKind(StrEnum):
     RUNTIME_CONSTELLATION_RENDERED = "runtime_constellation_rendered"
     OBJECTIVE_RIVER_RENDERED = "objective_river_rendered"
     COGNITIVE_VISUAL_DENSITY_COMPRESSED = "cognitive_visual_density_compressed"
+    EXECUTION_PIPELINE_INITIALIZED = "execution_pipeline_initialized"
+    EXECUTION_STAGE_CHECKPOINTED = "execution_stage_checkpointed"
+    EXECUTION_STAGE_ROLLED_BACK = "execution_stage_rolled_back"
+    EXECUTION_HEALTH_UPDATED = "execution_health_updated"
+    EXECUTION_QUEUE_REBALANCED = "execution_queue_rebalanced"
+    EXECUTION_BLOCKER_DETECTED = "execution_blocker_detected"
+    AGENT_COLLABORATION_STARTED = "agent_collaboration_started"
+    CONSENSUS_SCORE_UPDATED = "consensus_score_updated"
+    WORKSPACE_OPERATION_RECOVERED = "workspace_operation_recovered"
+    EXECUTION_CHAIN_PERSISTED = "execution_chain_persisted"
+    EXECUTION_VISIBILITY_STREAMED = "execution_visibility_streamed"
+    EXECUTION_PRESSURE_UPDATED = "execution_pressure_updated"
 
 
 class TraceEvent(BaseModel):
