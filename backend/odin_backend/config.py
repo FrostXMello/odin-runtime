@@ -496,6 +496,17 @@ class Settings(BaseSettings):
     cognition_multiplex_mode: str = "adaptive"
     operational_continuity_mode: str = "balanced"
 
+    # Closed-loop predictive recovery (Prompt 61)
+    predictive_recovery_v2_enabled: bool = False
+    recovery_orchestration_enabled: bool = False
+    rollback_intelligence_enabled: bool = False
+    continuity_recovery_enabled: bool = False
+    stability_loops_enabled: bool = False
+    operator_veto_enabled: bool = False
+    recovery_profile: str = "balanced"
+    recovery_density: str = "adaptive"
+    stability_mode: str = "balanced"
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

@@ -435,6 +435,21 @@ class TraceEventKind(StrEnum):
     OPERATIONAL_OVERLAY_UPDATED = "operational_overlay_updated"
     COGNITION_TIMELINE_APPENDED = "cognition_timeline_appended"
     COGNITION_WINDOW_REPLAYED = "cognition_window_replayed"
+    OPERATIONAL_FAILURE_FORECASTED = "operational_failure_forecasted"
+    RECOVERY_PATHS_SIMULATED = "recovery_paths_simulated"
+    RECOVERY_PROBABILITY_ESTIMATED = "recovery_probability_estimated"
+    RECOVERY_CYCLE_INITIALIZED = "recovery_cycle_initialized"
+    RECOVERY_PHASE_TRANSITIONED = "recovery_phase_transitioned"
+    ROLLBACK_CONFIDENCE_ESTIMATED = "rollback_confidence_estimated"
+    EXECUTION_WINDOW_REPLAYED = "execution_window_replayed"
+    MISSION_CONTINUITY_RESTORED = "mission_continuity_restored"
+    WORKSPACE_CONTEXT_REBUILT = "workspace_context_rebuilt"
+    STABILITY_LOOP_INITIALIZED = "stability_loop_initialized"
+    INSTABILITY_CASCADE_SUPPRESSED = "instability_cascade_suppressed"
+    RECOVERY_DENSITY_THROTTLED = "recovery_density_throttled"
+    OPERATOR_VETO_REQUESTED = "operator_veto_requested"
+    RECOVERY_CHAIN_AUTHORIZED = "recovery_chain_authorized"
+    RECOVERY_PATH_VETOED = "recovery_path_vetoed"
 
 
 class TraceEvent(BaseModel):

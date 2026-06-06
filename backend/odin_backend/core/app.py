@@ -908,6 +908,19 @@ class OdinApplication:
         self.runtime_fusion = RuntimeFusionRuntime(self)
         self.operator_command_surfaces = OperatorCommandSurfacesRuntime(self)
         self.live_cognition_timeline = LiveCognitionTimelineRuntime(self)
+        from odin_backend.core.predictive_recovery_v2 import PredictiveRecoveryV2Runtime
+        from odin_backend.core.recovery_orchestration import RecoveryOrchestrationRuntime
+        from odin_backend.core.rollback_intelligence import RollbackIntelligenceRuntime
+        from odin_backend.core.continuity_recovery import ContinuityRecoveryRuntime
+        from odin_backend.core.stability_loops import StabilityLoopsRuntime
+        from odin_backend.core.operator_veto import OperatorVetoRuntime
+
+        self.predictive_recovery_v2 = PredictiveRecoveryV2Runtime(self)
+        self.recovery_orchestration = RecoveryOrchestrationRuntime(self)
+        self.rollback_intelligence = RollbackIntelligenceRuntime(self)
+        self.continuity_recovery = ContinuityRecoveryRuntime(self)
+        self.stability_loops = StabilityLoopsRuntime(self)
+        self.operator_veto = OperatorVetoRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,

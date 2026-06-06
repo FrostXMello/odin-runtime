@@ -1047,6 +1047,40 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         TraceEventKind.COGNITION_WINDOW_REPLAYED,
     ):
         channels.append("live-cognition-timeline:runtime")
+    if event.kind in (
+        TraceEventKind.OPERATIONAL_FAILURE_FORECASTED,
+        TraceEventKind.RECOVERY_PATHS_SIMULATED,
+        TraceEventKind.RECOVERY_PROBABILITY_ESTIMATED,
+    ):
+        channels.append("predictive-recovery-v2:runtime")
+    if event.kind in (
+        TraceEventKind.RECOVERY_CYCLE_INITIALIZED,
+        TraceEventKind.RECOVERY_PHASE_TRANSITIONED,
+    ):
+        channels.append("recovery-orchestration:runtime")
+    if event.kind in (
+        TraceEventKind.ROLLBACK_GRAPH_GENERATED,
+        TraceEventKind.ROLLBACK_CONFIDENCE_ESTIMATED,
+        TraceEventKind.EXECUTION_WINDOW_REPLAYED,
+    ):
+        channels.append("rollback-intelligence:runtime")
+    if event.kind in (
+        TraceEventKind.MISSION_CONTINUITY_RESTORED,
+        TraceEventKind.WORKSPACE_CONTEXT_REBUILT,
+    ):
+        channels.append("continuity-recovery:runtime")
+    if event.kind in (
+        TraceEventKind.STABILITY_LOOP_INITIALIZED,
+        TraceEventKind.INSTABILITY_CASCADE_SUPPRESSED,
+        TraceEventKind.RECOVERY_DENSITY_THROTTLED,
+    ):
+        channels.append("stability-loops:runtime")
+    if event.kind in (
+        TraceEventKind.OPERATOR_VETO_REQUESTED,
+        TraceEventKind.RECOVERY_CHAIN_AUTHORIZED,
+        TraceEventKind.RECOVERY_PATH_VETOED,
+    ):
+        channels.append("operator-veto:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels
