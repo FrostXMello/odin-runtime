@@ -31,6 +31,11 @@ class DailyWorkflowRuntime:
             unfinished = restored.get("restored", {}).get("unfinished", 0)
             if unfinished:
                 suggestions.append(f"{unfinished} unfinished work items — restore continuity?")
+        if getattr(self._app.settings, "cognitive_shell_enabled", False) and hasattr(self._app, "cognitive_shell"):
+            await self._app.cognitive_shell.activate(workspace={"active_app": "operator_console"})
+            suggestions.append("Cognitive shell active — conversation continuity ready.")
+        if getattr(self._app.settings, "conversation_runtime_enabled", False) and hasattr(self._app, "conversation"):
+            suggestions.append("Live conversation runtime available in /runtime/conversation.")
         return {"accepted": True, "suggestions": suggestions, "briefing": briefing}
 
     async def engineering_briefing(self) -> dict[str, Any]:

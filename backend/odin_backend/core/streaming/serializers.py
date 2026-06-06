@@ -484,6 +484,31 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
         channels.append("live-copilot:runtime")
     if event.kind == TraceEventKind.WORKSPACE_ATTENTION_SHIFTED:
         channels.append("workstation:runtime")
+    if event.kind in (
+        TraceEventKind.THOUGHT_GENERATED,
+        TraceEventKind.REASONING_STREAM_UPDATED,
+    ):
+        channels.append("cognition-live:runtime")
+        channels.append("thought-stream:runtime")
+    if event.kind in (
+        TraceEventKind.PRESENCE_SHIFTED,
+        TraceEventKind.EMOTIONAL_STATE_UPDATED,
+    ):
+        channels.append("presence:runtime")
+    if event.kind == TraceEventKind.ATTENTION_FOCUS_CHANGED:
+        channels.append("overlay:runtime")
+    if event.kind == TraceEventKind.CONVERSATION_THREAD_RESTORED:
+        channels.append("conversation:runtime")
+    if event.kind == TraceEventKind.LIVE_OVERLAY_RENDERED:
+        channels.append("overlay:runtime")
+    if event.kind in (
+        TraceEventKind.IMPROVEMENT_PROPOSED,
+        TraceEventKind.ARCHITECTURE_REFLECTION_GENERATED,
+    ):
+        channels.append("self-development:runtime")
+    if event.kind == TraceEventKind.WORKSPACE_ATTENTION_CHANGED:
+        channels.append("workstation:runtime")
+        channels.append("presence:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

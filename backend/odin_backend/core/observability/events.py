@@ -220,6 +220,16 @@ class TraceEventKind(StrEnum):
     WORKSPACE_ATTENTION_SHIFTED = "workspace_attention_shifted"
     UNFINISHED_WORK_DETECTED = "unfinished_work_detected"
     LIVE_CONTEXT_FUSED = "live_context_fused"
+    THOUGHT_GENERATED = "thought_generated"
+    REASONING_STREAM_UPDATED = "reasoning_stream_updated"
+    PRESENCE_SHIFTED = "presence_shifted"
+    ATTENTION_FOCUS_CHANGED = "attention_focus_changed"
+    CONVERSATION_THREAD_RESTORED = "conversation_thread_restored"
+    LIVE_OVERLAY_RENDERED = "live_overlay_rendered"
+    IMPROVEMENT_PROPOSED = "improvement_proposed"
+    ARCHITECTURE_REFLECTION_GENERATED = "architecture_reflection_generated"
+    EMOTIONAL_STATE_UPDATED = "emotional_state_updated"
+    WORKSPACE_ATTENTION_CHANGED = "workspace_attention_changed"
 
 
 class TraceEvent(BaseModel):

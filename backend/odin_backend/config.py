@@ -301,6 +301,16 @@ class Settings(BaseSettings):
     cognitive_continuity_enabled: bool = False
     heavy_load: bool = False
 
+    # Cognitive interface + embodied presence (Prompt 41)
+    cognitive_shell_enabled: bool = False
+    conversation_runtime_enabled: bool = False
+    presence_enabled: bool = False
+    cognitive_visualization_enabled: bool = False
+    live_overlay_enabled: bool = False
+    self_development_enabled: bool = False
+    transparency_enabled: bool = False
+    cognitive_interface_mode: str = "balanced"
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

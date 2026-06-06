@@ -649,6 +649,21 @@ class OdinApplication:
         self.live_copilot = LiveCopilotRuntime(self)
         self.cognitive_continuity = CognitiveContinuityRuntime(self)
         self.cognitive_pipeline = CognitivePipelineRuntime(self)
+        from odin_backend.core.cognitive_shell import CognitiveShellRuntime
+        from odin_backend.core.conversation_runtime import ConversationRuntime
+        from odin_backend.core.presence import PresenceRuntime
+        from odin_backend.core.cognitive_visualization import CognitiveVisualizationRuntime
+        from odin_backend.core.live_overlay import LiveOverlayRuntime
+        from odin_backend.core.self_development import SelfDevelopmentRuntime
+        from odin_backend.core.transparency import TransparencyRuntime
+
+        self.cognitive_shell = CognitiveShellRuntime(self)
+        self.conversation = ConversationRuntime(self)
+        self.presence = PresenceRuntime(self)
+        self.cognitive_visualization = CognitiveVisualizationRuntime(self)
+        self.live_overlay = LiveOverlayRuntime(self)
+        self.self_development = SelfDevelopmentRuntime(self)
+        self.transparency = TransparencyRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,
