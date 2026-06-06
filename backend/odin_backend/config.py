@@ -41,7 +41,7 @@ class Settings(BaseSettings):
     # Persistent runtime
     runtime_heartbeat_interval_seconds: int = 15
     runtime_health_check_interval_seconds: int = 30
-    runtime_enable_background_loops: bool = True
+    runtime_enable_background_loops: bool = False
 
     # Browser CDP
     chrome_cdp_url: str = "http://127.0.0.1:9222"
@@ -88,12 +88,12 @@ class Settings(BaseSettings):
     desktop_collector_interval_seconds: int = 5
 
     # Cognitive stability (Milestone 8)
-    stability_loop_enabled: bool = True
+    stability_loop_enabled: bool = False
     coherence_execution_threshold: float = 0.4
     default_autonomy_level: int = 3  # bounded execution; governor + coherence gate high-risk
 
     # Milestone 10 — runtime conscious loop
-    conscious_loop_enabled: bool = True
+    conscious_loop_enabled: bool = False
     conscious_loop_interval_seconds: float = 3.0
     conscious_loop_stability_interval: int = 10
     conscious_loop_max_executions_per_cycle: int = 2
@@ -529,17 +529,17 @@ class Settings(BaseSettings):
     replay_density: str = "adaptive"
     timeline_render_mode: str = "adaptive"
 
-    # Production hardening (Prompt 64)
-    runtime_diagnostics_enabled: bool = False
-    stream_management_enabled: bool = False
-    session_persistence_v2_enabled: bool = False
-    runtime_cleanup_enabled: bool = False
-    production_observability_enabled: bool = False
+    # Production hardening (Prompt 64) — daily-driver defaults on
+    runtime_diagnostics_enabled: bool = True
+    stream_management_enabled: bool = True
+    session_persistence_v2_enabled: bool = True
+    runtime_cleanup_enabled: bool = True
+    production_observability_enabled: bool = True
     resource_profile: str = "balanced"
     stream_compression_mode: str = "adaptive"
     low_power_coordination: bool = False
-    startup_optimization_enabled: bool = False
-    sqlite_compaction_enabled: bool = False
+    startup_optimization_enabled: bool = True
+    sqlite_compaction_enabled: bool = True
 
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
