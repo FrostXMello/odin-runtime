@@ -26,6 +26,11 @@ class DailyWorkflowRuntime:
         if getattr(self._app.settings, "engineering_workspace_enabled", False):
             eng = await self.engineering_briefing()
             suggestions.extend(eng.get("suggestions", []))
+        if getattr(self._app.settings, "cognitive_continuity_enabled", False) and hasattr(self._app, "cognitive_continuity"):
+            restored = await self._app.cognitive_continuity.restore()
+            unfinished = restored.get("restored", {}).get("unfinished", 0)
+            if unfinished:
+                suggestions.append(f"{unfinished} unfinished work items — restore continuity?")
         return {"accepted": True, "suggestions": suggestions, "briefing": briefing}
 
     async def engineering_briefing(self) -> dict[str, Any]:
