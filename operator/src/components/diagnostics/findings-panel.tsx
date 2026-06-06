@@ -5,6 +5,7 @@ import { useRuntimeHealth, useRuntimeIntrospection } from "@/lib/hooks/use-runti
 import { Badge } from "@/components/ui/badge";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
 import type { RootCauseFinding } from "@/lib/api/types";
+import { isCriticalFinding } from "@/lib/stream/event-filter";
 
 function SeverityBadge({ s }: { s: string }) {
   const v =
@@ -49,12 +50,15 @@ export function DiagnosticsPanel() {
   const health = useRuntimeHealth();
   const intro = useRuntimeIntrospection();
   const findings = health.data?.root_cause_analysis?.findings ?? intro.data?.diagnostics?.findings ?? [];
+  const criticalCount =
+    health.data?.root_cause_analysis?.issue_count ??
+    findings.filter((f) => isCriticalFinding(f.severity)).length;
   const introData = intro.data?.introspection;
 
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3">
-        <Badge variant={health.data?.root_cause_analysis?.status === "critical" ? "critical" : "default"}>
+        <Badge variant={criticalCount > 0 ? "critical" : "default"}>
           {health.data?.root_cause_analysis?.summary ?? "Analyzing…"}
         </Badge>
       </div>
@@ -91,14 +95,25 @@ export function DiagnosticsPanel() {
       </div>
 
       <Card>
-        <CardHeader title="Root cause analysis" subtitle={`${findings.length} findings`} />
+        <CardHeader
+          title="Root cause analysis"
+          subtitle={`${criticalCount} critical · ${findings.length} findings`}
+        />
         <CardBody className="space-y-3">
           {findings.length === 0 && (
             <p className="text-sm text-odin-muted">Runtime operating within normal parameters</p>
           )}
-          {findings.map((f) => (
+          {findings
+            .filter((f) => isCriticalFinding(f.severity) || f.severity === "high")
+            .map((f) => (
             <FindingCard key={f.issue} f={f} />
           ))}
+          {findings.length > 0 &&
+            findings.filter((f) => isCriticalFinding(f.severity) || f.severity === "high").length === 0 && (
+              <p className="text-sm text-odin-muted">
+                No critical issues — {findings.length} advisory signal(s) suppressed from this view
+              </p>
+            )}
         </CardBody>
       </Card>
     </div>

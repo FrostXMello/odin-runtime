@@ -8,8 +8,6 @@ import { ApiError } from "@/lib/api/client";
 import { GlassPanel } from "@/components/ui/design-system";
 import {
   commandGlowStyle,
-  easeIntelligence,
-  microPress,
   transitionFast,
 } from "@/components/ui/design-system/motion";
 import type { OdinCorePhase } from "@/components/odin-core/odin-core-state";
@@ -17,7 +15,8 @@ import { cn } from "@/lib/utils/cn";
 
 type Props = {
   onMissionCreated: (missionId: string) => void;
-  disabled?: boolean;
+  onChatResponse?: (message: string) => void;
+  onSystemResponse?: (message: string) => void;
   onFocusChange?: (focused: boolean) => void;
   onTypingChange?: (typing: boolean) => void;
   onCreatingChange?: (creating: boolean) => void;
@@ -40,7 +39,8 @@ const PHASE_GLOW: Record<OdinCorePhase, number> = {
 
 export function MissionCommandBar({
   onMissionCreated,
-  disabled,
+  onChatResponse,
+  onSystemResponse,
   onFocusChange,
   onTypingChange,
   onCreatingChange,
@@ -64,38 +64,54 @@ export function MissionCommandBar({
       onCreatingChange?.(true);
       onSubmitPulse?.();
     },
-    onSuccess: (mission) => {
+    onSuccess: (result) => {
       setCommand("");
       setError(null);
       onCreatingChange?.(false);
-      qc.invalidateQueries({ queryKey: ["missions"] });
-      onMissionCreated(mission.mission_id);
+      if (result.intent === "chat") {
+        onChatResponse?.(result.message ?? "I'm here.");
+        return;
+      }
+      if (result.intent === "system") {
+        onSystemResponse?.(result.message ?? "System status retrieved.");
+        return;
+      }
+      if (result.mission?.mission_id) {
+        qc.invalidateQueries({ queryKey: ["missions"] });
+        onMissionCreated(result.mission.mission_id);
+      }
     },
     onError: (err: unknown) => {
       onCreatingChange?.(false);
       if (err instanceof ApiError) {
+        if (err.status === 409) {
+          setError("Similar mission already exists — try a different command.");
+          return;
+        }
         setError(err.message.slice(0, 160) || "Command failed");
         return;
       }
-      setError("Command failed");
+      setError("Command failed — is the Odin API running?");
     },
   });
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  function submitCommand() {
     const text = command.trim();
     if (text.length < 3) {
-      setError("Enter a mission command (min 3 characters).");
+      setError("Type at least 3 characters, then press Enter or Execute.");
       return;
     }
+    if (create.isPending) return;
     create.mutate(text);
   }
 
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    submitCommand();
+  }
+
   return (
-    <motion.div
-      animate={{ opacity: 1 }}
-      transition={transitionFast}
-    >
+    <motion.div animate={{ opacity: 1 }} transition={transitionFast}>
       <GlassPanel
         depth="command"
         glow={inputFocused || typing}
@@ -116,13 +132,19 @@ export function MissionCommandBar({
           <input
             type="text"
             value={command}
-            disabled={disabled || create.isPending}
+            disabled={create.isPending}
             onChange={(e) => {
               setCommand(e.target.value);
               setError(null);
               const isTyping = e.target.value.length > 0;
               onTypingChange?.(isTyping);
               if (isTyping) onTypingRipple?.();
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                submitCommand();
+              }
             }}
             onFocus={() => onFocusChange?.(true)}
             onBlur={() => {
@@ -133,14 +155,13 @@ export function MissionCommandBar({
             className="min-w-0 flex-1 bg-transparent text-sm text-slate-100 placeholder:text-slate-600 focus:outline-none"
             autoFocus
           />
-          <motion.button
+          <button
             type="submit"
-            disabled={disabled || create.isPending || command.trim().length < 3}
-            {...microPress}
-            className="shrink-0 rounded-lg bg-odin-cyan/12 px-4 py-1.5 text-xs font-medium text-odin-cyan ring-1 ring-odin-cyan/20 hover:bg-odin-cyan/20 disabled:cursor-not-allowed disabled:opacity-30"
+            disabled={create.isPending}
+            className="shrink-0 rounded-lg bg-odin-cyan/12 px-4 py-1.5 text-xs font-medium text-odin-cyan ring-1 ring-odin-cyan/20 transition hover:bg-odin-cyan/20 disabled:cursor-wait disabled:opacity-50"
           >
             {create.isPending ? "Absorbing…" : "Execute"}
-          </motion.button>
+          </button>
         </form>
         {error && (
           <motion.p
@@ -150,6 +171,11 @@ export function MissionCommandBar({
           >
             {error}
           </motion.p>
+        )}
+        {!error && command.trim().length > 0 && command.trim().length < 3 && (
+          <p className="border-t border-white/[0.04] px-4 py-1.5 text-[10px] text-slate-600">
+            {3 - command.trim().length} more character(s) to execute
+          </p>
         )}
       </GlassPanel>
     </motion.div>

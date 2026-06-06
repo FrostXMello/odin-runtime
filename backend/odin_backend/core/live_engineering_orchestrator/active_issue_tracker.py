@@ -6,10 +6,14 @@ class ActiveIssueTracker:
     def __init__(self) -> None:
         self._issues: list[dict] = []
 
-    def track(self, *, title: str, blocked: bool = False) -> dict[str, Any]:
-        item = {"title": title[:120], "blocked": blocked, "open": True}
+    def track(self, *, title: str, blocked: bool = False, severity: str = "info") -> dict[str, Any]:
+        item = {"title": title[:120], "blocked": blocked, "open": True, "severity": severity}
         self._issues.append(item)
         return item
 
     def open_issues(self) -> list[dict]:
-        return [i for i in self._issues if i.get("open")]
+        return [
+            i
+            for i in self._issues
+            if i.get("open") and i.get("severity") == "critical"
+        ]

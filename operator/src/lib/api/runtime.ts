@@ -1,6 +1,7 @@
 import { apiFetch } from "./client";
 import type {
   BottleneckReport,
+  CommandResponse,
   CausalEventsResponse,
   MemoryMutation,
   MissionSummary,
@@ -42,7 +43,7 @@ export const runtimeApi = {
     human_approved?: boolean;
     start_worker?: boolean;
   }) =>
-    apiFetch<MissionSummary>("/missions/create", {
+    apiFetch<CommandResponse>("/missions/create", {
       method: "POST",
       body: JSON.stringify({
         priority: 50,

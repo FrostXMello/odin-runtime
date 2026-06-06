@@ -136,3 +136,76 @@ class ExecutionPolicyEnforcer:
         }
         self._violations.append(entry)
         logger.warning("execution_policy_violation", **entry)
+
+
+InputIntent = str  # "chat" | "mission" | "system"
+
+_CHAT_GREETINGS = frozenset(
+    {"hi", "hello", "hey", "yo", "howdy", "good morning", "good evening", "good afternoon", "hiya", "sup"}
+)
+
+_MISSION_VERBS = re.compile(
+    r"\b("
+    r"build|fix|analyze|analyse|debug|implement|create|deploy|run|execute|test|refactor|"
+    r"migrate|optimize|optimise|investigate|audit|scan|write|develop|setup|configure|"
+    r"repair|resolve|update|upgrade|remove|delete|purge|clean|validate|verify|research|"
+    r"troubleshoot|diagnose|patch|integrate|automate|monitor|summarize|summarise"
+    r")\b",
+    re.I,
+)
+
+_SYSTEM_PATTERNS = re.compile(
+    r"\b(status|health|is system ok|system ok|uptime|how(?:'s| is) the system|runtime health)\b",
+    re.I,
+)
+
+_QUESTION_PREFIX = re.compile(
+    r"^(what|who|where|when|why|how|can you|could you|tell me|explain|describe|is |are |do you)\b",
+    re.I,
+)
+
+
+def classify_input_intent(text: str) -> InputIntent:
+    """Lightweight routing: default unclear input to chat, not mission."""
+    normalized = text.strip().lower()
+    if not normalized:
+        return "chat"
+
+    if _SYSTEM_PATTERNS.search(normalized):
+        return "system"
+
+    bare = normalized.rstrip("!?. ")
+    if bare in _CHAT_GREETINGS:
+        return "chat"
+
+    if _MISSION_VERBS.search(normalized):
+        return "mission"
+
+    if "?" in normalized or _QUESTION_PREFIX.match(normalized):
+        return "chat"
+
+    if len(normalized.split()) >= 6 and any(
+        phrase in normalized for phrase in ("and then", " step ", "first ", "after that", "next ")
+    ):
+        return "mission"
+
+    return "chat"
+
+
+def chat_response_for(text: str) -> str:
+    normalized = text.strip().lower()
+    bare = normalized.rstrip("!?. ")
+
+    if bare in _CHAT_GREETINGS:
+        return "Hello. I'm Odin, your runtime system. What would you like to work on?"
+
+    if "name" in normalized and any(w in normalized for w in ("what", "who", "your")):
+        return "I am Odin, your runtime system."
+
+    if normalized.endswith("?"):
+        return (
+            "I can answer quick questions here. For multi-step work, use a mission command "
+            'like "analyze logs" or "fix the auth flow".'
+        )
+
+    return "I'm here. Ask a question or give me a task to run."

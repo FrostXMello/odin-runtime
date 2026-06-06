@@ -23,6 +23,7 @@ import {
   phaseLabel,
   type MissionUiPhase,
 } from "@/components/missions/mission-state";
+import { isLifecycleNoise, isIssueSignal } from "@/lib/stream/event-filter";
 import { cn } from "@/lib/utils/cn";
 
 type Props = {
@@ -159,7 +160,15 @@ export function MissionLiveStream({
   });
 
   const entries = timeline?.entries ?? [];
-  const prevLen = useRef(entries.length);
+  const signalEntries = useMemo(
+    () => entries.filter((e) => !isLifecycleNoise(e.kind)),
+    [entries]
+  );
+  const issueEntries = useMemo(
+    () => entries.filter((e) => isIssueSignal(e.kind)),
+    [entries]
+  );
+  const prevLen = useRef(signalEntries.length);
   const entriesMounted = useRef(false);
 
   useEffect(() => {
@@ -168,11 +177,11 @@ export function MissionLiveStream({
       prevLen.current = entries.length;
       return;
     }
-    if (entries.length > prevLen.current) {
+    if (signalEntries.length > prevLen.current) {
       onStreamEvent?.();
     }
-    prevLen.current = entries.length;
-  }, [entries.length, onStreamEvent]);
+    prevLen.current = signalEntries.length;
+  }, [signalEntries.length, onStreamEvent]);
 
   const streamMetrics = useStreamStore((s) => s.channels[`mission:${missionId}`]);
   const prevEventAt = useRef<number | null>(null);
@@ -242,20 +251,38 @@ export function MissionLiveStream({
 
       <div className="max-h-[min(480px,50vh)] overflow-y-auto px-5 py-3">
         {isLoading && <p className="text-xs text-slate-500">Establishing signal channel…</p>}
-        {!isLoading && entries.length === 0 && (
+        {!isLoading && signalEntries.length === 0 && (
           <p className="font-mono text-xs text-slate-600">Awaiting execution signals…</p>
         )}
         <div className="space-y-0.5">
-          {entries.map((entry, i) => (
+          {signalEntries.map((entry, i) => (
             <SignalBlock
               key={`${entry.sort_key}-${entry.timestamp}`}
               entry={entry}
-              isLatest={i === entries.length - 1 && !locked}
+              isLatest={i === signalEntries.length - 1 && !locked}
               phase={phase}
               motionTier={motionTier}
             />
           ))}
         </div>
+        {issueEntries.length > 0 && (
+          <div className="mt-4 border-t border-odin-rose/10 pt-3">
+            <p className="mb-2 text-[10px] uppercase tracking-widest text-odin-rose/70">
+              Issues · {issueEntries.length}
+            </p>
+            <div className="space-y-0.5">
+              {issueEntries.map((entry, i) => (
+                <SignalBlock
+                  key={`issue-${entry.sort_key}-${entry.timestamp}`}
+                  entry={entry}
+                  isLatest={i === issueEntries.length - 1}
+                  phase="failed"
+                  motionTier={motionTier}
+                />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="border-t border-white/[0.04] px-5 py-2.5">
@@ -265,7 +292,7 @@ export function MissionLiveStream({
           {...microPress}
           className="text-[10px] text-slate-600 hover:text-odin-cyan/80"
         >
-          {timelineOpen ? "Collapse" : "Expand"} timeline · {entries.length} signals
+          {timelineOpen ? "Collapse" : "Expand"} timeline · {signalEntries.length} signals
         </motion.button>
         <AnimatePresence>
           {timelineOpen && (

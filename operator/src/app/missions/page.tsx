@@ -29,6 +29,7 @@ function MissionsCommandSurface() {
   const [cmdFocused, setCmdFocused] = useState(false);
   const [cmdTyping, setCmdTyping] = useState(false);
   const [creating, setCreating] = useState(false);
+  const [chatReply, setChatReply] = useState<string | null>(null);
   const [streamEventTick, setStreamEventTick] = useState(0);
   const [typingRippleKey, setTypingRippleKey] = useState(0);
   const [absorbKey, setAbsorbKey] = useState(0);
@@ -141,8 +142,18 @@ function MissionsCommandSurface() {
       <SurfaceLayer z="command" dominance={layerFocus.command} className="shrink-0">
         <motion.div variants={layerReveal} initial="hidden" animate="visible">
           <MissionCommandBar
-            onMissionCreated={(id) => setMission(id, false)}
-            disabled={isLoading}
+            onMissionCreated={(id) => {
+              setChatReply(null);
+              setMission(id, false);
+            }}
+            onChatResponse={(message) => {
+              setChatReply(message);
+              setRecovered(false);
+            }}
+            onSystemResponse={(message) => {
+              setChatReply(message);
+              setRecovered(false);
+            }}
             onFocusChange={setCmdFocused}
             onTypingChange={setCmdTyping}
             onCreatingChange={setCreating}
@@ -160,6 +171,17 @@ function MissionsCommandSurface() {
       )}
 
       <SurfaceLayer z="execution" dominance={layerFocus.execution} className="flex-1">
+        {chatReply && !showStream && (
+          <motion.div
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-6 rounded-xl border border-odin-cyan/10 bg-odin-cyan/[0.04] px-5 py-4"
+          >
+            <p className={odinTypography.systemState}>Odin</p>
+            <p className="mt-2 text-sm leading-relaxed text-slate-200">{chatReply}</p>
+          </motion.div>
+        )}
+
         {showStream && missionParam && (
           <MissionLiveStream
             missionId={missionParam}

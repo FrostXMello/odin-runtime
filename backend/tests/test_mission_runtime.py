@@ -172,13 +172,51 @@ async def test_mission_api(app: OdinApplication):
             json={"objective": "API mission step one. API mission step two.", "start_worker": False},
         )
         assert created.status_code == 200
-        mid = created.json()["mission_id"]
+        body = created.json()
+        assert body["intent"] == "mission"
+        mid = body["mission"]["mission_id"]
         detail = await client.get(f"/api/v1/missions/{mid}")
         assert detail.status_code == 200
         timeline = await client.get(f"/api/v1/missions/{mid}/timeline")
         assert timeline.status_code == 200
         reasoning = await client.get(f"/api/v1/missions/{mid}/reasoning")
         assert reasoning.status_code == 200
+
+
+@pytest.mark.asyncio
+async def test_mission_intent_routing(app: OdinApplication):
+    from odin_backend.api.routes import missions as missions_routes
+    from odin_backend.core.missions.policy import classify_input_intent
+
+    assert classify_input_intent("hi") == "chat"
+    assert classify_input_intent("what is your name") == "chat"
+    assert classify_input_intent("status") == "system"
+    assert classify_input_intent("analyze logs and report summary") == "mission"
+
+    api = FastAPI()
+    api.state.odin = app
+    api.include_router(missions_routes.router, prefix="/api/v1")
+    transport = ASGITransport(app=api)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        chat = await client.post(
+            "/api/v1/missions/create",
+            json={"objective": "hi", "start_worker": False},
+        )
+        assert chat.status_code == 200
+        chat_body = chat.json()
+        assert chat_body["intent"] == "chat"
+        assert chat_body.get("mission") is None
+        assert chat_body["message"]
+
+        system = await client.post(
+            "/api/v1/missions/create",
+            json={"objective": "system health status", "start_worker": False},
+        )
+        assert system.status_code == 200
+        system_body = system.json()
+        assert system_body["intent"] == "system"
+        assert system_body.get("mission") is None
+        assert system_body["system"]["system_health"]
 
 
 @pytest.mark.asyncio

@@ -29,8 +29,6 @@ class LiveEngineeringOrchestratorRuntime:
         ctx = build_context(repo=repo, goal=goal, files=[file] if file else [])
         tower = watch(logs=logs or [], errors=[error] if error else [])
         drift = drift_score(dirty_files=1 if error else 0, stale_hours=0.5)
-        if error:
-            self._issues.track(title=error[:80], blocked=True)
         live = {}
         if hasattr(self._app, "live_engineering"):
             live = await self._app.live_engineering.session(repo=repo, ide={"file": file}, error=error)

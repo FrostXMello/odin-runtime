@@ -2,6 +2,7 @@
 
 import { create } from "zustand";
 import type { StreamConnectionStatus, StreamEnvelope } from "@/lib/stream/types";
+import { isLifecycleNoise } from "@/lib/stream/event-filter";
 
 const MAX_TICKER = 40;
 
@@ -64,8 +65,9 @@ export const useStreamStore = create<StreamState>((set, get) => ({
     const dt = prev.lastEventAt ? (now - prev.lastEventAt) / 1000 : 1;
     const eps = dt > 0 ? 1 / dt : 0;
     const isHb = env.event_type === "heartbeat" || env.event_type === "connected";
+    const isNoise = isHb || isLifecycleNoise(env.event_type);
     set((s) => ({
-      ticker: isHb
+      ticker: isNoise
         ? s.ticker
         : [env, ...s.ticker].slice(0, MAX_TICKER),
       channels: {

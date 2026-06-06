@@ -1,9 +1,12 @@
 """Persistent mission API."""
 
+from typing import Literal
+
 from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel, Field
 
 from odin_backend.core.missions.manager import MissionDuplicateError
+from odin_backend.core.missions.policy import chat_response_for, classify_input_intent
 
 router = APIRouter(prefix="/missions", tags=["missions"])
 
@@ -29,6 +32,13 @@ class MissionResponse(BaseModel):
     completed_tasks: list[dict]
 
 
+class CommandResponse(BaseModel):
+    intent: Literal["chat", "mission", "system"]
+    message: str | None = None
+    mission: MissionResponse | None = None
+    system: dict | None = None
+
+
 def _to_response(mission) -> MissionResponse:
     return MissionResponse(
         mission_id=mission.mission_id,
@@ -44,9 +54,44 @@ def _enqueue(app, mission_id: str) -> None:
     app.mission_worker.enqueue_mission(mission_id)
 
 
-@router.post("/create", response_model=MissionResponse)
-async def create_mission(body: MissionCreateRequest, request: Request) -> MissionResponse:
+@router.post("/create", response_model=CommandResponse)
+async def create_mission(body: MissionCreateRequest, request: Request) -> CommandResponse:
     app = request.app.state.odin
+    intent = classify_input_intent(body.objective)
+
+    if intent == "chat":
+        return CommandResponse(intent="chat", message=chat_response_for(body.objective))
+
+    if intent == "system":
+        from odin_backend.core.missions.health import assess_orchestration_health
+        from odin_backend.core.observability.diagnostics import analyze_runtime
+
+        state = app.kernel.get_state()
+        orchestration = assess_orchestration_health(app)
+        root_cause = analyze_runtime(app)
+        system_health = state.system_health
+        if orchestration.status == "critical" or root_cause.status == "critical":
+            system_health = "critical"
+        elif (
+            orchestration.status == "degraded" or root_cause.status == "degraded"
+        ) and system_health == "healthy":
+            system_health = "degraded"
+
+        snapshot = {
+            "system_health": system_health,
+            "orchestration_status": orchestration.status,
+            "active_missions": len(app.mission_manager._active),  # noqa: SLF001
+            "issue_count": root_cause.issue_count,
+            "summary": root_cause.summary,
+        }
+        if system_health == "healthy":
+            message = "System OK — runtime is healthy."
+        elif system_health == "degraded":
+            message = "System degraded — check active missions before diving deeper."
+        else:
+            message = "System critical — review diagnostics or recover the session."
+        return CommandResponse(intent="system", message=message, system=snapshot)
+
     try:
         result = await app.mission_manager.create_checked(
             body.objective,
@@ -80,7 +125,7 @@ async def create_mission(body: MissionCreateRequest, request: Request) -> Missio
 
     if body.start_worker:
         _enqueue(app, result.mission.mission_id)
-    return _to_response(result.mission)
+    return CommandResponse(intent="mission", mission=_to_response(result.mission))
 
 
 @router.get("", response_model=list[MissionResponse])

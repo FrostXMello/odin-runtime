@@ -1,6 +1,6 @@
 import type { MissionSummary } from "@/lib/api/types";
 
-const TERMINAL = new Set(["completed", "failed", "cancelled"]);
+const TERMINAL = new Set(["completed", "failed", "cancelled", "archived"]);
 const PAUSED = new Set(["paused"]);
 const RUNNING = new Set(["running", "active", "planning", "planned", "queued", "waiting", "blocked"]);
 

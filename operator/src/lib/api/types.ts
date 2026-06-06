@@ -34,6 +34,7 @@ export interface RootCauseAnalysis {
   status: HealthStatus;
   findings: RootCauseFinding[];
   summary: string;
+  issue_count?: number;
 }
 
 export interface RuntimeHealthResponse {
@@ -203,6 +204,13 @@ export interface MissionSummary {
   priority: number;
   active_tasks: Array<Record<string, unknown>>;
   completed_tasks: Array<Record<string, unknown>>;
+}
+
+export interface CommandResponse {
+  intent: "chat" | "mission" | "system";
+  message?: string | null;
+  mission?: MissionSummary | null;
+  system?: Record<string, unknown> | null;
 }
 
 export interface CausalEventsResponse {
