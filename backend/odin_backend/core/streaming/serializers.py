@@ -736,6 +736,32 @@ def resolve_channels_for_trace(event: TraceEvent) -> list[str]:
     ):
         channels.append("daemon-v2:runtime")
         channels.append("daemon-cognition:runtime")
+    if event.kind == TraceEventKind.NATIVE_WINDOW_CONTEXT_CHANGED:
+        channels.append("native-os:runtime")
+        channels.append("desktop-v2:runtime")
+    if event.kind in (
+        TraceEventKind.AUTONOMOUS_GOAL_RESUMED,
+        TraceEventKind.LONG_HORIZON_PLAN_UPDATED,
+        TraceEventKind.PERSISTENT_REASONING_RESTORED,
+        TraceEventKind.AUTONOMOUS_TICK_EXECUTED,
+    ):
+        channels.append("autonomous-loop-v2:runtime")
+    if event.kind in (
+        TraceEventKind.ENGINEERING_REGRESSION_FORECASTED,
+        TraceEventKind.MULTI_REPO_REASONING_COMPLETED,
+    ):
+        channels.append("engineering-evolution-v2:runtime")
+    if event.kind in (
+        TraceEventKind.SEMANTIC_MEMORY_LINKED,
+        TraceEventKind.CONTEXT_REHYDRATED,
+    ):
+        channels.append("memory-fabric-v2:runtime")
+    if event.kind in (
+        TraceEventKind.DEEP_FOCUS_SESSION_STARTED,
+        TraceEventKind.BURNOUT_RISK_DETECTED,
+        TraceEventKind.ADAPTIVE_WORKFLOW_GENERATED,
+    ):
+        channels.append("productivity-v3:runtime")
     if event.kind == TraceEventKind.MODEL_LOADED:
         channels.append("models:runtime")
     return channels

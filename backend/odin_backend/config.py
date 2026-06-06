@@ -380,6 +380,16 @@ class Settings(BaseSettings):
     cognitive_load_balancing_enabled: bool = False
     overnight_cognition_enabled: bool = False
 
+    # Real autonomous cognitive OS (Prompt 50)
+    native_os_enabled: bool = False
+    autonomous_loop_v2_enabled: bool = False
+    engineering_evolution_v2_enabled: bool = False
+    memory_fabric_v2_enabled: bool = False
+    operator_intelligence_v3_enabled: bool = False
+    deep_focus_enabled: bool = False
+    context_rehydration_enabled: bool = False
+    autonomous_overnight_mode_enabled: bool = False
+
     # Milestone 15 — active perception
     runtime_observers_enabled: bool = False
     model_gemini: str = "gemini-2.0-flash"

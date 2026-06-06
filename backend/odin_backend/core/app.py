@@ -767,6 +767,18 @@ class OdinApplication:
         self.engineering_evolution = EngineeringEvolutionRuntime(self)
         self.cognitive_daemon_v2 = CognitiveDaemonV2Runtime(self)
         self.operator_intelligence_v2 = OperatorIntelligenceV2Runtime(self)
+        from odin_backend.core.native_os import NativeOSRuntime, SystemIntentBridge
+        from odin_backend.core.autonomous_loop_v2 import AutonomousLoopV2Runtime
+        from odin_backend.core.engineering_evolution_v2 import AutonomousEngineeringDirector
+        from odin_backend.core.memory_fabric_v2 import PersistentSemanticMemory
+        from odin_backend.core.operator_intelligence_v3 import CognitiveProductivityRuntime
+
+        self.native_os = NativeOSRuntime(self)
+        self.system_intents = SystemIntentBridge(self)
+        self.autonomous_loop_v2 = AutonomousLoopV2Runtime(self)
+        self.engineering_evolution_v2 = AutonomousEngineeringDirector(self)
+        self.memory_fabric_v2 = PersistentSemanticMemory(self)
+        self.operator_intelligence_v3 = CognitiveProductivityRuntime(self)
         self.mission_gc = MissionGarbageCollector(
             self.mission_store,
             stale_seconds=self.settings.mission_gc_stale_seconds,

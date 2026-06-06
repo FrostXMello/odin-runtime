@@ -64,6 +64,7 @@ from odin_backend.api.routes import (
     engineering_workstation_runtime,
     cognitive_computer_runtime,
     adaptive_autonomous_os_runtime,
+    real_autonomous_cognitive_os_runtime,
     traces,
     ws,
     executions,
@@ -150,6 +151,7 @@ def create_api(odin_app: OdinApplication | None = None) -> FastAPI:
     app.include_router(engineering_workstation_runtime.router, prefix="/api/v1")
     app.include_router(cognitive_computer_runtime.router, prefix="/api/v1")
     app.include_router(adaptive_autonomous_os_runtime.router, prefix="/api/v1")
+    app.include_router(real_autonomous_cognitive_os_runtime.router, prefix="/api/v1")
     app.include_router(traces.router, prefix="/api/v1")
     app.include_router(ws.router, prefix="/api/v1")
     app.include_router(executions.router, prefix="/api/v1")

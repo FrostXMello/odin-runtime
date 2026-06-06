@@ -307,6 +307,18 @@ class TraceEventKind(StrEnum):
     OVERNIGHT_CYCLE_COMPLETED = "overnight_cycle_completed"
     LOW_POWER_TRANSITION = "low_power_transition"
     COGNITIVE_RESUME_COMPLETED = "cognitive_resume_completed"
+    NATIVE_WINDOW_CONTEXT_CHANGED = "native_window_context_changed"
+    AUTONOMOUS_GOAL_RESUMED = "autonomous_goal_resumed"
+    LONG_HORIZON_PLAN_UPDATED = "long_horizon_plan_updated"
+    ENGINEERING_REGRESSION_FORECASTED = "engineering_regression_forecasted"
+    MULTI_REPO_REASONING_COMPLETED = "multi_repo_reasoning_completed"
+    SEMANTIC_MEMORY_LINKED = "semantic_memory_linked"
+    CONTEXT_REHYDRATED = "context_rehydrated"
+    DEEP_FOCUS_SESSION_STARTED = "deep_focus_session_started"
+    BURNOUT_RISK_DETECTED = "burnout_risk_detected"
+    ADAPTIVE_WORKFLOW_GENERATED = "adaptive_workflow_generated"
+    PERSISTENT_REASONING_RESTORED = "persistent_reasoning_restored"
+    AUTONOMOUS_TICK_EXECUTED = "autonomous_tick_executed"
 
 
 class TraceEvent(BaseModel):
